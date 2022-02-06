@@ -23,14 +23,18 @@
     </div>
     
     <div class="companyTitle">
-        DALALI WINEHOUSE LTD
+        <a routerLink="/home" routerLinkActive="active-link">DALALI WINEHOUSE LTD</a>
     </div>
 
     <div class="otherComps">
-        <i class="fas fa-user"></i>
-        <i class="fas fa-shopping-cart"></i>
+        <a routerLink="/userprofile" routerLinkActive="active-link"><i class="fas fa-user"></i></a>
+        <a routerLink="/cat" routerLinkActive="active-link"><i class="fas fa-shopping-cart"></i></a>
     </div>
 
 </nav>
 
-<router-outlet></router-outlet>
+<main class="pagesHoder">
+
+    <router-outlet></router-outlet>
+    
+</main>

@@ -1,0 +1,95 @@
+.categoryDiv{
+    width: 100%;
+    height: auto;
+}
+.categoryTitle{
+    width: 100%;
+    height: 50px;
+    display: grid;
+    grid-template-columns: 80% 20%;
+}
+.catTitleName{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 120%;
+}
+.catTitleSeeMore{
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 90% 10%;
+    font-size: 120%;
+    cursor: pointer;
+}
+.seeMoreTxt{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 10px;
+    box-sizing: border-box;
+}
+.seeMoreIcon{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.catBody{
+    width: 100%;
+    height: auto;
+    padding: 10px;
+    box-sizing: border-box;
+}
+.catBodyDetails{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+.itemDiv{
+    height: 400px;
+    width: 300px;
+    overflow: hidden;
+    padding: 5px;
+    box-sizing: border-box;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    cursor: pointer;
+    position: relative;
+    left: 20px;
+}
+.itmePic{
+    width: 100%;
+    height: 85%;  
+    overflow: hidden;
+}
+.itemImgTag{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+.itemDetails{
+    width: 100%;
+    height: 15%;
+}
+.itemName{
+    width: 100%;
+    height: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.itemPrice{
+    width: 100%;
+    height: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

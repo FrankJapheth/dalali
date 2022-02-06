@@ -13,6 +13,8 @@ import { CategoriesPageComponent } from './categories-page/categories-page.compo
 import { ContactPageComponent } from './contact-page/contact-page.component';
 import { ProfilePageComponent } from './profile-page/profile-page.component';
 import { CatPageComponent } from './cat-page/cat-page.component';
+import { BunnerComponent } from './bunner/bunner.component';
+import { HomeCategoriesComponent } from './home-categories/home-categories.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import { CatPageComponent } from './cat-page/cat-page.component';
     CategoriesPageComponent,
     ContactPageComponent,
     ProfilePageComponent,
-    CatPageComponent
+    CatPageComponent,
+    BunnerComponent,
+    HomeCategoriesComponent
   ],
   imports: [
     BrowserModule,
