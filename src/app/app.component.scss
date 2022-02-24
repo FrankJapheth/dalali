@@ -1,8 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
 :root{
     --textColor:#2C2B3C;
     --links:#121420;
 }
-
 .mainNav{
     width: 100%;
     height: 50px;
@@ -15,12 +15,14 @@
     top: 0px;
     background-color: white;
     z-index: 100;
+    font-family: 'Open Sans', sans-serif; 
 }
 .pagesHoder{
     width: 100%;
     height: auto;
     position: relative;
     top: 60px;
+    font-family: 'Open Sans', sans-serif; 
 }
 .linDiv{
     width: 100%;
@@ -48,15 +50,12 @@
     top: 5%;
     margin-right: 5%;
     border-radius: 3px;
+    text-decoration: inherit;
+    color: inherit;
 }
 .linkItem:hover{
     background-image: linear-gradient(rgb(255, 255, 255), #121420);
     color: #fff;
-
-}
-.linkItem a{
-    text-decoration: inherit;
-    color: inherit;
 }
 .companyTitle{
     width: 100%;
@@ -79,4 +78,7 @@
 .otherComps a{
     text-decoration: inherit;
     color: black;        
+}
+.nosite{
+    display:none
 }

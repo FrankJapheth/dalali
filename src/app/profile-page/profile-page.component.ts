@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DalalidataService } from '../dalalidata.service';
 
 @Component({
   selector: 'app-profile-page',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProfilePageComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private dalaliData:DalalidataService,
+  ) { }
+  
+    public userType:string=this.dalaliData.getUserBasiInfo()[2]
 
-  ngOnInit(): void {
+  ngOnInit(): void {    
   }
 
 }

@@ -1,0 +1,145 @@
+.ageLimiter{
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+.aLHead{
+    width: 100%;
+    height: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.controlBoards{
+    width: 100%;
+    height: 13%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+.valueControlers{
+    width: 33%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+.valueControlers:hover{
+    background-image: linear-gradient(rgb(255, 255, 255), #121420);
+    color: #fff;
+}
+.aLBody{
+    width: 100%;
+    height: 40%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    position: relative;
+}
+.dateDivBg{
+    width: 100%;
+}
+.nextDateDivBg{
+    height: 44%;
+}
+.currentDateDivBg{
+    height: 16%;
+    background-color: #121420;
+}
+.prevDateDivBg{
+    height: 40%;
+}
+.aLHolder{
+    width: 33%;
+    height: 100%;
+}
+.aLVHolder{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.aLYUpper{
+    height: 33%;
+}
+.aLYMiddle{
+    background-color: #121420;
+    height: 33%;
+    color: #fff;
+}
+.aLYDown{
+    height: 33%;
+}
+.aLMUpper{
+    height: 33%;
+}
+.aLMMiddle{
+    background-color: #121420;
+    height: 33%;
+    color: #fff;
+}
+.aLMDown{
+    height: 33%;
+}
+.aLDUpper{
+    height: 33%;
+}
+.aLDMiddle{
+    background-color: #121420;
+    height: 33%;
+    color: #fff;
+}
+.aLDDown{
+    height: 33%;
+}
+.smallerValues{
+    font-size: 70%;
+    color: rgb(80, 77, 77);
+}
+.pickerAndSubmitter{
+    width: 100%;
+    height: 10%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 5px;
+}
+.pickerInput{
+    width: 70%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#DOBTextInputPicker{
+    outline: none;
+    border: 0px;
+    width: 100%;
+    height: 100%;
+    font-size: 100%;
+    padding: 5px;
+    box-sizing: border-box;
+}
+.submitterInput{
+    width: 30%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.submitterButton{
+    width: 95%;
+    height: 100%;
+    border-radius: 2px;
+    background-color: #121420;
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.nosite{
+    display: none;
+}

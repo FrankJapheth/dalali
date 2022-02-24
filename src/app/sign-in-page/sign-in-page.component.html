@@ -1,1 +1,18 @@
-<p>sign-in-page works!</p>
+<div class="wholeSignInPage">
+    <form class="SignInForm">
+        <div class="signInFormHead">
+            Sign In
+        </div>
+        <div class="signInFormBody">
+
+            <input type="text" name="SignInContact" id="SignInContact" placeholder="Contact" class="signInInput" autocomplete="username">
+            <input type="password" name="signInPassword" id="signInPassword" placeholder="Password" class="signInInput" autocomplete="current-password">
+            
+            <div class="signInButton"(click)="signInButton($event)">
+                Sign In
+            </div>
+            <a routerLink="/" routerLinkActive="active-link" class="nosite homeBut">Home</a>
+
+        </div>
+    </form>
+</div>

@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
+.wholeProfilePage{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+.profileButtons{
+    width: 150px;
+    height: 70px;
+    border-radius: 3px;
+    margin-left: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow:  7px 7px 11px #b3b3b3,
+                 -7px -7px 11px #ffffff;
+    cursor: pointer;
+    font-family: 'Open Sans', sans-serif;
+}
+.linkButtons{
+    text-decoration: none;
+    color: black;
+}

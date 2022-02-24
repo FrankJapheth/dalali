@@ -1,0 +1,20 @@
+<div class="searchdiv">
+    <div class="searchTextDiv">
+        <input type="text" name="searchInputText" id="searchInputText" class="searchInputText"
+        (keyup)="this.getSearchedUsers($event)" placeholder="Search users">
+        <!-- <div class="searchSubmitter"><i class="fas fa-search"></i></div> -->
+    </div>
+    <div class="searchResultHolder" >
+        <div *ngFor="let userInfo of this.usersInfo" >
+            <div class="searchResultTablet" id="sRT{{this.usersInfo.indexOf(userInfo)}}"
+            (click)="searchResultTablet($event)">
+                <section class="searchResultUserContact userInfoDiv" id="sRUC{{this.usersInfo.indexOf(userInfo)}}">
+                    {{userInfo[0]}}
+                </section>
+                <section class="searchResultUserName userInfoDiv" id="sRUN{{this.usersInfo.indexOf(userInfo)}}">
+                    {{userInfo[1]}}
+                </section>
+            </div>
+        </div>
+    </div>
+</div>

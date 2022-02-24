@@ -1,1 +1,17 @@
-<p>registration-page works!</p>
+<div class="wholeSignUpPage">
+    <form class="SignUpForm">
+        <div class="signUpFormTitle">
+            Sign Up
+        </div>
+        <div class="signUpFormBody">
+            <input type="text" name="userContact" id="userContact" placeholder="Contact" class="signUpInput" autocomplete="username">
+            <input type="text" name="UserName" id="UserName" placeholder="Name" class="signUpInput">
+            <input type="password" name="userPassword" id="userPassword" placeholder="Password" class="signUpInput" autocomplete="current-password">
+            <input type="password" name="confirmUserPassword" id="confirmUserPassword" placeholder="Confirm password" class="signUpInput">
+            <div class="submitButton" (click)="signUpButton($event)">
+                Sign Up
+            </div>
+            <a routerLink="/" routerLinkActive="active-link" class="nosite homeBut">Home</a>
+        </div>
+    </form>
+</div>

@@ -15,6 +15,13 @@ import { ProfilePageComponent } from './profile-page/profile-page.component';
 import { CatPageComponent } from './cat-page/cat-page.component';
 import { BunnerComponent } from './bunner/bunner.component';
 import { HomeCategoriesComponent } from './home-categories/home-categories.component';
+import { SuperUserComponent } from './super-user/super-user.component';
+import { AdminComponent } from './admin/admin.component';
+import { RetailerComponent } from './retailer/retailer.component';
+import { AgelimiterComponent } from './agelimiter/agelimiter.component';
+import { LoaderComponent } from './loader/loader.component';
+import { UserSearchComponent } from './user-search/user-search.component';
+import { SystemMaintananceComponent } from './system-maintanance/system-maintanance.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +37,14 @@ import { HomeCategoriesComponent } from './home-categories/home-categories.compo
     ProfilePageComponent,
     CatPageComponent,
     BunnerComponent,
-    HomeCategoriesComponent
+    HomeCategoriesComponent,
+    SuperUserComponent,
+    AdminComponent,
+    RetailerComponent,
+    AgelimiterComponent,
+    LoaderComponent,
+    UserSearchComponent,
+    SystemMaintananceComponent
   ],
   imports: [
     BrowserModule,

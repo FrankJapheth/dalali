@@ -1,1 +1,18 @@
-<p>profile-page works!</p>
+<div class="wholeProfilePage">
+    <a routerLink="/signUp" class="linkButtons">            
+        <div class="signUpButton profileButtons">
+            Sign Up
+        </div>
+    </a>
+    <a routerLink="/signIn" class="linkButtons">            
+        <div class="signInButton profileButtons">
+            Sign In
+        </div>
+    </a>
+    
+    <a routerLink="/superuser" class="linkButtons" *ngIf="this.userType=='superuser'">            
+        <div class="superUserButton profileButtons">
+            Tools
+        </div>
+    </a>
+</div>
