@@ -1,0 +1,49 @@
+import { Component, OnInit,ElementRef,Renderer2 } from '@angular/core';
+import { DalalidataService } from '../dalalidata.service';
+
+@Component({
+  selector: 'app-retailer-tools',
+  templateUrl: './retailer-tools.component.html',
+  styleUrls: ['./retailer-tools.component.scss']
+})
+export class RetailerToolsComponent implements OnInit {
+
+  constructor(
+    private eleRef:ElementRef,
+    private renderer:Renderer2,
+    private dataService:DalalidataService
+  ) { }
+
+  ngOnInit(): void {
+  }
+  ngAfterViewInit(){
+    this.addingProducts()
+    this.rTCAPMDHClosing()
+    this.rTCAPMDBNewProduct()
+    this.rTCAPMDBExistsingCall()
+  }
+  addingProducts():void{
+    this.renderer.listen(this.eleRef.nativeElement.querySelector(".addingProducts"),"click",()=>{
+      this.renderer.removeClass(this.eleRef.nativeElement.querySelector(".rTCAddingProductControl"),"nosite")
+      this.renderer.removeClass(this.eleRef.nativeElement.querySelector(".retailerToolsControls"),"nosite")
+    })
+  }
+  rTCAPMDHClosing():void{
+    this.renderer.listen(this.eleRef.nativeElement.querySelector(".rTCAPMDHClosing"),"click",()=>{
+      this.renderer.addClass(this.eleRef.nativeElement.querySelector(".retailerToolsControls"),"nosite")
+      this.renderer.addClass(this.eleRef.nativeElement.querySelector(".rTCAddingProductControl"),"nosite")
+    })    
+  }
+  rTCAPMDBNewProduct(){
+    this.renderer.listen(this.eleRef.nativeElement.querySelector(".rTCAPMDBNewProduct"),"click",()=>{
+      this.dataService.uploadType="newProduct"
+      this.eleRef.nativeElement.querySelector(".addingProductLink").click()
+    })
+  }
+  rTCAPMDBExistsingCall(){
+    this.renderer.listen(this.eleRef.nativeElement.querySelector(".rTCAPMDBExistsingCall"),"click",()=>{
+      this.dataService.uploadType="existingProduct"
+      this.eleRef.nativeElement.querySelector(".addingProductLink").click()
+    })
+  }
+}

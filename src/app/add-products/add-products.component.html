@@ -1,0 +1,55 @@
+<div class="productUploadPage">
+    <div *ngIf="this.uploadType=='newProduct'; else elseBlock" class="pUPHolder">
+        <div class="pUPNewProdPg">
+            <div class="controlsSect nosite">
+                <div class="cSFileChooser">
+                    Product Image
+                    <input type="file" accept="image/*" id="csRFileChooser" class="nosite" multiple>
+                </div>
+            </div>
+            <div class="pUtoolsSect">
+                <div class="pUTSProductManipulator">
+                    <div class="pUTSPMCropper">
+                        <div class="pUTSPMCImgHolder">
+
+                        </div>
+                        <div class="pUTSPMCCropperDivsHolder">
+                            <div class="pUTSPMCDHTopLeftDiv">
+
+                            </div>
+                            <div class="pUTSPMCDHTopCenterDiv">
+
+                            </div>
+                            <div class="pUTSPMCDHTopRightDiv">
+
+                            </div>
+                            <div class="pUTSPMCDHMiddleLeftDiv">
+
+                            </div>
+                            <div class="pUTSPMCDHMiddleCenterDiv">
+
+                            </div>
+                            <div class="pUTSPMCDHMiddleRightDiv">
+
+                            </div>
+                            <div class="pUTSPMCDHBottomLeftDiv">
+
+                            </div>
+                            <div class="pUTSPMCDHBottomCenterDiv">
+
+                            </div>
+                            <div class="pUTSPMCDHBottomRightDiv">
+
+                            </div>                        
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <ng-template #elseBlock>
+        <div class="pUPExistingProd">
+            Existing Product
+        </div>
+    </ng-template>
+</div>

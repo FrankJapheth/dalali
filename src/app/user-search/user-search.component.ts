@@ -48,8 +48,7 @@ export class UserSearchComponent implements OnInit {
       this.renderer.setStyle(searchTablet,"backgroundColor","#fff");       
       this.styleSetTabs.splice(this.styleSetTabs.indexOf(searchTablet),1)
       this.dataService.selectedUsers.splice(this.dataService.selectedUsers.indexOf(this.eleRef.nativeElement.querySelector(`#sRUC${evt.target.id.slice(4)}`).innerText),1)
-    }
-    console.log(this.dataService.selectedUsers);    
+    } 
   }
 
 }

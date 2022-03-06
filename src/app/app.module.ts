@@ -17,11 +17,17 @@ import { BunnerComponent } from './bunner/bunner.component';
 import { HomeCategoriesComponent } from './home-categories/home-categories.component';
 import { SuperUserComponent } from './super-user/super-user.component';
 import { AdminComponent } from './admin/admin.component';
-import { RetailerComponent } from './retailer/retailer.component';
 import { AgelimiterComponent } from './agelimiter/agelimiter.component';
 import { LoaderComponent } from './loader/loader.component';
 import { UserSearchComponent } from './user-search/user-search.component';
 import { SystemMaintananceComponent } from './system-maintanance/system-maintanance.component';
+import { UpdatingSiteComponent } from './updating-site/updating-site.component';
+import { ErrorCorectionComponent } from './error-corection/error-corection.component';
+import { ProductManagementComponent } from './product-management/product-management.component';
+import { RetailerManagementComponent } from './retailer-management/retailer-management.component';
+import { ProductSearchComponent } from './product-search/product-search.component';
+import { RetailerToolsComponent } from './retailer-tools/retailer-tools.component';
+import { AddProductsComponent } from './add-products/add-products.component';
 
 @NgModule({
   declarations: [
@@ -40,11 +46,17 @@ import { SystemMaintananceComponent } from './system-maintanance/system-maintana
     HomeCategoriesComponent,
     SuperUserComponent,
     AdminComponent,
-    RetailerComponent,
     AgelimiterComponent,
     LoaderComponent,
     UserSearchComponent,
-    SystemMaintananceComponent
+    SystemMaintananceComponent,
+    UpdatingSiteComponent,
+    ErrorCorectionComponent,
+    ProductManagementComponent,
+    RetailerManagementComponent,
+    ProductSearchComponent,
+    RetailerToolsComponent,
+    AddProductsComponent
   ],
   imports: [
     BrowserModule,

@@ -27,12 +27,38 @@
             </div>
         </div>
         <div class="systeMaintananceSect nosite">
-            <app-system-maintanance>
+            <div class="systemMaintainanceHead">
+                <div class="systemMaintainanceHeadCancelBut">
+                    Cancel
+                </div>
+                <div class="systemMaintainanceHeadDoneBut">
+                    Done
+                </div>
+            </div>
+            <div class="systeMaintananceSectBody">
+                <app-system-maintanance>
 
-            </app-system-maintanance>
+                </app-system-maintanance>
+            </div>
         </div>
     </div>
-    <div class="systemMaintanancePopUp">
-        
+    <div class="systemMaintanancePopUp nosite">
+        <div class="systemMaintainanceType">
+            <div class="systemMaintainanceTypeHead">
+                <div class="headString">
+                    Type Of Maintainance
+                </div>
+                <div class="headClose">
+                    <i class="fas fa-times"></i>
+                </div>
+            </div>
+            <div class="systemMaintainanceTypeBody">
+                <div *ngFor="let maintainanceType of this.maintainanceTypes">
+                    <div class="systemMaintainanceTypeButs" (click)="this.systemMaintainanceTypeButs($event)">
+                        {{maintainanceType}}
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

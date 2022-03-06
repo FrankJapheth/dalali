@@ -11,7 +11,13 @@ import { CatPageComponent } from './cat-page/cat-page.component';
 import { ProfilePageComponent } from './profile-page/profile-page.component';
 import { LoaderComponent } from './loader/loader.component';
 import { SuperUserComponent } from './super-user/super-user.component';
-
+import { UpdatingSiteComponent } from './updating-site/updating-site.component';
+import { ErrorCorectionComponent } from './error-corection/error-corection.component';
+import { AdminComponent } from './admin/admin.component';
+import { ProductManagementComponent } from './product-management/product-management.component';
+import { RetailerManagementComponent } from './retailer-management/retailer-management.component';
+import { RetailerToolsComponent } from './retailer-tools/retailer-tools.component';
+import { AddProductsComponent } from './add-products/add-products.component';
 
 const routes: Routes = [
   {
@@ -19,16 +25,16 @@ const routes: Routes = [
     component: LoaderComponent
   },
   {
-    path:'home' , 
-    component: HomePageComponent
+    path:'addProducts',
+    component:AddProductsComponent
   },
   {
-    path:'signUp' , 
-    component: RegistrationPageComponent
+    path:'admin',
+    component:AdminComponent
   },
   {
-    path:'signIn' , 
-    component: SignInPageComponent
+    path:'cat' , 
+    component: CatPageComponent,
   },
   {
     path:'categories' , 
@@ -39,24 +45,52 @@ const routes: Routes = [
     component: ContactPageComponent
   },
   {
+    path:'errorCorrection' ,
+    component: ErrorCorectionComponent
+  },
+  {
+    path:'home' , 
+    component: HomePageComponent
+  },
+  {
     path:'popular' , 
     component: PopularPageComponent
+  },
+  {
+    path:'productManagement' , 
+    component: ProductManagementComponent
+  },
+  {
+    path:'retailerManagement' , 
+    component: RetailerManagementComponent
+  },
+  {
+    path:'retailerTools' , 
+    component: RetailerToolsComponent
+  },
+  {
+    path:'signUp' , 
+    component: RegistrationPageComponent
+  },
+  {
+    path:'signIn' , 
+    component: SignInPageComponent
+  },
+  {
+    path:'superuser' , 
+    component: SuperUserComponent
   },
   {
     path:'search' , 
     component: SearchPageComponent
   },
   {
-    path:'cat' , 
-    component: CatPageComponent
-  },
-  {
     path:'userprofile' , 
     component: ProfilePageComponent
   },
   {
-    path:'superuser' , 
-    component: SuperUserComponent
+    path:'updating' , 
+    component: UpdatingSiteComponent
   },
   /* {
     path:'userhome', 
@@ -69,10 +103,42 @@ const routes: Routes = [
   } */
 ];
 
+// class routingConf {
+//   constructor(
+//     private dalaliData:any,
+//   ) {}
+//   getRoutedLinks():void{
+//     this.dalaliData.getRoutedLinks().then((resp:any)=>{
+//       let typeOfRedirect:any=resp.typeOfRedirect
+//       let redirectedLinks:any=resp.redirectLinks
+//       let appRouterLinks:any=routes
+//       for (let index = 0; index < appRouterLinks.length; index++) {
+//         const appRouter:any = appRouterLinks[index]; 
+//         let routerpath:any=appRouter.path
+//         for (let index = 0; index < redirectedLinks.length; index++) {
+//           const routedLink = redirectedLinks[index];
+//           if(routerpath!="" && routerpath==routedLink){
+//             for (let index = 0; index < this.dalaliData.systemRepairTypes.length; index++) {
+//               const errorType = this.dalaliData.systemRepairTypes[index];
+//               if(typeOfRedirect==errorType){
+//                 appRouter.component=null
+//                 appRouter.redirectTo=`/${errorType}`
+//               }              
+//             }       
+//           }
+//         }
+//       } 
+//     })
+//   }
+// }
+// let routerConf:any=new routingConf(DalalidataService)
+// routerConf.getRoutedLinks()
+
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
 export class AppRoutingModule {
   public exportedRoutes:Array<Object>=routes
+
 }

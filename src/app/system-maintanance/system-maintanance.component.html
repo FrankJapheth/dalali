@@ -1,7 +1,7 @@
 <div class="systemMain">
     <div class="systemMaintananceButtonsHolder">
         <div *ngFor="let routToisplay of this.routsToDisplay">
-            <div class="linkButton">
+            <div class="linkButton" (click)="this.linkButton($event)">
                 {{routToisplay}}
             </div>
         </div>

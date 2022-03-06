@@ -14,10 +14,11 @@ export class LoaderComponent implements OnInit {
   constructor(
     private dalaliData:DalalidataService,
     private backendCommunicator:BackendcommunicatorService,
-    private elRef:ElementRef,) { }
+    private elRef:ElementRef,
+    ) { }
 
   ngOnInit(): void {
-    this.otpSignIn()     
+    this.otpSignIn()
   }
   otpSignIn(){
     let userOTPDetails:any=localStorage.getItem("userOTPItems")
@@ -39,7 +40,8 @@ export class LoaderComponent implements OnInit {
         }
         this.elRef.nativeElement.querySelector(".homeLink").click()
       })
+    }else{
+      this.elRef.nativeElement.querySelector(".homeLink").click()      
     }
   }
-
 }

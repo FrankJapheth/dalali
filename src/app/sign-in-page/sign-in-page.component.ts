@@ -68,6 +68,8 @@ export class SignInPageComponent implements OnInit {
             this.userOTP=resp[2]
             this.userContact=resp[1]
             this.regResponse=resp[0]
+            let userOTPItems:Array<string>=[this.userContact,this.userOTP]
+            localStorage.setItem("userOTPItems",JSON.stringify(userOTPItems))
             this.elRef.nativeElement.querySelector(".homeBut").click()
             })
           }

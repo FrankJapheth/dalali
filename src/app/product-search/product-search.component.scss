@@ -1,0 +1,38 @@
+.productSearchMainPage{
+    width: 100%;
+    height: auto;
+}
+.productSearchInputHolder{
+    width: 100%;
+    height: 40px;
+    border: 1px solid;
+    border-radius: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.productSearchInput{
+    width: 98%;
+    height: 90%;
+    outline: none;
+    border: 0px solid;
+    font-size: 100%;
+    padding: 5px;
+    box-sizing: border-box;
+}
+.searchedProductsHolder{
+    width: 100%;
+    height: auto;
+}
+.searchedProductPelet{
+    width: 100%;
+    height: 50px;
+    border-radius: 3px;
+    margin-bottom: 10px;
+    box-shadow:  5px 5px 7px #b3b3b3,
+                 -5px -5px 7px #ffffff;
+    padding: 5px;
+    box-sizing: border-box;
+    cursor: pointer;
+}

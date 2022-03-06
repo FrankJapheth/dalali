@@ -17,6 +17,7 @@ export class DalalidataService {
   public selectedLinks:Array<string>=[]
   public typeOfRepair:string=""
   public systemRepairTypes:Array<string>=["updating","errorCorrection"]
+  public uploadType:string=""
 
   setUserBasicInfo(userBasicInfo:Array<string>){
     
@@ -40,6 +41,16 @@ export class DalalidataService {
         respResolve(resp)
       }).catch(err=>{
         respReject(err)
+      })
+    })
+  }
+  getRoutedLinks(){
+    return new Promise((backResp,backRej)=>{
+      this.backendCommunicator.backendCommunicator(new FormData,"get",
+      `${this.backendCommunicator.backendBaseLink}/getRedirects`).then(resp=>{
+        backResp(resp)
+      }).catch(err=>{
+        backRej(err)
       })
     })
   }

@@ -15,4 +15,14 @@
             Tools
         </div>
     </a>
+    <a routerLink="/admin" class="linkButtons" *ngIf="this.userType=='admin'">            
+        <div class="adminButton profileButtons">
+            Tools
+        </div>
+    </a>
+    <a routerLink="/retailerTools" class="linkButtons" *ngIf="this.userType=='retailer'">            
+        <div class="retailerButton profileButtons">
+            Tools
+        </div>
+    </a>
 </div>
