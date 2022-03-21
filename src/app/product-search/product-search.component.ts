@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ElementRef,Renderer2 } from '@angular/core';
 import { DalalidataService } from '../dalalidata.service';
 import { BackendcommunicatorService } from '../backendcommunicator.service';
 
@@ -11,19 +11,85 @@ export class ProductSearchComponent implements OnInit {
 
   constructor(
     private dataService:DalalidataService,
-    private backendComms:BackendcommunicatorService
+    private backendComms:BackendcommunicatorService,
+    private eleRef:ElementRef,
+    private renderer:Renderer2
   ) { }
+  
+  public prodSearchResult:any=[]
+  public maxProdIndexSet:boolean=false
+  public maxProdSearchIndex:string=""
 
   ngOnInit(): void {
   }
+  ngAfterViewInit():void{
+    this.searchBtn()
+  }
   productSearchInput(evt:any):void{
-    let searchValue:string=evt.target.value
-    if(searchValue!=""){
-      let searchForm:FormData=new FormData()
-      searchForm.append("prodIdentity",searchValue)
-      this.backendComms.backendCommunicator(searchForm,"post",`${this.backendComms.backendBaseLink}/searchProds`).then(resp=>{
-        console.log(resp);
+    if(this.maxProdIndexSet==false){
+      this.dataService.getMaxProdIndex().then((resp:any)=>{
+        this.maxProdIndexSet=true
+        this.maxProdSearchIndex=resp
+        let searchValue:string=evt.target.value
+        let docSearchedProductsHolder:any=this.eleRef.nativeElement.querySelector(".searchedProductsHolder")
+        if(searchValue!=""){
+          let searchForm:FormData=new FormData()
+          searchForm.append("prodIdentity",searchValue)
+          searchForm.append("maxProdIndex",this.maxProdSearchIndex)
+          this.backendComms.backendCommunicator(searchForm,"post",`${this.backendComms.backendBaseLink}/searchProds`).then(resp=>{
+            this.prodSearchResult=resp
+            this.renderer.removeClass(docSearchedProductsHolder,"nosite")
+            this.renderer.setStyle(docSearchedProductsHolder,"height","auto")
+          })
+        }else{
+          this.renderer.setStyle(docSearchedProductsHolder,"height","0px")
+          setTimeout(() => {
+            this.renderer.addClass(docSearchedProductsHolder,"nosite")
+          }, 200);
+        }
       })
+    }else{
+      let searchValue:string=evt.target.value
+      let docSearchedProductsHolder:any=this.eleRef.nativeElement.querySelector(".searchedProductsHolder")
+      if(searchValue!=""){
+        let searchForm:FormData=new FormData()
+        searchForm.append("prodIdentity",searchValue)
+        searchForm.append("maxProdIndex",this.maxProdSearchIndex)
+        this.backendComms.backendCommunicator(searchForm,"post",`${this.backendComms.backendBaseLink}/searchProds`).then(resp=>{
+          this.prodSearchResult=resp
+          this.renderer.removeClass(docSearchedProductsHolder,"nosite")
+          this.renderer.setStyle(docSearchedProductsHolder,"height","auto")
+        })
+      }else{
+        this.renderer.setStyle(docSearchedProductsHolder,"height","0px")
+        setTimeout(() => {
+          this.renderer.addClass(docSearchedProductsHolder,"nosite")
+        }, 200);
+      }
     }
+  }
+  redirectToSearch():void{
+    let docProductSearchInput:any=this.eleRef.nativeElement.querySelector(".productSearchInput")
+    let docLinkItemSearch:any=this.eleRef.nativeElement.querySelector(".linkItemSearch")
+    this.dataService.prodSearchResult=this.prodSearchResult
+    if(docProductSearchInput.value!=""){
+      this.dataService.searchTerm=docProductSearchInput.value
+      docLinkItemSearch.click()
+    }
+  }
+  searchBtn():void{
+    let docSearchBtn:any=this.eleRef.nativeElement.querySelector(".searchBtn")
+    this.renderer.listen(docSearchBtn,"click",()=>{
+      this.redirectToSearch()
+    })
+  }
+  searchPeleteClick(evt:any):void{
+    let targetId:string=evt.target.id
+    let slicedId:string=targetId.slice(4)
+    let redirectTargetId:string="sPNS"+slicedId
+    let redirectTargetElement:any=this.eleRef.nativeElement.querySelector(`#${redirectTargetId}`)
+    let docProductSearchInput:any=this.eleRef.nativeElement.querySelector(".productSearchInput")
+    docProductSearchInput.value=redirectTargetElement.innerText
+    this.redirectToSearch()
   }
 }

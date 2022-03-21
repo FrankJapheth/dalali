@@ -1,0 +1,128 @@
+<div class="cartPage">
+    <div class="cPHead">
+        DALALI CART : {{this.userName}}
+    </div>
+    <div class="cPBody">
+        <div class="cPBProductTileHolder">
+            <div *ngFor="let cartProd of this.cartProdsArray" style="height: auto;"  id="cPBTHPT{{cartProd[0][0]}}">
+                <div class="cPBPTHProductTile">
+                    <div class="prodImgDetails">
+                        <div class="pIDImgHolder">
+                            <img src="{{baseLink}}{{cartProd[0][7]}}" alt="" class="pIDIHProdImg">
+                        </div>
+                        <div class="pIDControlButs">
+                            <div class="pIDCBReducer pIDCButtons">
+                                <div class="pIDCRButton" id="reduceProdQuant{{cartProd[0][0]}}" (click)="this.pIDCRButton($event)">
+                                    -
+                                </div>
+                            </div>
+                            <div class="pIDCBProdNumb  pIDCButtons">
+                                <input type="text" id="ProdQuant{{cartProd[0][0]}}" value="{{cartProd[1]}}"
+                                class="prodQuantTxtIpt">
+                            </div>
+                            <div class="pIDIncreaser  pIDCButtons">
+                                <div class="pIDCIButton" id="addProdQuant{{cartProd[0][0]}}"
+                                (click)="this.pIDCIButton($event)">
+                                    +
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="prodDetSect">
+                        <div class="pDSProdName pDSProdInfo">
+                            <div class="pDSPNString">
+                                {{cartProd[0][1]}} {{cartProd[0][2]}}
+                            </div>
+                            <div class="pDSPNRemove">
+                                <div class="pDSPNRbutton" id="pDSPNRB{{cartProd[0][0]}}"
+                                (click)="this.pDSPNRbutton($event)">
+                                    Remove
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pDSOtherProdDet pDSProdInfo">
+                            <div class="pDSOPDPriceDet">
+                                <div class="pDSOPDPDTitle pDSODPDDiv">
+                                    Price
+                                </div>
+                                <div class="pDSOPDPDValue pDSODPDDiv">
+                                    Ksh. {{cartProd[0][5]}}
+                                </div>
+                            </div>
+                            <div class="pDSOPDQuantityDet">
+                                <div class="pDSOPDQDTitle pDSOPQDDiv">
+                                    Quantity
+                                </div>
+                                <div class="pDSOPDQDValue pDSOPQDDiv">
+                                    {{cartProd[1]}} Pcs
+                                </div>
+                            </div>
+                            <div class="pDSOPDTPriceDet">
+                                <div class="pDSOPDTPDTitle pDSOPTDDiv">
+                                    Total Price
+                                </div>
+                                <div class="pDSOPDTPDValue pDSOPTDDiv">
+                                    Ksh. {{cartProd[0][5]*cartProd[1]}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="payoutDiv">
+            <div class="pDTile">
+                <div class="pDTTotalAmount pDTInfoTab">
+                    <div class="pDTAString pDTITMiddleTab">
+                        Total Amount
+                    </div>
+                    <div class="pDTAValue">
+                        Ksh.{{this.totalPrice}}
+                    </div>
+                </div>
+                <div class="pDTTotalNumberOfProducts pDTInfoTab">
+                    <div class="pDTTOPString pDTITMiddleTab">
+                        Number Of Products
+                    </div>
+                    <div class="pDTTOPValue">
+                        {{this.totalProductsNumb}}
+                    </div>
+                </div>
+                <div class="pDTPaymentMethod pDTInfoTab">
+                    <div class="pDTPMString pDTITMiddleTab">
+                        Payment Method
+                    </div>
+                    <section class="pDTPMValue">
+                        <div class="pDTPMVString">
+                            M-PESA
+                        </div>
+                        <div class="pDTPVDDIcon">
+                            <i class="fas fa-chevron-down"></i>                            
+                        </div>
+                    </section>
+                    <ul class="paymentMethodsList nosite">
+                        <section *ngFor="let paymentMethod of this.paymentMethods">
+                            <li class="paymentMethodList pMListItem" id="pMLI{{paymentMethod[0]}}"
+                            (click)="this.pMListItem($event)">
+                                {{paymentMethod[1]}}
+                            </li>
+                        </section>
+                    </ul>
+                </div>
+                <div class="pDTDateOrdered pDTInfoTab">
+                    <div class="pDTDOString pDTITMiddleTab">
+                        Date Ordered
+                    </div>
+                    <div class="pDTDOValue">
+                        {{this.currentDate}}
+                    </div>
+                </div>
+                <div class="orderSubmitBut">
+                    <div class="oSBDiv">
+                        Pay
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

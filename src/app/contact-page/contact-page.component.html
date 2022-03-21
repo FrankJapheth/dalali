@@ -5,31 +5,38 @@
                 Account
             </div>
             <div class="userAccountBody contactItemBody">
-                <div>
-                    Sign Up
+                <div class="clickable">
+                    <a routerLink="/signUp" class="clickableLinkItem">
+                        Sign Up
+                    </a>                    
                 </div>
-                <div>
-                    Sign In
-                </div>
-                <div>
-                    Settings
+                <div class="clickable">
+                    <a routerLink="/signIn" class="clickableLinkItem">
+                        Sign In
+                    </a>
                 </div>
             </div>
         </div>
 
-        <div class="ourInfo contactItem">
+        <div class="ourInfo contactItem nosite">
             <div class="ourInfoTitle contactItemTitle">
                 Information
             </div>
             <div class="ourInfoBody contactItemBody">
-                <div>
-                    About Us
+                <div class="clickable">
+                    <a routerLink="/aboutUs" class="clickableLinkItem">
+                        About Us
+                    </a>
                 </div>
-                <div>
-                    Privacy Policy
+                <div class="clickable">
+                    <a routerLink="/privaceyPolicy" class="clickableLinkItem">
+                        Privacy Policy
+                    </a>
                 </div>
-                <div>
-                    Terms Of Service
+                <div class="clickable">
+                    <a routerLink="/termsOfService" class="clickableLinkItem">
+                        Terms Of Service
+                    </a>
                 </div>
             </div>
         </div>
@@ -39,19 +46,23 @@
                 Contact
             </div>
             <div class="ourContactBody contactItemBody">
-                <section>
+                <section class="oCSect">
                     <div>
                         <span><i class="fas fa-map-marker-alt"></i></span><span>Nairobi West Mall</span>
                     </div>
                 </section>
-                <section>
-                    <div>
-                        <span><i class="far fa-envelope"></i></span><span>dalaliwholesallers@gmail.com</span>
+                <section class="oCSectoulinks">
+                    <div class="clickable">
+                        <a href="mailto:dalaliwholesallers@gmail.com" class="contLinks" target="_blank">
+                            <span><i class="far fa-envelope"></i></span><span>dalaliwholesallers@gmail.com</span>
+                        </a>
                     </div>
                 </section>
-                <section>
-                    <div>
-                        <span><i class="fas fa-phone"></i></span><span>+254791687707</span>
+                <section class="oCSectoulinks">
+                    <div class="clickable">
+                        <a href="tel:+254791687707" class="contLinks" target="_blank">
+                            <span><i class="fas fa-phone"></i></span><span>+254791687707</span>
+                        </a>
                     </div>
                 </section>
             </div>
@@ -74,8 +85,17 @@
             </div>
         </div>
     </div>
-    <div class="copyrightdiv">
-        copyright div
+    <div class="copyrightdiv nosite">
+        <div class="firstDiv">
+
+        </div>
+        <div class="copyrightElement nosite">
+            <section class="cRESect">
+                <a routerLink="/aboutUs" class="clickableLinkItem">
+                    COPYRIGHT &#169; Dalali WineHouse
+                </a>
+            </section>
+        </div>
     </div>
 </div>
 

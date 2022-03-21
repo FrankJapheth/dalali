@@ -1,0 +1,9 @@
+
+    <div class="homeCategories">
+        <div *ngFor="let catDet of this.prodCats" class="catTablet">
+            <app-home-categories
+                [catId]="catDet[0]"
+                [catName]="catDet[1]">
+            </app-home-categories>
+        </div>
+    </div>

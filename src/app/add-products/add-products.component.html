@@ -1,55 +1,108 @@
 <div class="productUploadPage">
     <div *ngIf="this.uploadType=='newProduct'; else elseBlock" class="pUPHolder">
         <div class="pUPNewProdPg">
-            <div class="controlsSect nosite">
+            <div class="controlsSect">
                 <div class="cSFileChooser">
-                    Product Image
+                    Choose Image
                     <input type="file" accept="image/*" id="csRFileChooser" class="nosite" multiple>
                 </div>
             </div>
-            <div class="pUtoolsSect">
-                <div class="pUTSProductManipulator">
-                    <div class="pUTSPMCropper">
-                        <div class="pUTSPMCImgHolder">
+        </div>
+    </div>
+    <ng-template #elseBlock>
 
+        <a routerLink="/productManagement" class="pUPExistingProd">
+            <div class="adminToolsBut productManagement">
+                Existing Details
+            </div>
+        </a>
+    </ng-template>
+    <div class="pUtoolsSect nosite">
+        <div class="pUTSProductManipulator">
+            <div class="imgHolderSect">
+                <img src="../../assets/bunnerImgs/jdAd.jpg" class="imgMAnProdPic">
+                <div class="imgManControllers">
+                    <div class="btnNext">
+                        Details
+                    </div>
+                </div>
+            </div>
+            <div class="productetailsSect nosite">
+                <div class="detailsTitle">
+                    Product Details
+                </div>
+                <input type="text" name="productBarCode" id="productBarCode" class="prodDetTextInput" placeholder="barcode">
+                <input type="text" name="productName" id="productName" class="prodDetTextInput" placeholder="Product Name">
+                <div style="position: relative;">
+                    <input type="text" name="productMetrics" id="productMetrics" class="prodDetTextInput" placeholder="Metrics">
+                    <div class="chosenMetricsDisplay">
+                        {{this.chosenMetric}}
+                    </div>
+                    <div class="metricsUnitsDDI">
+                        <div class="mUDDIInnerDiv">
+                            <i class="fas fa-chevron-down"></i>
                         </div>
-                        <div class="pUTSPMCCropperDivsHolder">
-                            <div class="pUTSPMCDHTopLeftDiv">
-
+                    </div>
+                    <ul class="metricsUnitsList nosite">    
+                        <li class="mUListItem" *ngFor="let productMetric of this.mericsArray" id="mULI{{this.mericsArray.indexOf(productMetric)}}"
+                            (click)="this.listItemClick($event)"
+                        > {{productMetric}}</li>
+                    </ul>
+                </div>
+                
+                <input type="text" name="productQuantity" id="productQuantity" class="prodDetTextInput" placeholder="Quantity">
+                <input type="text" name="productPrice" id="productPrice" class="prodDetTextInput" placeholder="Price">
+                <input type="text" name="productCategoryipt" id="productCategoryipt" class="prodDetTextInput" placeholder="Product Category">
+                <div class="prevSectBut">
+                    Previous
+                </div>
+                <div class="productDetailsSubmmiter">
+                    Finish
+                </div>
+                <div class="categoryAnsDiv nosite">
+                    <div class="cADTitle">
+                        <div class="cADTString">
+                            Categories
+                        </div>
+                        <!-- <div class="cADTExit">
+                            <i class="fas fa-times"></i>                            
+                        </div> -->
+                    </div>
+                    <div class="cADBody">
+                        <div *ngFor="let catResults of this.predictedCategories">
+                            <div class="cTResultTab" id="cTRT{{catResults[0]}}"
+                            (click)="this.cTResultTab($event)">
+                                {{catResults[1]}}
                             </div>
-                            <div class="pUTSPMCDHTopCenterDiv">
-
-                            </div>
-                            <div class="pUTSPMCDHTopRightDiv">
-
-                            </div>
-                            <div class="pUTSPMCDHMiddleLeftDiv">
-
-                            </div>
-                            <div class="pUTSPMCDHMiddleCenterDiv">
-
-                            </div>
-                            <div class="pUTSPMCDHMiddleRightDiv">
-
-                            </div>
-                            <div class="pUTSPMCDHBottomLeftDiv">
-
-                            </div>
-                            <div class="pUTSPMCDHBottomCenterDiv">
-
-                            </div>
-                            <div class="pUTSPMCDHBottomRightDiv">
-
-                            </div>                        
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <ng-template #elseBlock>
-        <div class="pUPExistingProd">
-            Existing Product
+    <div class="addingCategoriesSect nosite">
+        <div class="aCSCatImgHolder">
+            <img src="../../assets/bunnerImgs/jdAd.jpg" class="prodCatImg">
+            <div class="catImgManCOntrollers">
+                <div class="catSectBtnNext">
+                    Details
+                </div>
+            </div>
         </div>
-    </ng-template>
+        <div class="catDetailsSect nosite">
+            <div class="detailsTitle">
+                Category Details
+            </div>
+            <input type="text" name="categoryName" id="categoryName" class="catDetTextInput" placeholder="Category name"> 
+            <div class="catPrevSectBut">
+                Previous
+            </div>
+            <div class="catFinButton">
+                Finish
+            </div>    
+        </div>
+    </div>
+    <div class="imgholdertest">
+        
+    </div>
 </div>

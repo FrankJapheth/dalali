@@ -3,29 +3,259 @@
         Product Management
     </div>
     <div class="prodManagementBody">
-        <div class="prodManagementButs priceChange">
+        <div class="prodManagementButs changeProductetails"
+        (click)="this.changeProductetails()">
+            Change Details
+        </div>
+        <div class="prodManagementButs priceChange nosite">
             Change price
         </div>
-        <div class="prodManagementButs">
-            Quantity reduction
+        <div class="prodManagementButs nosite">
+            Change Quantities
         </div>
-        <div class="prodManagementButs soldProducts">
+        <div class="prodManagementButs soldProducts nosite">
             Sold products
         </div>
-        <div class="prodManagementButs prodStats">
+        <div class="prodManagementButs prodStats nosite">
             Product Statistics
         </div>
     </div>
-    <div class="prodManagementControls">
+    <div class="prodManagementControls nosite">
         <div class="priceChangeHolder">
-            <div class="productSelection">
-                <app-product-search>
+            <div class="selectedProductsSect">
+                <div class="sPSPDTHolder"
+                *ngFor="let chosenprod of this.editListToDisplay">
+                    <div class="sPSProductDetailsTap">
+                        <div class="sPSPDTImageHolder">
+                            <img src="{{this.baseLink}}{{chosenprod[7]}}" class="sPSPDTIHImgTag">
+                        </div>
+                        <div class="sPSTDTProdDetails">
+                            <div class="sPSTDTPDProdName sPSTDTPDDivs">
+                                {{chosenprod[1]}}
+                            </div>
+                            <div class="sPSTDTPDProdBarcode sPSTDTPDDivs">
+                                {{chosenprod[0]}}
+                            </div>
+                        </div>
+                        <div class="sPSPDTClickable" id="sPSPDTC{{chosenprod[0]}}">
 
-                </app-product-search>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="priceCange">
-                
+            <div class="productSelection">
+                <div class="productSelectionBody">
+                    <div class="pSBControlHead">
+                        <div class="pSBCHDiv">
+                            <div class="pSBCHDCancelBut pSBCSDBut"
+                            (click)="this.pSBCHDCancelBut()">
+                                Cancel
+                            </div>
+                        </div>
+                        <div class="pSBCHDiv">
+                            <div class="pSBCHDDDoneBut pSBCSDBut"
+                            (click)="this.pSBCHDDDoneBut()">
+                                Done
+                            </div>
+                        </div>
+                    </div>
+                    <div class="inputHolder">
+                        <div class="iHTextBoxHolder iHDiv">
+                            <input type="text" name="searchProductToEdit" id="searchProductToEdit" 
+                            class="searchProductToEdit" placeholder="Search barcode or product name"
+                            (keyup)="this.searchProductToEdit($event)">
+                        </div>
+                        <div class="sIHolder iHDiv">
+                            <i class="fas fa-search"></i>                        
+                        </div>
+                    </div>
+                    <div class="searchResultHolder">
+                        <div style="width: 100%; height:auto;" class="sRPDTabHolder"
+                            *ngFor="let productDetails of this.prodSearchResult">
+                            <div class="sRProductDetailsTab">
+                                <div class="sRPDTProductImgHolder sRPDTDiv">
+                                    <img src="{{this.baseLink}}{{productDetails[7]}}" class="sRProductImage">
+                                </div>
+                                <div class="sRPDTProductsDetails sRPDTDiv">
+                                    <div class="sRPDTPDProdName">
+                                        {{productDetails[1]}}
+                                    </div>
+                                    <div class="sRPDTPDProdBarcode">
+                                        {{productDetails[0]}}
+                                    </div>
+                                </div>
+                                <div class="sRPDTabClicker" id="sRPDTC{{productDetails[0]}}"
+                                (click)="this.addToEditList($event)">
+
+                                    <div class="pressenceTick" id="sRPDTCPT{{productDetails[0]}}"
+                                    *ngIf="productDetails[13]; else elseBlock">
+                                        &#10004;
+                                    </div>
+                                    <ng-template #elseBlock>
+                                        <div class="pressenceTickAlt nosite"  id="RPDTCPTA{{productDetails[0]}}">
+                                            &#10004;                                            
+                                        </div>
+                                    </ng-template>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="editableColumnsToChoose nosite">
+                <div class="eCTCBody">
+
+                    <div class="eCTCBHead">
+
+                        <div class="eCTCBHTitle eCTCBHDiv">
+                            Choose Column(s) to edit
+                        </div>
+
+                        <div class="eCTCBHClose eCTCBHDiv"
+                        (click)="this.eCTCBFCBut()">
+                            <i class="fas fa-times"></i>                            
+                        </div>
+
+                    </div>
+
+                    <div class="eCTCBBody">
+
+                        <div class="columnToChooseTile"
+                        *ngFor="let columnToAsk of this.columnsToAsk">
+
+                            <div class="textDiv" id="tD{{this.nativeColumnIndeces.indexOf(columnToAsk)}}">
+                                {{columnToAsk}}
+                            </div>
+
+                            <div class="chosenTick nosite"
+                            id="cTCTCT{{this.nativeColumnIndeces.indexOf(columnToAsk)}}">
+                                &#10004;                                
+                            </div>
+
+                            <div class="cTCTClickable" 
+                            id="cTCT{{this.nativeColumnIndeces.indexOf(columnToAsk)}}"
+                            (click)="this.columnToChooseTile($event)">
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="eCTCBFooter">
+
+                        <div class="ecTCBFCancel eCTCBFDiv">
+                            <div class="eCTCBFCBut eCTCBFBut"
+                            (click)="this.eCTCBFCBut()">
+                                Cancel
+                            </div>
+                        </div>
+
+                        <div class="eCTCBFDone eCTCBFDiv">
+                            <div class="eCTCBFDBut eCTCBFBut"
+                            (click)="this.eCTCBFDBut()">
+                                Done
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="productDetailsCangeForm nosite">
+                <div class="pDCFBody">
+                    <div class="pDCFHead">
+                        <div class="pDCFHProdName">
+                            Product Name
+                        </div>
+                        <div class="closeForm" (click)="this.closeForm()">
+                            <i class="fas fa-times"></i>                            
+                        </div>
+                    </div>
+                    <div class="prodMediaDiv nosite">
+                        <div class="pMDchangeMediaDiv">
+                            <div class="cMDBut"
+                            (click)="this.cMDBut()">
+                                Change
+                                <input type="file" id="newPic" class="nosite"
+                                (change)="this.newPic($event)" accept="image/*">
+                            </div>
+                        </div>
+                        <div class="pMDMediaHolder">
+                            <img src="../../assets/bunnerImgs/jdAd.jpg" class="pMDMHMedia">
+                        </div>
+                    </div>
+                    <div class="pDCBDetailsSect">
+
+                        <div style="width: 100%;height:auto;" 
+                        *ngFor="let tableColumn of this.productColumns" 
+                        id="pDCBDSIH{{this.nativeColumnIndeces.indexOf(tableColumn)}}">
+
+                            <input type="text" name="{{tableColumn}}" 
+                            id="pDCBDSI{{this.nativeColumnIndeces.indexOf(tableColumn)}}" class="pDCBDSInput {{tableColumn}}"
+                            placeholder="{{tableColumn}}">
+
+                        </div>
+
+                    </div>
+                    <div class="pDCBProductsChangeControls">
+                        <div class="pDCBPCCPPrevProd pDCBPCCDivs">
+                            <div class="pDCBPCCPPPButton pDCBPCCBut"
+                            (click)="this.pDCBPCCPPPButton()">
+                                Previous
+                            </div>
+                        </div>
+                        <div class="pDCBPCCPUploadAndGoNext pDCBPCCDivs">
+                            <div class="pDCBPCCPUAGNButton pDCBPCCBut"
+                            (click)="this.sendOtherDetails()">
+                                Upload And Go Next
+                            </div>
+                        </div>
+                        <div class="pDCBPCCPNextProd pDCBPCCDivs">
+                            <div class="pDCBCCPNPButton pDCBPCCBut"
+                            (click)="this.pDCBCCPNPButton()">
+                                Next
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sendImgPrompt nosite">
+                        <div class="sIPBody">
+                            <div class="sIBHead">
+                                <div class="sIBHTitle sIBHBut">
+                                    Send Image
+                                </div>
+                                <div class="sIBHClose sIBHBut"
+                                (click)="this.cBCBut()">
+                                    <i class="fas fa-times"></i>                                      
+                                </div>
+                            </div>
+                            <div class="sIPBBoday">
+                                Send changed image.
+                            </div>
+                            <div class="controlButs">
+                                <div class="cBCancel cBBut">
+                                    <div class="cBCBut cBBBut"
+                                    (click)="this.cBCBut()">
+                                        Cancel
+                                    </div>
+                                </div>
+                                <div class="cBSend cBBut">
+                                    <div class="cBSBut cBBBut"
+                                    (click)="this.sendProductImg()">
+                                        Send
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+    </div>
+
+    <div class="imgholdertest">
+        
     </div>
 </div>

@@ -14,8 +14,11 @@ export class HomePageComponent implements OnInit {
     private elRef:ElementRef,
     private renderer:Renderer2
   ) { }
+  public prodCats:any=[]
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.getProductCat()
+  }
   ngAfterViewInit(){    
     if(this.dalaliData.getUserDOB()=="not set"){
       this.renderer.setStyle(this.elRef.nativeElement.querySelector('.ageLimiter'),'height',`${this.windowHeight}px`)
@@ -31,6 +34,11 @@ export class HomePageComponent implements OnInit {
     if(otpDetails!=null){
       this.redirect()
     }
+  }
+  getProductCat():void{
+    this.dalaliData.getProductCategories().then(resp=>{
+      this.prodCats=resp  
+    })
   }
 
 }

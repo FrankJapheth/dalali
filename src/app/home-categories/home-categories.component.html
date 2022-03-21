@@ -1,172 +1,92 @@
 
 <div class="categoryDiv">
-    <div class="categoryTitle">
-        <div class="catTitleName">
-            Wines
+    <div class="categoryTitle" id="cDT{{catId}}">
+        <div class="catTitleName" id="cDTCTN{{catId}}" >
+            {{catName}}
+            <div class="catDetClickable"  id="cDTCTNclk{{catId}}" (click)="this.catTitleName($event)">
+
+            </div>
         </div>
         <div class="catTitleSeeMore">
-            <span class="seeMoreTxt">See More</span><span class="seeMoreIcon"><i class="fas fa-greater-than"></i></span>
+            <span class="seeMoreTxt">More</span>
+            <div class="catDetClickable" id="cTSM{{catId}}" (click)="this.catTitleSeeMore($event)">
+
+            </div>
         </div>
+        <a routerLink="/products" class="productsLinkItem nosite" id="pCTSM{{catId}}"></a>
     </div>
     <div class="catBody">
         <div class="catBodyDetails">
-            <div class="itemDiv">
-                <div class="itmePic">
-                    <img src="../../assets/testImgs/nederburg.jpg" class="itemImgTag">
-                </div>
-                <div class="itemDetails">
-                    <div class="itemName">
-                        Nederberg Cab Sauv
+            <div *ngFor="let catDet of this.catProdsArray">                    
+                <div class="itemDiv">
+                    <div class="itmePic">
+                        <img src="{{this.bEBaseLink}}{{catDet[7]}}" class="itemImgTag">
                     </div>
-                    <div class="itemPrice">
-
-                        <div>
-
-                            <span class="itemPriceCurrency">
-                                Ksh.
+                    <div class="itemDetails">
+                        <div class="itemName">
+                            <span style="padding:5px;box-sizing:border-box;">
+                                {{catDet[1]}} 
                             </span>
-
-                            <span class="itemPriceValue">
-                                1800
-                            </span>
-
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="itemDiv">
-                <div class="itmePic">
-                    <img src="../../assets/testImgs/nederburg.jpg" class="itemImgTag">
-                </div>
-                <div class="itemDetails">
-                    <div class="itemName">
-                        Nederberg Cab Sauv
-                    </div>
-                    <div class="itemPrice">
-
-                        <div>
-
-                            <span class="itemPriceCurrency">
-                                Ksh.
-                            </span>
-
-                            <span class="itemPriceValue">
-                                1800
+                            <span style="padding:5px;box-sizing:border-box;">
+                                {{catDet[2]}} 
                             </span>
                             
                         </div>
+                        <div class="itemPrice">
+                
+                            <div>
+                                <div class="iPPriceDiv">
 
-                    </div>
-                </div>
-            </div>
+                                    <span class="itemPriceCurrency">
+                                        Ksh.{{catDet[5]}}
+                                    </span>
 
+                                </div>
 
-            <div class="itemDiv">
-                <div class="itmePic">
-                    <img src="../../assets/testImgs/nederburg.jpg" class="itemImgTag">
-                </div>
-                <div class="itemDetails">
-                    <div class="itemName">
-                        Nederberg Cab Sauv
-                    </div>
-                    <div class="itemPrice">
+                                <div class="iPAmountDiv">
 
-                        <div>
-
-                            <span class="itemPriceCurrency">
-                                Ksh.
-                            </span>
-
-                            <span class="itemPriceValue">
-                                1800
-                            </span>
-                            
+                                    <span class="iPADValue">
+                                        {{catDet[3]}} Pcs
+                                    </span>
+                                </div>
+                
+                            </div>
+                
                         </div>
-
                     </div>
-                </div>
-            </div>
-
-
-            <div class="itemDiv">
-                <div class="itmePic">
-                    <img src="../../assets/testImgs/nederburg.jpg" class="itemImgTag">
-                </div>
-                <div class="itemDetails">
-                    <div class="itemName">
-                        Nederberg Cab Sauv
-                    </div>
-                    <div class="itemPrice">
-
-                        <div>
-
-                            <span class="itemPriceCurrency">
-                                Ksh.
-                            </span>
-
-                            <span class="itemPriceValue">
-                                1800
-                            </span>
-                            
+                    <div class="prodControlButton">
+                        <div class="pCBHolderBoxes">
+                            <div class="detailsButton pCBHBClickBut">
+                                More
+                            </div>
                         </div>
-
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="itemDiv">
-                <div class="itmePic">
-                    <img src="../../assets/testImgs/nederburg.jpg" class="itemImgTag">
-                </div>
-                <div class="itemDetails">
-                    <div class="itemName">
-                        Nederberg Cab Sauv
-                    </div>
-                    <div class="itemPrice">
-
-                        <div>
-
-                            <span class="itemPriceCurrency">
-                                Ksh.
-                            </span>
-
-                            <span class="itemPriceValue">
-                                1800
-                            </span>
-                            
+                        <div class="pCBHolderBoxes">
+                            <div class="addToCartBut pCBHBClickBut" id="aTCB{{catDet[0]}}" (click)="this.addToCartBut($event)">
+                                ADD TO CART
+                            </div>
                         </div>
-
                     </div>
-                </div>
-            </div>
-
-
-            <div class="itemDiv">
-                <div class="itmePic">
-                    <img src="../../assets/testImgs/nederburg.jpg" class="itemImgTag">
-                </div>
-                <div class="itemDetails">
-                    <div class="itemName">
-                        Nederberg Cab Sauv
-                    </div>
-                    <div class="itemPrice">
-
-                        <div>
-
-                            <span class="itemPriceCurrency">
-                                Ksh.
-                            </span>
-
-                            <span class="itemPriceValue">
-                                1800
-                            </span>
-                            
+                    <div class="cartProdControls nosite" id="cPC{{catDet[0]}}">
+                        <div class="cPCAddOrReduce">
+                            <div class="cPCAORRuduceBut cPCAORButs">
+                                <div class="cPCAORBDiv" id="cPAORBD{{catDet[0]}}" (click)="this.cPCAORBDiv($event)">
+                                    -
+                                </div>
+                            </div>
+                            <div class="cartProdNumber cPCAORButs">
+                                <input type="number" class="cPCAORNumbtxtBox" id="cPCAORNTB{{catDet[0]}}" min="1" value="1" (keyup)="this.cPCAORNumbtxtBox($event)">            
+                            </div>
+                            <div class="cPCAORAdd cPCAORButs">
+                                <div class="cPAORADiv" id="cPAORAD{{catDet[0]}}" (click)="this.cPAORADiv($event)">
+                                    +
+                                </div>
+                            </div>
                         </div>
-
+                        <div class="cPCRemoveProBut">
+                            <div class="cPCRPBDiv" id="cPCRBD{{catDet[0]}}" (click)="this.cPCRPBDiv($event)">
+                                Remove
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

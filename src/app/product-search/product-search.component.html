@@ -1,17 +1,25 @@
 <div class="productSearchMainPage">
     <div class="productSearchInputHolder">
-        <input type="text" name="productSearchInput" 
+        <input type="text" name="productSearchInput"
         id="productSearchInput" class="productSearchInput"
         placeholder="Search products" (keyup)="this.productSearchInput($event)">
+        <div class="searchBtn">
+            <i class="fas fa-search"></i>
+            <a routerLink="/searchResult"  class="linkItemSearch nosite"></a>
+        </div>
     </div>
-    <div class="searchedProductsHolder">
-        <div>
+    <div class="searchedProductsHolder nosite">
+        <div *ngFor="let prodSearched of this.prodSearchResult">
             <div class="searchedProductPelet">
                 <div class="searchedProductName">
-                    Product name
+                    <span id="sPNS{{prodSearched[0]}}" style="padding:5px;box-sizing:border-box;">{{prodSearched[1]}}</span>
+                    <span style="padding:5px;box-sizing:border-box;">{{prodSearched[2]}}</span>
                 </div>
-                <div class="searchedProductPrice">
-                    product price
+                <div class="searchedProductPrice"style="padding:5px;box-sizing:border-box;">
+                    <span class="">KSh. </span><span class="">{{prodSearched[5]}}</span>
+                </div>
+                <div class="clickableDiv" id="sPPC{{prodSearched[0]}}" (click)="this.searchPeleteClick($event)">
+
                 </div>
             </div>
         </div>

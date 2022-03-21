@@ -21,6 +21,7 @@ export class RetailerToolsComponent implements OnInit {
     this.rTCAPMDHClosing()
     this.rTCAPMDBNewProduct()
     this.rTCAPMDBExistsingCall()
+    this.addingCategories()
   }
   addingProducts():void{
     this.renderer.listen(this.eleRef.nativeElement.querySelector(".addingProducts"),"click",()=>{
@@ -32,17 +33,26 @@ export class RetailerToolsComponent implements OnInit {
     this.renderer.listen(this.eleRef.nativeElement.querySelector(".rTCAPMDHClosing"),"click",()=>{
       this.renderer.addClass(this.eleRef.nativeElement.querySelector(".retailerToolsControls"),"nosite")
       this.renderer.addClass(this.eleRef.nativeElement.querySelector(".rTCAddingProductControl"),"nosite")
-    })    
+    })
   }
   rTCAPMDBNewProduct(){
     this.renderer.listen(this.eleRef.nativeElement.querySelector(".rTCAPMDBNewProduct"),"click",()=>{
       this.dataService.uploadType="newProduct"
+      this.dataService.sectionToOpen="product"
       this.eleRef.nativeElement.querySelector(".addingProductLink").click()
     })
   }
   rTCAPMDBExistsingCall(){
     this.renderer.listen(this.eleRef.nativeElement.querySelector(".rTCAPMDBExistsingCall"),"click",()=>{
       this.dataService.uploadType="existingProduct"
+      this.eleRef.nativeElement.querySelector(".addingProductLink").click()
+    })
+  }
+  addingCategories():void{
+    let addingCategories:any=this.eleRef.nativeElement.querySelector(".addingCategories")
+    this.renderer.listen(addingCategories,"click",()=>{
+      this.dataService.sectionToOpen="Categories"
+      this.dataService.uploadType="newProduct"
       this.eleRef.nativeElement.querySelector(".addingProductLink").click()
     })
   }

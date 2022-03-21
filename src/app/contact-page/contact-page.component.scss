@@ -1,4 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
+body{
+    background-color: #2C2B3C;
+}
 .contactdiv{
     width: 100%;
     height: auto;
@@ -8,11 +11,11 @@
     padding: 10px;
     box-sizing: border-box;
     background-color: #2C2B3C;
-    margin-bottom: 20px;
     color: #fff;
 }
 .contactItem{
-    width: 300px;
+    width: 100%;
+    max-width: 400px;
     height: 400px;
 }
 .contactItemTitle{
@@ -26,6 +29,7 @@
 .contactItemBody{
     width: 100%;
     height: 80%;
+    position: relative;
 }
 .contactItemBody div{
     width: 100%;
@@ -33,7 +37,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    cursor: pointer;
 }
 .contactItemBody section{
     width: 100%;
@@ -42,13 +45,26 @@
     justify-content: center;
     align-items: center;
     margin-bottom: 10px;
-    cursor: pointer;
 }
-.ourContactBody section div{
-    width: 70%;
+.oCSect div{
+    width: 90%;
     height: 100%;
     display: grid;
     grid-template-columns: 10% 90%;
+}
+.oCSectoulinks{
+    width: 90%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.oCSectoulinks div{
+    width: 90%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .ourContactBody span{
     width: 100%;
@@ -57,4 +73,72 @@
     align-items: center;
     padding: 5px;
     box-sizing: border-box;
+}
+.copyrightdiv{
+    width: 100%;
+    height: 70px;
+    background-color: #2C2B3C;
+    color: #fff;
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+.copyrightdiv div{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+.cRESect{
+    width: 50%;
+    height: 60%;
+    border-radius: 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all ease 0.2s;
+    padding: 5px;
+    box-sizing: border-box;
+}
+.clickable{
+    width: 100%;
+    height: 100%;
+    transition: all ease 0.25s;
+    cursor: pointer;
+}
+.clickable:hover{
+    background-color: #2C2B3C;
+    background: linear-gradient(145deg, #2f2e40, #282736);
+    box-shadow:  5px 5px 7px #16161e,
+                 -5px -5px 7px #42415a;
+}
+.cRESect:hover{
+    background-color: #2C2B3C;
+    background: linear-gradient(145deg, #2f2e40, #282736);
+    box-shadow:  5px 5px 7px #16161e,
+                 -5px -5px 7px #42415a;
+}
+.clickableLinkItem{
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+    outline: none;
+    color: inherit;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.contLinks{
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+    outline: none;
+    color: inherit;
+    display: grid;
+    grid-template-columns: 10% 90%;
+}
+.nosite{
+    display: none;
 }

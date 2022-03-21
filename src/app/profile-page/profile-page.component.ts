@@ -12,7 +12,8 @@ export class ProfilePageComponent implements OnInit {
     private dalaliData:DalalidataService,
   ) { }
   
-    public userType:string=this.dalaliData.getUserBasiInfo()[2]
+    public userData:any=this.dalaliData.getUserBasiInfo()
+    public userType:string= this.userData.userType
 
   ngOnInit(): void {    
   }

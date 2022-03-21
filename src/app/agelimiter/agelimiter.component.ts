@@ -147,7 +147,7 @@ export class AgelimiterComponent implements OnInit {
     this.elRef.nativeElement.querySelector("#DOBTextInputPicker").value=`${this.currentDayValue+1} / ${this.currentMonthValue+1} / ${this.yearValue}`
   }
   storeDateAndClose(){
-    this.dalaliData.setUserDOB(`${this.currentDayValue+1} / ${this.currentMonthValue+1} / ${this.yearValue}`)
+    this.dalaliData.userData.push((`${this.currentDayValue+1} / ${this.currentMonthValue+1} / ${this.yearValue}`))
     this.elRef.nativeElement.querySelector(".homeBut").click()
   }
   submitterButton(){

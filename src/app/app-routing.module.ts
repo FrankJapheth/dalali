@@ -3,11 +3,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomePageComponent } from './home-page/home-page.component';
 import { RegistrationPageComponent } from './registration-page/registration-page.component';
 import { SignInPageComponent } from './sign-in-page/sign-in-page.component';
-import { CategoriesPageComponent } from './categories-page/categories-page.component';
 import { ContactPageComponent } from './contact-page/contact-page.component';
 import { PopularPageComponent } from './popular-page/popular-page.component';
-import { SearchPageComponent } from './search-page/search-page.component';
-import { CatPageComponent } from './cat-page/cat-page.component';
+import { CartComponent } from './cart/cart.component';
 import { ProfilePageComponent } from './profile-page/profile-page.component';
 import { LoaderComponent } from './loader/loader.component';
 import { SuperUserComponent } from './super-user/super-user.component';
@@ -18,11 +16,21 @@ import { ProductManagementComponent } from './product-management/product-managem
 import { RetailerManagementComponent } from './retailer-management/retailer-management.component';
 import { RetailerToolsComponent } from './retailer-tools/retailer-tools.component';
 import { AddProductsComponent } from './add-products/add-products.component';
-
+import { ProductSearchComponent } from './product-search/product-search.component';
+import { SearchResultComponent } from './search-result/search-result.component';
+import { ProductsComponent } from './products/products.component';
+import { PrivaceyPoliceyComponent } from './privacey-policey/privacey-policey.component';
+import { TermsOfServiceComponent } from './terms-of-service/terms-of-service.component';
+import { AboutDalaliComponent } from './about-dalali/about-dalali.component';
+import { ProductsCategoriesComponent } from './products-categories/products-categories.component';
 const routes: Routes = [
   {
     path:'' , 
     component: LoaderComponent
+  },
+  {
+    path:'aboutUs',
+    component:AboutDalaliComponent
   },
   {
     path:'addProducts',
@@ -33,12 +41,12 @@ const routes: Routes = [
     component:AdminComponent
   },
   {
-    path:'cat' , 
-    component: CatPageComponent,
+    path:'cart' , 
+    component: CartComponent,
   },
   {
     path:'categories' , 
-    component: CategoriesPageComponent
+    component: ProductsCategoriesComponent
   },
   {
     path:'contact' , 
@@ -55,6 +63,14 @@ const routes: Routes = [
   {
     path:'popular' , 
     component: PopularPageComponent
+  },
+  {
+    path:'privaceyPolicy' , 
+    component: PrivaceyPoliceyComponent
+  },
+  {
+    path:'products' , 
+    component: ProductsComponent
   },
   {
     path:'productManagement' , 
@@ -82,7 +98,15 @@ const routes: Routes = [
   },
   {
     path:'search' , 
-    component: SearchPageComponent
+    component: ProductSearchComponent
+  },
+  {
+    path:'searchResult' , 
+    component: SearchResultComponent
+  },
+  {
+    path:'termsOfService' , 
+    component: TermsOfServiceComponent
   },
   {
     path:'userprofile' , 

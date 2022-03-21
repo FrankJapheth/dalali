@@ -34,6 +34,350 @@
     box-sizing: border-box;
     margin-bottom: 10px;
 }
+.pUtoolsSect{
+    width: 100%;
+    height: auto;
+}
+.pUTSProductManipulator{
+    width: 30%;
+    position: relative;
+    left: 50%;
+    transform: translate(-50%);
+    overflow: hidden;
+    box-shadow:  7px 7px 9px #b3b3b3,
+                 -7px -7px 9px #ffffff;
+}
+.imgHolderSect{
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+}
+.imgMAnProdPic{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+.imgManControllers{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+}
+.btnNext{
+    width: 50%;
+    height: 50px;
+    background-color: #121420;
+    border-radius: 3px;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    left: 50%;
+    transform: translate(-50%);
+    top: 85%;
+    cursor: pointer;
+}
+.productetailsSect{
+    width: 100%;
+    height: 100%;
+    background-color: #ffffff;
+    position: absolute;
+    left: 0px;
+    right: 0px;
+}
+.prodDetTextInput{
+    width: 100%;
+    height: 50px;
+    font-size: 100%;
+    outline: none;
+    border: 0px;
+    border-bottom: 1px solid #121420;
+    color: #121420;
+    padding: 5px;
+    box-sizing: border-box;
+    margin-bottom: 5px;
+}
+.detailsTitle{
+    width: 100%;
+    height: 50px;
+    padding: 5px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #121420;
+}
+.prevSectBut{
+    width: 45%;
+    height: 40px;
+    font-size: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    position: absolute;
+    left: 2.5%;
+    border-radius: 3px;
+    color: #121420;
+    border: 1px solid #121420;
+    cursor: pointer;
+}
+.productDetailsSubmmiter{
+    width: 45%;
+    height: 40px;
+    font-size: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    position: absolute;
+    left: 50%;
+    border-radius: 3px;
+    background-color: #121420;
+    color: #ffffff;
+    cursor: pointer;
+}
+.chosenMetricsDisplay{
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    right: 36px;
+    top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 2px;
+    color: #121420;
+    background-color: #ffffff;
+    cursor: pointer;
+}
+.metricsUnitsDDI{
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    right: 5px;
+    top: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 2px;
+    background-color: #121420;
+    color: #ffffff;
+    cursor: pointer;
+}
+.mUDDIInnerDiv{
+    width: 90%;
+    height: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+    cursor: pointer;
+    transition: all ease 0.2s;
+}
+.metricsUnitsList{
+    position: absolute;
+    right: 5px;
+    top: 36px;
+    width: 10px;
+    height: auto;
+    background-color: #ffffff;
+    border: 1px solid;
+    border-radius: 3px;
+    list-style-type: none;
+    margin: 0;
+    padding: 5px;
+    box-sizing: border-box;
+    outline: none;
+    transition: all ease 0.2s;
+    overflow: hidden;
+}
+.mUListItem{
+    width: 100%;
+    height: 30px;
+    padding: 3px;
+    box-sizing: border-box;
+    cursor: pointer;
+    color: #121420;
+    border-radius: 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.mUListItem:hover{
+    background-color: #121420;
+    color: #ffffff;
+}
+.addingCategoriesSect{
+    width: 30%;
+    position: relative;
+    left: 50%;
+    transform: translate(-50%);
+    overflow: hidden;
+}
+.aCSCatImgHolder{
+    width: 100%;
+    height: 100%;
+}
+.prodCatImg{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+.catImgManCOntrollers{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+}
+.catSectBtnNext{
+    width: 50%;
+    height: 50px;
+    background-color: #121420;
+    border-radius: 3px;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    left: 50%;
+    transform: translate(-50%);
+    top: 90%;
+    cursor: pointer;
+}
+.catDetailsSect{
+    width: 100%;
+    height: 100%;
+}
+.catDetTextInput{
+    width: 100%;
+    height: 50px;
+    font-size: 100%;
+    outline: none;
+    border: 0px;
+    border-bottom: 1px solid #121420;
+    color: #121420;
+    padding: 5px;
+    box-sizing: border-box;
+    margin-bottom: 5px;
+}
+.catPrevSectBut{
+    width: 45%;
+    height: 40px;
+    font-size: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    position: absolute;
+    left: 2.5%;
+    border-radius: 3px;
+    color: #121420;
+    border: 1px solid #121420;
+    cursor: pointer;
+}
+.catFinButton{
+    width: 45%;
+    height: 40px;
+    font-size: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    position: absolute;
+    left: 50%;
+    border-radius: 3px;
+    background-color: #121420;
+    color: #ffffff;
+    cursor: pointer;
+}
+.categoryAnsDiv{
+    width: 100%;
+    height: 150px;
+    background-color: #ffffff;
+    box-shadow:  5px 5px 7px #b3b3b3,
+                 -5px -5px 7px #ffffff;
+    position: absolute;
+    left: 0px;
+    top: 77%;
+}
+.cADTitle{
+    width: 100%;
+    height: 12%;
+    display: grid;
+    grid-template-columns: 95% 5%;
+}
+.cADTString{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.cADTExit{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 100%;
+    transition: all ease 0.2s;
+    cursor: pointer;
+}
+.cADTExit:hover{
+    font-size: 130%;
+}
+.cADBody{
+    width: 100%;
+    height: 88%;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    padding: 5px;
+    box-sizing: border-box;
+}
+.cTResultTab{
+    width: 100%;
+    height: 35px;
+    border-radius: 3px;
+    padding: 3px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    cursor: pointer;
+}
+.cTResultTab:hover{
+    background-color: #121420;
+    color: #ffffff;
+}
+.imgholdertest{
+    width: auto;
+    height: auto;
+    visibility: hidden;
+    position: absolute;
+    top: -100%;
+}
+.pUPExistingProd{
+    width: 150px;
+    height: 50px;
+    border-radius: 3px;
+    margin-left: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow:  5px 5px 7px #b3b3b3,
+                 -5px -5px 7px #ffffff;
+    cursor: pointer;
+    padding: 10px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+    color: inherit;
+    text-decoration: inherit;
+}
 .nosite{
     display:none;
 }
