@@ -1,3 +1,5 @@
+//index 13 is for product in cart
+
 import { Injectable} from '@angular/core';
 import { BackendcommunicatorService } from './backendcommunicator.service';
 
@@ -32,13 +34,15 @@ export class DalalidataService {
   public cartProductsArray:Array<any>=[]
   public cartProductsDetails:any={}
   public paymentDetails:any={}
-  public siteProds:any={}
+  private siteProds:any={}
   public adminColumnsToEdit:Array<any>=[
     "barcode","name","metrics","quantity","Price","Discounts","ImgUrl"
   ]
   public retailerColumnToEdit:Array<any>=[
     "name","metrics","quantity","ImgUrl"
   ]
+
+  public mWFLAns:boolean=false
 
   setUserBasicInfo(userBasicInfo:Array<string>){
     this.userData.userDob=userBasicInfo[4]
@@ -83,18 +87,41 @@ export class DalalidataService {
 
     })
   }
-  addProdToCart(prodId:string,prodDetails:Array<any>,numbOrdered:any):boolean{
+  addProdToCart(prodId:string,prodDetails:Array<any>,numbOrdered:any=1):boolean{
+
     let productAdded:boolean=false
     let productPresent:boolean=this.cartProductsArray.includes(prodId)
+
     if(productPresent==false){
+
       this.cartProductsArray.push(prodId)
+
+      if(prodDetails.length>13){
+        prodDetails[13]=true
+      }else{
+        prodDetails.push(true)
+      }
+
       this.cartProductsDetails[`${prodId}`]=[prodDetails,numbOrdered]
+      this.addSiteProd(prodId,prodDetails)
       productAdded=true
+      
     }else{
+
+      if(prodDetails.length>13){
+        prodDetails[13]=false
+      }
+
       this.cartProductsArray.splice(this.cartProductsArray.indexOf(prodId),1)
+      delete this.cartProductsDetails[`${prodId}`]
+      this.addSiteProd(prodId,prodDetails)
+
       productAdded=false
+      
     }
+
     return productAdded
+
   }
   getCartProd(prodId:string):any{
     let cartProdDet:any=this.cartProductsDetails[prodId]
@@ -109,11 +136,18 @@ export class DalalidataService {
     let newTotalNumber:number=0
     let newTotalValue:number=0
     try {
-      this.cartProductsArray.splice(this.cartProductsArray.indexOf(prodId))
+      this.cartProductsArray.splice(this.cartProductsArray.indexOf(prodId),1)
       delete this.cartProductsDetails[`${prodId}`]
+      let prodDetails:any=this.getSiteProd(prodId)
+      if(prodDetails.length>13){
+        prodDetails[13]=false
+      }else[
+        prodDetails.push(false)
+      ]
+      this.addSiteProd(prodId,prodDetails)
       newTotalNumber=this.getTotalNuberOfProducts()
       newTotalValue=this.getTotalCartProductsPrice()
-      removed=true
+      removed=true      
     } catch (error) {
       removed=false
     }
@@ -147,24 +181,45 @@ export class DalalidataService {
     let newValue:number=0
     let newTotal:number=0
     let newTotalProds:number=0
+    let changeDone:boolean=false
+    let productDetails:any=this.getSiteProd(prodId)
+    let prouctQuant:number=Number(productDetails[3])
     if(type=="add"){
       newValue=currentValue+numberToIncreaseBy
-      this.cartProductsDetails[prodId][1]=newValue
-      newTotal=this.getTotalCartProductsPrice()
-      newTotalProds=this.getTotalNuberOfProducts()
+      if(newValue>prouctQuant){
+        this.cartProductsDetails[prodId][1]=currentValue
+        newTotal=this.getTotalCartProductsPrice()
+        newTotalProds=this.getTotalNuberOfProducts()
+        changeDone=false
+      }else{
+        this.cartProductsDetails[prodId][1]=newValue
+        newTotal=this.getTotalCartProductsPrice()
+        newTotalProds=this.getTotalNuberOfProducts()
+        changeDone=true
+      }
     }else if(type=="sabtruct"){
       newValue=currentValue-numberToIncreaseBy
-      this.cartProductsDetails[prodId][1]=newValue
-      newTotal=this.getTotalCartProductsPrice()
-      newTotalProds=this.getTotalNuberOfProducts()
+      if(newValue>0){
+        this.cartProductsDetails[prodId][1]=newValue
+        newTotal=this.getTotalCartProductsPrice()
+        newTotalProds=this.getTotalNuberOfProducts()
+        changeDone=true
+      }else {
+        this.cartProductsDetails[prodId][1]=1
+        let productRemovedDetails:Array<any>=this.removeCartProd(prodId)
+        newTotal=productRemovedDetails[0]
+        newTotalProds=productRemovedDetails[1]
+        changeDone=false
+      }
     }
-    return [newValue,newTotal,newTotalProds]
+    return [newValue,newTotal,newTotalProds,changeDone]
   }
   clearCartProd(){
     this.cartProductsArray=[]
     this.cartProductsDetails={}
   }
   addSiteProd(prodId:string,prodDetails:Array<any>):void{
+    prodDetails.push(false)
     this.siteProds[prodId]=prodDetails
   }
   getSiteProd(prodId:string):any{
@@ -173,6 +228,18 @@ export class DalalidataService {
   getSiteProds():any{
     return this.siteProds
   }
+  getSiteProdsList():Array<Array<any>>{
+    let siteProdList:Array<Array<any>>=[]
+    let listToEdit:Array<any>=Object.keys(this.siteProds)
+
+    for (let index = 0; index < listToEdit.length; index++) {
+      const prodArray:any = this.siteProds[listToEdit[index]];
+      siteProdList.push(prodArray)      
+    }
+
+    return siteProdList
+  }
+
   clearSiteProds(){
     this.siteProds={}
   }

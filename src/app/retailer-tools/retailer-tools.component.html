@@ -3,12 +3,20 @@
         Retailer
     </div>
     <div class="retailerToolsBody">
+
         <div class="retailerToolsBut addingProducts">
             Products
         </div>
+
         <div class="retailerToolsBut addingCategories">
             Add Category
         </div>
+
+        <div class="custOrders retailerToolsBut"
+        (click)="this.customerOrdersLink()">
+            Orders
+        </div>
+
     </div>
     <div class="retailerToolsControls nosite">
         <div class="rTCAddingProductControl nosite">
@@ -25,10 +33,14 @@
                     <div class="rTCAPMDBNewProduct rTCAMDBToolsButtons">
                         New Product
                     </div>
-                    <div class="rTCAPMDBExistsingCall rTCAMDBToolsButtons">
-                        Existing Product
-                    </div>
                     <a routerLink="/addProducts" class="addingProductLink nosite">
+                    </a>
+                    <a routerLink="/customerOrders" class="customerOrdersLink nosite">
+                    </a>
+                    <a routerLink="/productManagement" class="pUPExistingProd">
+                        <div class="adminToolsBut productManagement">
+                            Existing Details
+                        </div>
                     </a>
                 </div>
             </div>

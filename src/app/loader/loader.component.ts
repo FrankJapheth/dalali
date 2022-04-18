@@ -8,16 +8,18 @@ import { DalalidataService } from '../dalalidata.service';
   styleUrls: ['./loader.component.scss']
 })
 export class LoaderComponent implements OnInit {
-  private userOTP: string="";
-  private userContact: string="";
 
   constructor(
-    private dalaliData:DalalidataService,
+    private eleRef:ElementRef,
+    private dataService:DalalidataService,
     private backendCommunicator:BackendcommunicatorService,
-    private elRef:ElementRef,
     ) { }
+    private userOTP: string="";
+    private userContact: string="";
 
   ngOnInit(): void {
+  }
+  ngAfterViewInit():void{
     this.otpSignIn()
   }
   otpSignIn(){
@@ -31,16 +33,16 @@ export class LoaderComponent implements OnInit {
       formToAppend.append("userOTP",userOTP)
       this.backendCommunicator.backendCommunicator(formToAppend,"post",`${this.backendCommunicator.backendBaseLink}/otpSignIn`).then(resp=>{
         if(resp[0]=="success"){
-          this.dalaliData.setUserBasicInfo([resp[1],resp[2],resp[3],resp[4]])
+          this.dataService.setUserBasicInfo([resp[1],resp[2],resp[3],resp[4]])
           this.userOTP=resp[5]
           this.userContact=resp[6]
           let userOTPItems:Array<string>=[this.userContact,this.userOTP]
           localStorage.setItem("userOTPItems",JSON.stringify(userOTPItems))
         }
-        this.elRef.nativeElement.querySelector(".homeLink").click()
+        this.eleRef.nativeElement.querySelector(".homeLinkSignIn").click()
       })
     }else{
-      this.elRef.nativeElement.querySelector(".homeLink").click()      
+      this.eleRef.nativeElement.querySelector(".homeLinkSignIn").click()      
     }
   }
 }

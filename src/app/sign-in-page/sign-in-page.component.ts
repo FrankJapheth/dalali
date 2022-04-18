@@ -14,6 +14,7 @@ export class SignInPageComponent implements OnInit {
   private contactType:string=""
   private userContact:string=""
   private userOTP:string=""
+  public displayText:string="Display text"
 
   constructor(
     private elRef:ElementRef, 
@@ -81,7 +82,17 @@ export class SignInPageComponent implements OnInit {
       }
     }
   signInAlert(message: string) {
-    console.log(message);    
+    this.openFeedBackLoop(message) 
+  }
+  closeFeedbackLoop():void{
+    let fBLoop:any=this.elRef.nativeElement.querySelector(".sWFLMain")
+    this.renderer.addClass(fBLoop,"nosite")
+  }
+
+  openFeedBackLoop(textToDisplay:string):void{
+    this.displayText=textToDisplay
+    let fBLoop:any=this.elRef.nativeElement.querySelector(".sWFLMain")
+    this.renderer.removeClass(fBLoop,"nosite")
   }
   
 }

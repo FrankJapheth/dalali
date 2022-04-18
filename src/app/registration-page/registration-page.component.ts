@@ -15,6 +15,7 @@ export class RegistrationPageComponent implements OnInit {
   private windowHeight:number=window.innerHeight
   private userContact:string=""
   private userOTP:string=""
+  public displayText:string="Display text"
 
   constructor(private elRef:ElementRef, 
               private renderer:Renderer2,
@@ -25,7 +26,7 @@ export class RegistrationPageComponent implements OnInit {
   ngOnInit(): void {     
   }
   signUpAlert(message:string):void{
-    alert(message)  
+    this.openFeedBackLoop(message)
   }
 
   signUpFunc():NodeList{
@@ -98,6 +99,16 @@ export class RegistrationPageComponent implements OnInit {
       }
     }
     
+  }
+  closeFeedbackLoop():void{
+    let fBLoop:any=this.elRef.nativeElement.querySelector(".sWFLMain")
+    this.renderer.addClass(fBLoop,"nosite")
+  }
+
+  openFeedBackLoop(textToDisplay:string):void{
+    this.displayText=textToDisplay
+    let fBLoop:any=this.elRef.nativeElement.querySelector(".sWFLMain")
+    this.renderer.removeClass(fBLoop,"nosite")
   }
 
 }

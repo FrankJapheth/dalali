@@ -35,6 +35,7 @@ export class AddProductsComponent implements OnInit {
   public predictedCategories:Array<any>=[]
   private chosenCatId:string=""
   private emptyProdValues:boolean=false
+  public displayText:string="Display text"
   ngOnInit(): void {
   }
 
@@ -153,7 +154,7 @@ export class AddProductsComponent implements OnInit {
           resizerContext.drawImage(imgToResize, 0, 0, reducedWidth, reducedHeight)
           reducedImgCanvas.toBlob((imgtostore:any)=>{
             fTSResp(imgtostore)
-        },'image/png')
+        },'image/png',0.7)
           this.docPicAdded=true
         }
       }
@@ -236,7 +237,6 @@ export class AddProductsComponent implements OnInit {
           }).then(()=>{
             this.dataServices.getProductCategories().then(resp=>{
               this.prouctCategoriesDetails=resp
-              this.productCategoryipt()
             })
           })
         })
@@ -299,37 +299,33 @@ export class AddProductsComponent implements OnInit {
             this.prodUploaded=false
         })
       }else{
-        console.log("There are some empty fields");        
+        let textToDisplay:string="There are some empty fields."
+        this.openFeedBackLoop(textToDisplay)      
       }
     })
   }
-  productCategoryipt():void{
-    let productCategoryipt:any=this.eleRef.nativeElement.querySelector("#productCategoryipt")
-    let docCategoryAnsDiv=this.eleRef.nativeElement.querySelector(".categoryAnsDiv")
-    this.renderer.listen(productCategoryipt,"keyup",(evt:any)=>{
+  productCategoryipt(evt:any):void{
+    let docCategoryAnsDiv=this.eleRef.nativeElement.querySelector(".categoryAnsDiv")    
       this.predictedCategories=[]
-      let pCIValue:string=productCategoryipt.value
+      let pCIValue:string=evt.target.value      
       if(pCIValue!=""){
         this.renderer.removeClass(docCategoryAnsDiv,"nosite")
         this.productCategories.forEach((productCategoryDetails:any) => {
           productCategoryDetails.forEach((productCategoryDetail:any) => {
             if(productCategoryDetail!=null){
               let stringedWord:string=productCategoryDetail.toString().toLowerCase()          
-              if(stringedWord.includes(pCIValue)){
+              if(stringedWord.includes(pCIValue.toString().toLowerCase())){
                 if(!this.predictedCategories.includes(productCategoryDetails))
                 this.predictedCategories.push(productCategoryDetails)
               }
             }
           });
         });
+        console.log(this.predictedCategories);
+        
       }else{
-            this.renderer.addClass(docCategoryAnsDiv,"nosite")
+        this.renderer.addClass(docCategoryAnsDiv,"nosite")
       }
-    })
-    this.renderer.listen(productCategoryipt,"click",(evt:any)=>{
-      let doccategoryAnsDiv=this.eleRef.nativeElement.querySelector(".categoryAnsDiv")
-      this.renderer.removeClass(doccategoryAnsDiv,"nosite")
-    })
   }
   // cADTExit():void{
   //   let docCADTExit:any=this.eleRef.nativeElement.querySelector(".cADTExit")
@@ -414,10 +410,22 @@ export class AddProductsComponent implements OnInit {
           this.renderer.removeClass(aCSCatImgHolder,"nosite")
         })
       }else{
-        console.log("Please fill category name");
+        let textToDisplay:string="Please fill category name."
+        this.openFeedBackLoop(textToDisplay)  
         
       }
 
     })
+  }
+
+  closeFeedbackLoop():void{
+    let fBLoop:any=this.eleRef.nativeElement.querySelector(".sWFLMain")
+    this.renderer.addClass(fBLoop,"nosite")
+  }
+
+  openFeedBackLoop(textToDisplay:string):void{
+    this.displayText=textToDisplay
+    let fBLoop:any=this.eleRef.nativeElement.querySelector(".sWFLMain")
+    this.renderer.removeClass(fBLoop,"nosite")
   }
 }

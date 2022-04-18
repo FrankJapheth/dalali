@@ -20,7 +20,6 @@ export class RetailerToolsComponent implements OnInit {
     this.addingProducts()
     this.rTCAPMDHClosing()
     this.rTCAPMDBNewProduct()
-    this.rTCAPMDBExistsingCall()
     this.addingCategories()
   }
   addingProducts():void{
@@ -42,12 +41,6 @@ export class RetailerToolsComponent implements OnInit {
       this.eleRef.nativeElement.querySelector(".addingProductLink").click()
     })
   }
-  rTCAPMDBExistsingCall(){
-    this.renderer.listen(this.eleRef.nativeElement.querySelector(".rTCAPMDBExistsingCall"),"click",()=>{
-      this.dataService.uploadType="existingProduct"
-      this.eleRef.nativeElement.querySelector(".addingProductLink").click()
-    })
-  }
   addingCategories():void{
     let addingCategories:any=this.eleRef.nativeElement.querySelector(".addingCategories")
     this.renderer.listen(addingCategories,"click",()=>{
@@ -55,5 +48,8 @@ export class RetailerToolsComponent implements OnInit {
       this.dataService.uploadType="newProduct"
       this.eleRef.nativeElement.querySelector(".addingProductLink").click()
     })
+  }
+  customerOrdersLink():void{
+    this.eleRef.nativeElement.querySelector(".customerOrdersLink").click()
   }
 }

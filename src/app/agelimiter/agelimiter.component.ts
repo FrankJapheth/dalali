@@ -26,6 +26,7 @@ export class AgelimiterComponent implements OnInit {
   public nextDayValue:number=2
   private DaysUpperMover:any=null
   private DayslowerMover:any=null
+  public displayText:string="Display text"
 
   constructor( private elRef:ElementRef, private renderer:Renderer2,private dalaliData:DalalidataService) { }
 
@@ -147,12 +148,32 @@ export class AgelimiterComponent implements OnInit {
     this.elRef.nativeElement.querySelector("#DOBTextInputPicker").value=`${this.currentDayValue+1} / ${this.currentMonthValue+1} / ${this.yearValue}`
   }
   storeDateAndClose(){
-    this.dalaliData.userData.push((`${this.currentDayValue+1} / ${this.currentMonthValue+1} / ${this.yearValue}`))
-    this.elRef.nativeElement.querySelector(".homeBut").click()
+    let userBirthDate:any=new Date(`${this.monthsList[this.currentMonthValue+1]} ${this.currentDayValue+1}, ${this.yearValue}`)
+    let currentDate:any=new Date()
+    let userAge:any=Math.abs(currentDate-userBirthDate)
+    let userAgeInYears:any=userAge/(1000*3600*24*365)
+    if(userAgeInYears>18){
+      this.dalaliData.userData.userDob=`${this.currentDayValue+1} / ${this.currentMonthValue+1} / ${this.yearValue}`
+      this.elRef.nativeElement.querySelector(".homeBut").click()
+    }else{
+      let textToDisplay:string="You are underage."
+      this.openFeedBackLoop(textToDisplay)      
+    }
   }
   submitterButton(){
     this.renderer.listen(this.elRef.nativeElement.querySelector(".submitterButton"),'click',()=>{
       this.storeDateAndClose()
     })
+  }
+
+  closeFeedbackLoop():void{
+    let fBLoop:any=this.elRef.nativeElement.querySelector(".sWFLMain")
+    this.renderer.addClass(fBLoop,"nosite")
+  }
+
+  openFeedBackLoop(textToDisplay:string):void{
+    this.displayText=textToDisplay
+    let fBLoop:any=this.elRef.nativeElement.querySelector(".sWFLMain")
+    this.renderer.removeClass(fBLoop,"nosite")
   }
 }

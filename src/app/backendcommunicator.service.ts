@@ -4,7 +4,8 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class BackendcommunicatorService {
-  public backendBaseLink:string="http://127.0.0.1:8000"
+  public hostName='dalaliwinehouse.com/backend'
+  public backendBaseLink:string=`https://${this.hostName}`
   constructor() { }
 
   backendCommunicator(msgBody:FormData,method:string,link:string):Promise< string>{
@@ -24,4 +25,6 @@ export class BackendcommunicatorService {
         searchXhr.send(msgBody)
     })
   }
+
+
 }

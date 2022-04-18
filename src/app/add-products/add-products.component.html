@@ -4,18 +4,15 @@
             <div class="controlsSect">
                 <div class="cSFileChooser">
                     Choose Image
-                    <input type="file" accept="image/*" id="csRFileChooser" class="nosite" multiple>
+                    <input type="file" accept="image/*" id="csRFileChooser" class="nosite">
                 </div>
             </div>
         </div>
     </div>
     <ng-template #elseBlock>
-
-        <a routerLink="/productManagement" class="pUPExistingProd">
-            <div class="adminToolsBut productManagement">
-                Existing Details
-            </div>
-        </a>
+        <div>
+            Not For You
+        </div>
     </ng-template>
     <div class="pUtoolsSect nosite">
         <div class="pUTSProductManipulator">
@@ -52,7 +49,8 @@
                 
                 <input type="text" name="productQuantity" id="productQuantity" class="prodDetTextInput" placeholder="Quantity">
                 <input type="text" name="productPrice" id="productPrice" class="prodDetTextInput" placeholder="Price">
-                <input type="text" name="productCategoryipt" id="productCategoryipt" class="prodDetTextInput" placeholder="Product Category">
+                <input type="text" name="productCategoryipt" id="productCategoryipt" class="prodDetTextInput" placeholder="Product Category"
+                (keyup)="this.productCategoryipt($event)">
                 <div class="prevSectBut">
                     Previous
                 </div>
@@ -100,6 +98,38 @@
             <div class="catFinButton">
                 Finish
             </div>    
+        </div>
+    </div>
+
+    <div class="sWFLMain nosite">
+        <div class="sWFLMBody">
+    
+            <div class="sWFLMHead">
+    
+                <div class="sWFLHTitle sWFLDiv">
+                    DALALI
+                </div>
+    
+                <div class="sWFLClose sWFLDiv"
+                (click)="this.closeFeedbackLoop()">
+                    <i class="fas fa-times"></i>            
+                </div>
+    
+            </div>
+    
+            <div class="sWFLBody">
+                <p>
+                    {{displayText}}
+                </p>
+            </div>
+    
+            <div class="sWFLFooter">
+                <div class="sWFLFCloseAns"
+                (click)="this.closeFeedbackLoop()">
+                    Okay
+                </div>
+            </div>
+            
         </div>
     </div>
     <div class="imgholdertest">

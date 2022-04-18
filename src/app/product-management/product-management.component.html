@@ -88,7 +88,7 @@
                                 (click)="this.addToEditList($event)">
 
                                     <div class="pressenceTick" id="sRPDTCPT{{productDetails[0]}}"
-                                    *ngIf="productDetails[13]; else elseBlock">
+                                    *ngIf="productDetails[productDetails.length-1]; else elseBlock">
                                         &#10004;
                                     </div>
                                     <ng-template #elseBlock>

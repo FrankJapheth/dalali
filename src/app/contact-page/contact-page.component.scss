@@ -16,7 +16,14 @@ body{
 .contactItem{
     width: 100%;
     max-width: 400px;
-    height: 400px;
+    height: 250px;
+}
+@media all and (min-width:600px) {
+    .contactItem{
+        width: 100%;
+        max-width: 400px;
+        height: 400px;
+    }    
 }
 .contactItemTitle{
     width: 100%;

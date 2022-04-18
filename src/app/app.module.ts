@@ -7,7 +7,7 @@ import { HomePageComponent } from './home-page/home-page.component';
 import { RegistrationPageComponent } from './registration-page/registration-page.component';
 import { SignInPageComponent } from './sign-in-page/sign-in-page.component';
 import { MenuPageComponent } from './menu-page/menu-page.component';
-import { PopularPageComponent } from './popular-page/popular-page.component'
+import { PopularPageComponent } from './popular-page/popular-page.component';
 import { ContactPageComponent } from './contact-page/contact-page.component';
 import { ProfilePageComponent } from './profile-page/profile-page.component';
 import { BunnerComponent } from './bunner/bunner.component';
@@ -34,6 +34,9 @@ import { PrivaceyPoliceyComponent } from './privacey-policey/privacey-policey.co
 import { TermsOfServiceComponent } from './terms-of-service/terms-of-service.component';
 import { AboutDalaliComponent } from './about-dalali/about-dalali.component';
 import { ProductsCategoriesComponent } from './products-categories/products-categories.component';
+import { SingleWayFeedbackLoopComponent } from './single-way-feedback-loop/single-way-feedback-loop.component';
+import { MultiWaysFeedbackLoopComponent } from './multi-ways-feedback-loop/multi-ways-feedback-loop.component';
+import { CustomersOrdersComponent } from './customers-orders/customers-orders.component';
 
 @NgModule({
   declarations: [
@@ -68,7 +71,10 @@ import { ProductsCategoriesComponent } from './products-categories/products-cate
     PrivaceyPoliceyComponent,
     TermsOfServiceComponent,
     AboutDalaliComponent,
-    ProductsCategoriesComponent
+    ProductsCategoriesComponent,
+    SingleWayFeedbackLoopComponent,
+    MultiWaysFeedbackLoopComponent,
+    CustomersOrdersComponent
   ],
   imports: [
     BrowserModule,

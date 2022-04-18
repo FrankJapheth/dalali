@@ -23,6 +23,7 @@ import { PrivaceyPoliceyComponent } from './privacey-policey/privacey-policey.co
 import { TermsOfServiceComponent } from './terms-of-service/terms-of-service.component';
 import { AboutDalaliComponent } from './about-dalali/about-dalali.component';
 import { ProductsCategoriesComponent } from './products-categories/products-categories.component';
+import { CustomersOrdersComponent } from './customers-orders/customers-orders.component';
 const routes: Routes = [
   {
     path:'' , 
@@ -51,6 +52,10 @@ const routes: Routes = [
   {
     path:'contact' , 
     component: ContactPageComponent
+  },
+  {
+    path:'customerOrders' , 
+    component: CustomersOrdersComponent
   },
   {
     path:'errorCorrection' ,

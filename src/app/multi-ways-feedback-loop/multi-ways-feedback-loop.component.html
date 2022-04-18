@@ -1,0 +1,42 @@
+<div class="mWFLPage nosite">
+    <div class="mWFLPBody">
+
+        <div class="mWFLPBHead">
+
+            <div class="mWFLOBHTitle mWFLPBHDiv">
+                DALALI
+            </div>
+
+            <div class="mWFLPBHClose mWFLPBHDiv"
+            (click)="this.closeFeedbackLoop()">
+                <i class="fas fa-times"></i>                  
+            </div>
+
+        </div>
+
+        <div class="mWFLPBBody">
+            <p>
+                {{this.displayText}}
+            </p>
+        </div>
+
+        <div class="mWFLPBFooter">
+
+            <div class="mWFLPBFClose mWFLPBFDiv">
+                <div class="mWFLPBFCBut mWFLPBFBut"
+                (click)="this.closeFeedbackLoop()">
+                    Cancel
+                </div>
+            </div>
+
+            <div class="mWFLPBFAccept mWFLPBFDiv">
+                <div class="mWFLPBFABut mWFLPBFBut"
+                (click)="this.acceptAndClose()">
+                    Accept
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>

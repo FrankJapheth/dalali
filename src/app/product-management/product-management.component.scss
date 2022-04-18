@@ -51,7 +51,7 @@
     z-index: 101;
 }
 .productSelectionBody{
-    width: 400px;
+    width: 95%;
     max-height: 95%;
     position: relative;
     left: 50%;
@@ -63,6 +63,23 @@
     box-sizing: border-box;
     overflow-x: hidden;
     overflow-y: scroll;
+}
+@media all and (min-width:800px) {
+    .productSelectionBody{
+        width: 400px;
+        max-height: 95%;
+        position: relative;
+        left: 50%;
+        transform: translate(-50%);
+        background-color: #ffffff;
+        margin-top: 20px;
+        border-radius: 3px;
+        padding: 5px;
+        box-sizing: border-box;
+        overflow-x: hidden;
+        overflow-y: scroll;
+    }
+    
 }
 .pSBControlHead{
     width: 100%;
@@ -262,7 +279,7 @@
     z-index: 101;
 }
 .pDCFBody{
-    width: 500px;
+    width: 95%;
     height: 80%;
     position: relative;
     left: 50%;
@@ -274,6 +291,23 @@
     box-sizing: border-box;
     overflow-x: hidden;
     overflow-y: scroll;
+}
+@media all and (min-width:800px) {
+    .pDCFBody{
+        width: 500px;
+        height: 80%;
+        position: relative;
+        left: 50%;
+        transform: translate(-50%);
+        top: 50px;
+        background-color: #ffffff;
+        border-radius: 3px;
+        padding: 5px;
+        box-sizing: border-box;
+        overflow-x: hidden;
+        overflow-y: scroll;
+    }
+    
 }
 .pDCFHead{
     width: 100%;
@@ -360,16 +394,34 @@
 }
 .pDCBProductsChangeControls{
     width: 100%;
-    height: 70px;
-    display: grid;
-    grid-template-columns: 30% 40% 30%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+}
+@media all and (min-width:800px) {
+    .pDCBProductsChangeControls{
+        width: 100%;
+        height: 70px;
+        display: grid;
+        grid-template-columns: 30% 40% 30%;
+    }    
 }
 .pDCBPCCDivs{
     width: 100%;
-    height: 100%;
+    height: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+@media all and (min-width:800px) {
+    .pDCBPCCDivs{
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
 }
 .pDCBPCCBut{
     min-width: 100px;
@@ -480,7 +532,7 @@
     z-index: 101;    
 }
 .eCTCBody{
-    width: 40%;
+    width: 95%;
     height: 50%;
     background-color: #ffffff;
     border-radius: 3px;
@@ -490,6 +542,21 @@
     top: 50px;
     padding: 5px;
     box-sizing: border-box;
+}
+@media all and (min-width:800px) {
+    .eCTCBody{
+        width: 40%;
+        height: 50%;
+        background-color: #ffffff;
+        border-radius: 3px;
+        position: relative;
+        left: 50%;
+        transform: translate(-50%);
+        top: 50px;
+        padding: 5px;
+        box-sizing: border-box;
+    }
+    
 }
 .eCTCBHead{
     width:100%;
@@ -580,6 +647,8 @@
     color: #ffffff;
     cursor: pointer;
 }
+
+
 
 
 .nosite{

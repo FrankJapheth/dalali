@@ -11,11 +11,11 @@
     <div class="searchedProductsHolder nosite">
         <div *ngFor="let prodSearched of this.prodSearchResult">
             <div class="searchedProductPelet">
-                <div class="searchedProductName">
-                    <span id="sPNS{{prodSearched[0]}}" style="padding:5px;box-sizing:border-box;">{{prodSearched[1]}}</span>
-                    <span style="padding:5px;box-sizing:border-box;">{{prodSearched[2]}}</span>
+                <div class="searchedProductName sPPDiv">
+                    <span id="sPNS{{prodSearched[0]}}">{{prodSearched[1]}}</span>
+                    <span >{{prodSearched[2]}}</span>
                 </div>
-                <div class="searchedProductPrice"style="padding:5px;box-sizing:border-box;">
+                <div class="searchedProductPrice sPPDiv">
                     <span class="">KSh. </span><span class="">{{prodSearched[5]}}</span>
                 </div>
                 <div class="clickableDiv" id="sPPC{{prodSearched[0]}}" (click)="this.searchPeleteClick($event)">

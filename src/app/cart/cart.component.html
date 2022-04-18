@@ -4,7 +4,8 @@
     </div>
     <div class="cPBody">
         <div class="cPBProductTileHolder">
-            <div *ngFor="let cartProd of this.cartProdsArray" style="height: auto;"  id="cPBTHPT{{cartProd[0][0]}}">
+            <div *ngFor="let cartProd of this.cartProdsArray" style="height: auto;"  id="cPBTHPT{{cartProd[0][0]}}"
+            class="cartProdItemHolder">
                 <div class="cPBPTHProductTile">
                     <div class="prodImgDetails">
                         <div class="pIDImgHolder">
@@ -18,7 +19,7 @@
                             </div>
                             <div class="pIDCBProdNumb  pIDCButtons">
                                 <input type="text" id="ProdQuant{{cartProd[0][0]}}" value="{{cartProd[1]}}"
-                                class="prodQuantTxtIpt">
+                                class="prodQuantTxtIpt" (keyup)="this.prodNumbInput($event)">
                             </div>
                             <div class="pIDIncreaser  pIDCButtons">
                                 <div class="pIDCIButton" id="addProdQuant{{cartProd[0][0]}}"
@@ -46,7 +47,7 @@
                                     Price
                                 </div>
                                 <div class="pDSOPDPDValue pDSODPDDiv">
-                                    Ksh. {{cartProd[0][5]}}
+                                   {{cartProd[0][5]}}
                                 </div>
                             </div>
                             <div class="pDSOPDQuantityDet">
@@ -59,10 +60,10 @@
                             </div>
                             <div class="pDSOPDTPriceDet">
                                 <div class="pDSOPDTPDTitle pDSOPTDDiv">
-                                    Total Price
+                                    Total
                                 </div>
                                 <div class="pDSOPDTPDValue pDSOPTDDiv">
-                                    Ksh. {{cartProd[0][5]*cartProd[1]}}
+                                   {{cartProd[0][5]*cartProd[1]}}
                                 </div>
                             </div>
                         </div>
@@ -74,7 +75,7 @@
             <div class="pDTile">
                 <div class="pDTTotalAmount pDTInfoTab">
                     <div class="pDTAString pDTITMiddleTab">
-                        Total Amount
+                        Total
                     </div>
                     <div class="pDTAValue">
                         Ksh.{{this.totalPrice}}
@@ -82,7 +83,7 @@
                 </div>
                 <div class="pDTTotalNumberOfProducts pDTInfoTab">
                     <div class="pDTTOPString pDTITMiddleTab">
-                        Number Of Products
+                        Quantity
                     </div>
                     <div class="pDTTOPValue">
                         {{this.totalProductsNumb}}
@@ -109,7 +110,7 @@
                         </section>
                     </ul>
                 </div>
-                <div class="pDTDateOrdered pDTInfoTab">
+                <div class="pDTDateOrdered pDTInfoTab nosite">
                     <div class="pDTDOString pDTITMiddleTab">
                         Date Ordered
                     </div>
@@ -118,11 +119,86 @@
                     </div>
                 </div>
                 <div class="orderSubmitBut">
-                    <div class="oSBDiv">
+                    <div class="oSBDiv"
+                    (click)="this.openingPrompt()">
                         Pay
                     </div>
                 </div>
             </div>
         </div>
+
+        <div class="mpesaNumber nosite">
+            <div class="mNBody">
+
+                <div class="mNBHead">
+
+                    <div class="mNBHTitle mNBHDiv">
+                        M-PESA
+                    </div>
+
+                    <div class="mNBHClose mNBHDiv"
+                    (click)="this.closingPayingWithMpesaPrompt()">
+                        <i class="fas fa-times"></i>                           
+                    </div>
+
+                </div>
+
+                <div class="mNBBody">
+
+                    <p class="mNBBPara">
+                        Enter the contact to pay with.
+                        ( phone Number)
+                    </p>
+
+                    <div class="ansInput">
+                        <input type="text" name="payingContact" id="payingContact"
+                        placeholder="Paying Contact">
+                    </div>
+
+                </div>
+
+                <div class="mNFooter">
+                    <div class="pCsubmitter"
+                    (click)="this.storeCartDetails()">
+                        Confirm
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="sWFLMain nosite">
+            <div class="sWFLMBody">
+        
+                <div class="sWFLMHead">
+        
+                    <div class="sWFLHTitle sWFLDiv">
+                        DALALI
+                    </div>
+        
+                    <div class="sWFLClose sWFLDiv"
+                    (click)="this.closeFeedbackLoop()">
+                        <i class="fas fa-times"></i>            
+                    </div>
+        
+                </div>
+        
+                <div class="sWFLBody">
+                    <p>
+                        {{displayText}}
+                    </p>
+                </div>
+        
+                <div class="sWFLFooter">
+                    <div class="sWFLFCloseAns"
+                    (click)="this.closeFeedbackLoop()">
+                        Okay
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    
     </div>
 </div>

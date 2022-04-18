@@ -22,16 +22,37 @@ export class HomeCategoriesComponent implements OnInit {
   @Input() catName:any
   public productCategoriesDetails:any=[]
   public catProdsArray:any=[]
+  public displayText:string="Display text"
+  public classType:string=""
+
   ngOnInit(): void {
   }
   ngAfterViewInit():void{
     this.dataServices.getMaxProdIndex().then((respmax:any)=>{
       this.getCategoryProducts(respmax).then((resp:any)=>{
-        this.catProdsArray=resp
-      }).then(()=>{      
-        this.storeFetchedProdDetails()
+        if(resp.length>0){
+          this.catProdsArray=resp
+          let prodToDisp:any=this.storeFetchedProdDetails(resp)
+          return prodToDisp
+        }else{
+          let categoryContainer:any=this.eleRef.nativeElement.querySelector(".categoryDiv")
+          this.renderer.addClass(categoryContainer,"nosite")
+        }
       })
     })
+  }
+  ngAfterViewChecked():void{
+    let storedProds:any=this.dataServices.getSiteProdsList()
+    storedProds.forEach((storedProd:any) => {
+      let ele:any=this.eleRef.nativeElement.querySelector(`#cPC${storedProd[0]}`)
+      let addBut:any=this.eleRef.nativeElement.querySelector(`#aTCB${storedProd[0]}`)
+      if(ele!=null){
+        if(this.dataServices.cartProductsArray.includes(storedProd[0])){
+          this.renderer.removeClass(ele,"nosite")
+          addBut.innerText="REMOVE"
+        }
+      }      
+    });  
   }
   getCategoryProducts(maxIndex:string):Promise<string>{  
     return new Promise((res:any,rej:any)=>{
@@ -44,11 +65,16 @@ export class HomeCategoriesComponent implements OnInit {
       }) 
     })
   }
-  storeFetchedProdDetails():void{
-    for (let prodDet = 0; prodDet < this.catProdsArray.length; prodDet++) {
-      const prodDetEle = this.catProdsArray[prodDet];
-      this.dataServices.addSiteProd(prodDetEle[0],prodDetEle)     
-    }
+  storeFetchedProdDetails(prodsDetails:Array<any>):Array<any>{
+    for (let prodDet = 0; prodDet < prodsDetails.length; prodDet++) {
+      const prodDetEle = prodsDetails[prodDet];
+      let siteProd:any=this.dataServices.getSiteProd(prodDetEle[0])
+      if(siteProd==undefined){
+        this.dataServices.addSiteProd(prodDetEle[0],prodDetEle)    
+      }
+    } 
+    let prodList:Array<any>=this.dataServices.getSiteProdsList()
+    return prodList
   }
   catTitleSeeMore(evt:any):void{
     let docCatTitleSeeMoreId:any=evt.target.id
@@ -107,16 +133,29 @@ export class HomeCategoriesComponent implements OnInit {
   cPAORADiv(evt:any):void{
     let eleId:any=evt.target.id.slice(7)
     let newProdVals:Array<any>=this.changeNumberOrdered(eleId,1,"add")
-    let cPCAORNTBId:string=`#cPCAORNTB${eleId}`
-    let cPCAORNTB:any=this.eleRef.nativeElement.querySelector(cPCAORNTBId)
-    cPCAORNTB.value=newProdVals[0]
+    if(newProdVals[3]==true){
+      let cPCAORNTBId:string=`#cPCAORNTB${eleId}`
+      let cPCAORNTB:any=this.eleRef.nativeElement.querySelector(cPCAORNTBId)
+      cPCAORNTB.value=newProdVals[0]
+    }else{
+      this.displayText="The quantity of the products you are requesting is more than the number in stock"
+      this.openFeedBackLoop()
+    }
   }
   cPCAORBDiv(evt:any):void{
     let eleId:any=evt.target.id.slice(7)
     let newProdVals:Array<any>=this.changeNumberOrdered(eleId,1,"sabtruct")
-    let cPCAORNTBId:string=`#cPCAORNTB${eleId}`
-    let cPCAORNTB:any=this.eleRef.nativeElement.querySelector(cPCAORNTBId)
-    cPCAORNTB.value=newProdVals[0]
+    if(newProdVals[3]==true){
+      let cPCAORNTBId:string=`#cPCAORNTB${eleId}`
+      let cPCAORNTB:any=this.eleRef.nativeElement.querySelector(cPCAORNTBId)
+      cPCAORNTB.value=newProdVals[0]
+    }else{
+      let aTCBId:string=`#aTCB${eleId}`
+      let cPCId:string=`#cPC${eleId}`
+      let cPCEle:any=this.eleRef.nativeElement.querySelector(cPCId)
+      this.renderer.addClass(cPCEle,"nosite")
+      this.eleRef.nativeElement.querySelector(aTCBId).innerText="ADD TO CART"
+    }
   }
   cPCRPBDiv(evt:any):void{
     let cPCRPBDId:string=evt.target.id.slice(6)
@@ -132,8 +171,47 @@ export class HomeCategoriesComponent implements OnInit {
     }
   }
   cPCAORNumbtxtBox(evt:any){
-    let valueToset:number=Number(evt.target.value)
-    let eleId:any=evt.target.id.slice(9)
-    let changed:boolean=this.dataServices.setCartProdNumb(eleId,valueToset)
+    let valueToset:any=evt.target.value
+    if(valueToset!=""){
+      if(isNaN(valueToset)==false){
+        let eleId:any=evt.target.id.slice(9)
+        let productDetails:any=this.dataServices.getSiteProd(eleId)
+        let productQauntity:number=Number(productDetails[3])
+        
+        if(valueToset>0){
+          let changed:boolean=this.dataServices.setCartProdNumb(eleId,valueToset)
+        }else if(valueToset<=0){
+          let cPCRPBDId:string=evt.target.id.slice(9)
+          let removedCartProddetails:Array<any>=this.dataServices.removeCartProd(cPCRPBDId)
+          if(removedCartProddetails[2]==true){
+            let aTCBId:string=`#aTCB${cPCRPBDId}`
+            let cPCId:string=`#cPC${cPCRPBDId}`
+            let cPCEle:any=this.eleRef.nativeElement.querySelector(cPCId)
+            this.renderer.addClass(cPCEle,"nosite")
+            this.eleRef.nativeElement.querySelector(aTCBId).innerText="ADD TO CART"
+            evt.target.value=1
+          }        
+        }
+        if(valueToset>productQauntity){
+          let changed:boolean=this.dataServices.setCartProdNumb(eleId,productQauntity)
+          evt.target.value=productQauntity
+          this.displayText="The quantity of the products you are requesting is more than the number in stock"
+          this.openFeedBackLoop()          
+        }
+      }else{
+        console.log("only numbers allowed");
+        evt.target.value=1
+      }
+    }
+  }
+
+  closeFeedbackLoop():void{
+    let fBLoop:any=this.eleRef.nativeElement.querySelector(".sWFLMain")
+    this.renderer.addClass(fBLoop,"nosite")
+  }
+
+  openFeedBackLoop():void{
+    let fBLoop:any=this.eleRef.nativeElement.querySelector(".sWFLMain")
+    this.renderer.removeClass(fBLoop,"nosite")
   }
 }

@@ -15,4 +15,35 @@
 
         </div>
     </form>
+    <div class="sWFLMain nosite">
+        <div class="sWFLMBody">
+    
+            <div class="sWFLMHead">
+    
+                <div class="sWFLHTitle sWFLDiv">
+                    DALALI
+                </div>
+    
+                <div class="sWFLClose sWFLDiv"
+                (click)="this.closeFeedbackLoop()">
+                    <i class="fas fa-times"></i>            
+                </div>
+    
+            </div>
+    
+            <div class="sWFLBody">
+                <p>
+                    {{displayText}}
+                </p>
+            </div>
+    
+            <div class="sWFLFooter">
+                <div class="sWFLFCloseAns"
+                (click)="this.closeFeedbackLoop()">
+                    Okay
+                </div>
+            </div>
+            
+        </div>
+    </div>
 </div>

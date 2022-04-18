@@ -38,11 +38,27 @@
     height: auto;
 }
 .setOrRemoveRetailer{
-    width: 400px;
+    width: 95%;
     height: auto;
     position: relative;
     left: 50%;
     transform: translate(-50%);
+    box-shadow:  5px 5px 7px #b3b3b3,
+                 -5px -5px 7px #ffffff;
+}
+@media all and (min-width:800px) {
+    .setOrRemoveRetailer{
+        width: 400px;
+        height: auto;
+        position: relative;
+        left: 50%;
+        transform: translate(-50%);
+    }
+    
+}
+.searchDiv{
+    width: 95%;
+    height: auto;
 }
 .setOrRemoveRetailerControllers{
     width: 100%;

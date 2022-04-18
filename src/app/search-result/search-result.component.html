@@ -14,7 +14,9 @@
                     </div>
                     <div class="itemDetails">
                         <div class="itemName">
-                            <span style="padding:5px;box-sizing:border-box;">
+                            <span style="padding:5px;box-sizing:border-box;
+                            overflow-x:scroll;overflow-y:hidden;white-space: nowrap;"
+                            class="itemNameValue">
                                 {{productSearchResult[1]}} 
                             </span>
                             <span style="padding:5px;box-sizing:border-box;">
@@ -64,7 +66,7 @@
                                 </div>
                             </div>
                             <div class="cartProdNumber cPCAORButs">
-                                <input type="number" class="cPCAORNumbtxtBox" id="cPCAORNTB{{productSearchResult[0]}}" min="1" value="1" (keyup)="this.cPCAORNumbtxtBox($event)">            
+                                <input type="text" class="cPCAORNumbtxtBox" id="cPCAORNTB{{productSearchResult[0]}}" min="1" value="1" (keyup)="this.cPCAORNumbtxtBox($event)">            
                             </div>
                             <div class="cPCAORAdd cPCAORButs">
                                 <div class="cPAORADiv" id="cPAORAD{{productSearchResult[0]}}" (click)="this.cPAORADiv($event)">
@@ -87,7 +89,9 @@
                     </div>
                     <div class="itemDetails">
                         <div class="itemName">
-                            <span style="padding:5px;box-sizing:border-box;">
+                            <span style="padding:5px;box-sizing:border-box;
+                            overflow-x:scroll;overflow-y:hidden;white-space: nowrap;"
+                            class="itemNameValue">
                                 {{scrollproductSearchResult[1]}} 
                             </span>
                             <span style="padding:5px;box-sizing:border-box;">
@@ -137,7 +141,7 @@
                                 </div>
                             </div>
                             <div class="cartProdNumber cPCAORButs">
-                                <input type="number" class="cPCAORNumbtxtBox" id="cPCAORNTB{{scrollproductSearchResult[0]}}" min="1" value="1" (keyup)="this.cPCAORNumbtxtBox($event)">            
+                                <input type="text" class="cPCAORNumbtxtBox" id="cPCAORNTB{{scrollproductSearchResult[0]}}" min="1" value="1" (keyup)="this.cPCAORNumbtxtBox($event)">            
                             </div>
                             <div class="cPCAORAdd cPCAORButs">
                                 <div class="cPAORADiv" id="cPAORAD{{scrollproductSearchResult[0]}}" (click)="this.cPAORADiv($event)">
@@ -152,6 +156,38 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <div class="sWFLMain nosite">
+            <div class="sWFLMBody">
+        
+                <div class="sWFLMHead">
+        
+                    <div class="sWFLHTitle sWFLDiv">
+                        DALALI
+                    </div>
+        
+                    <div class="sWFLClose sWFLDiv"
+                    (click)="this.closeFeedbackLoop()">
+                        <i class="fas fa-times"></i>            
+                    </div>
+        
+                </div>
+        
+                <div class="sWFLBody">
+                    <p>
+                        {{displayText}}
+                    </p>
+                </div>
+        
+                <div class="sWFLFooter">
+                    <div class="sWFLFCloseAns"
+                    (click)="this.closeFeedbackLoop()">
+                        Okay
+                    </div>
+                </div>
+                
             </div>
         </div>
     </div>
