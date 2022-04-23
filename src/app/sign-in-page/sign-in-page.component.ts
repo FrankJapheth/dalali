@@ -31,6 +31,7 @@ export class SignInPageComponent implements OnInit {
     formToAppend=new FormData();
     formToAppend.append("userDOB",this.dalaliData.getUserDOB())
     inputList.forEach((inputNode:any)=>{
+      
       if(inputNode.value!=""){
         formToAppend.append(inputNode.id,inputNode.value)
       }else{        
@@ -57,6 +58,13 @@ export class SignInPageComponent implements OnInit {
     let SignUpInputs:NodeList=document.querySelectorAll(".signInInput");
     return SignUpInputs
   }
+  clearData(inputs:any):void{
+
+    inputs.forEach((inputElement: any) => {
+      inputElement.value=''
+    });
+
+  }
   signInButton(evt:any): void{
     if(evt.type==='click'){
       this.emptyValues=[]
@@ -66,24 +74,50 @@ export class SignInPageComponent implements OnInit {
       if(this.contactType!="undetermined"){
         if(this.emptyValues.length==0){
             this.backendCommunicator.backendCommunicator(signInFormData,'post',`${this.backendCommunicator.backendBaseLink}/signIn`).then(resp=>{
-            this.userOTP=resp[2]
-            this.userContact=resp[1]
-            this.regResponse=resp[0]
-            let userOTPItems:Array<string>=[this.userContact,this.userOTP]
-            localStorage.setItem("userOTPItems",JSON.stringify(userOTPItems))
-            this.elRef.nativeElement.querySelector(".homeBut").click()
+              this.userOTP=resp[2]
+              this.userContact=resp[1]
+              this.regResponse=resp[0]
+              let userOTPItems:Array<string>=[this.userContact,this.userOTP]
+              localStorage.setItem("userOTPItems",JSON.stringify(userOTPItems))
+              this.clearData(this.signInFunc())
+              this.signInRouter("Successfully signed in",true).then(()=>{
+                this.closeFeedbackLoop()
+                this.elRef.nativeElement.querySelector(".homeBut").click()
+              })
+            })
+          }else{
+            this.signInRouter("There are some empty values",false).then(()=>{
+              this.closeFeedbackLoop()
+              this.elRef.nativeElement.querySelector(".homeBut").click()
             })
           }
-        }else{
-          this.signInAlert("There are some empty values")
-        }
       }else{
-        this.signInAlert("We only allow phone number or email")
+        this.signInRouter("We only allow phone number or email",false).then(()=>{
+          this.closeFeedbackLoop()
+          this.elRef.nativeElement.querySelector(".homeBut").click()
+        })
       }
     }
-  signInAlert(message: string) {
-    this.openFeedBackLoop(message) 
   }
+
+  signInAlert(message: string){
+    this.openFeedBackLoop(message)
+  }
+
+  signInRouter(msg: string,signInType: boolean): Promise< any >{
+    return new Promise( (signInResp: any) =>{
+      this.signInAlert(msg)
+      const usrBut: any = this.elRef.nativeElement.querySelector(".sWFLFCloseAns")
+      this.renderer.listen(usrBut,'click',()=>{
+        if(signInType === true){
+          signInResp(true)
+        }else{
+          signInResp(false)
+        }
+      })
+    })
+  }
+
   closeFeedbackLoop():void{
     let fBLoop:any=this.elRef.nativeElement.querySelector(".sWFLMain")
     this.renderer.addClass(fBLoop,"nosite")

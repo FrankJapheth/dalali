@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class BackendcommunicatorService {
-  public hostName='dalaliwinehouse.com/backend'
+  public hostName: string='dalaliwinehouse.com/backend'
   public backendBaseLink:string=`https://${this.hostName}`
   constructor() { }
 

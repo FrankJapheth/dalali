@@ -2,15 +2,146 @@
     width: 100%;
     height: auto;
 }
-
+.cODivs{
+    width: 100%;
+    height: auto;
+}
+.cOControllers{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.cDivs{
+    width: 150px;
+    height: 40px;
+    box-shadow:  5px 5px 7px #b3b3b3,
+                 -5px -5px 7px #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    margin: 5px;
+    font-size: 100%;
+    border-radius: 3px;
+}
+.cOControls{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    width: 100%;
+    height: 85vh;
+}
+.orderLists{
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    padding: 5px;
+    box-sizing: border-box;
+    border-right: 1px solid #121420;
+}
+@media all and (min-width:800px) {
+    .orderLists{
+        width: 40%;
+        height: 100%;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        padding: 5px;
+        box-sizing: border-box;
+        border-right: 1px solid #121420;
+    }    
+}
+.oLtPellete{
+    width: 100%;
+    height: 70px;
+    padding: 2px;
+    box-sizing: border-box;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border-bottom: 1px solid #121420;
+    color: #121420;
+    background-color: #ffffff;
+    position: relative;
+    border-radius: 3px;
+}
+.oLtPellete:hover{
+    background-color: #cfd5ee;
+}
+.pDivs{
+    width: 100%;
+    height: 50%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+.pClickable{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    cursor: pointer;
+}
+.orderView{
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    position: fixed;
+    left: 0px;
+    top: 60px;
+    background-color: #ffffff;
+}
+@media all and (min-width:800px) {
+    .orderView{
+        width: 60%;
+        height: 100%;
+        overflow-x: hidden;
+        overflow-y: scroll;
+        position: relative;
+        top: 0px;
+    }
+    
+}
+.closeorderView{
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow:  5px 5px 7px #b3b3b3,
+                 -5px -5px 7px #ffffff;
+    position: absolute;
+    top: 0px;
+    right: 10px;
+    background-color: #ffffff;
+    z-index: 10;
+}
+@media all and(min-width:800px) {
+    .closeorderView{
+        display: none;   
+    }    
+}
+.closecontrolsView{
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow:  5px 5px 7px #b3b3b3,
+                 -5px -5px 7px #ffffff;
+    position: absolute;
+    top: 0px;
+    right: 10px;
+    background-color: #ffffff;
+    z-index: 5;
+}
 .cOReceiptView{
     width: 290px;
     height: auto;
     position: relative;
     left: 50%;
-    transform: translate(-50%);
-    box-shadow:  5px 5px 7px #b3b3b3,
-                 -5px -5px 7px #ffffff;
+    transform: translateX(-50%);
     margin-bottom: 20px;
     padding: 5px;
     box-sizing: border-box;
@@ -18,6 +149,8 @@
 @media all and (min-width:800px) {
     .cOReceiptView{
         font-size: 90%;
+        box-shadow:  5px 5px 7px #b3b3b3,
+                     -5px -5px 7px #ffffff;
     }
     
 }
@@ -108,4 +241,8 @@
     .hiddenClass{
         display: none;
     }
+}
+
+.nosite{
+    display: none;
 }

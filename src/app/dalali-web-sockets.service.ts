@@ -10,7 +10,7 @@ export class DalaliWebSocketsService {
     private dataService:DalalidataService
   ) { }
   public dalaliSockets:any=null
-  public hostName='dalaliwinehouse.com/backend'
+  public hostName='dalaliwinehouse.com/wsbackend'
   public wsBackendBaseLink:string=`wss://${this.hostName}`
   public websocketOpen:boolean=false
 
@@ -21,7 +21,7 @@ export class DalaliWebSocketsService {
     
     this.dalaliSockets.onopen = (event:any) => {
 
-      this.websocketOpen=true
+      this.websocketOpen=true    
           
       
     };

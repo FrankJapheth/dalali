@@ -1,213 +1,313 @@
 
 <div class="customerOrders">
 
-    <div class="cOReceiptView">
+    <div class="cOControllers cODivs">
+
+        <div class="cMyOrders cDivs"
+        (click)="this.getSuccessfulCartIds()">
+            Successful Orders
+        </div>
+
+        <div class="failedOders cDivs"
+        (click)="this.getFailedCartIds()">
+            Failed orders
+        </div>
+
+        <div class="pendingOders cDivs"
+        (click)="this.getPendingCartIds()">
+            Pending orders
+        </div>
+
+    </div>
+
+    <div class="cOControls cODivs nosite">
+
+        <div class="orderLists">
+
+    
+            <div
+            *ngFor="let cartId of this.docCartIds"
+            class="oLTPDiv">
+                <div class="oLtPellete">
+
+                    <div class="pOrderId pDivs"
+                    id="pOI{{this.docCartIds.indexOf(cartId)}}">
+                        {{cartId.orderId}}
+                    </div>
+
+                    <div class="pOrderDate pDivs">
+                        KSh.{{cartId.totalBill}}
+                    </div>
+
+                    <div class="pClickable"
+                    id="pC{{this.docCartIds.indexOf(cartId)}}"
+                    (click)="this.getDBOrder($event)">
+
+                    </div>
+
+                </div>
+            </div>
+
+
+
+            <div
+            *ngFor="let cartId of this.docCustomerCartIds"
+            class="oLTPDiv">
+                <div class="oLtPellete">
+
+                    <div class="pOrderId pDivs"
+                    id="pOI{{this.docCustomerCartIds.indexOf(cartId)}}">
+                        {{cartId.orderId}}
+                    </div>
+
+                    <div class="pOrderDate pDivs">
+                        KSh.{{cartId.totalBill}}
+                    </div>
+
+                    <div class="pClickable"
+                    id="pC{{this.docCustomerCartIds.indexOf(cartId)}}"
+                    (click)="this.getCustomerDBOrder($event)">
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="orderView nosite">
+
+            <div class="cOReceiptView">
         
-        <div class="orgDetails cORVDivs">
+                <div class="orgDetails cORVDivs">
+        
+                    <div class="oDOrgName oDDivs">
+                        Dalali Wine House
+                    </div>
+        
+                    <div class="oDOrgLoc oDDivs">
+                        Nairobi West Mall
+                    </div>
+        
+                    <div class="oDOrgPostalDetails oDDivs">
+                        P O Box 26264 - 00100, Nairobi
+                    </div>
+                    
+                    <a href="tel:+254718575876" class="oDOrgNumber oDDivs">
+                        Phone Number : +254718575876
+                    </a>
+        
+                    <div class="oDOrgSaleType oDDivs">
+                        Cash Sale
+                    </div>
+        
+                </div>
+        
+                <div class="orderDetails cORVDivs">
+        
+                    <!-- <div class="oDOrderId oDInfoDivs">
+                        
+                        <div class="oILabel oDIDLabelDivs oDIDDivs">
+                            Order Id
+                        </div>
+        
+                        <div class="oDValue oDIDValueDivs oDIDDivs">
+                            {{this.cartDetails.orderdate}}
+                        </div>
+        
+                    </div> -->
+        
+                    <div class="oDOrderDate oDInfoDivs">
+        
+                        <div class="oDLabel oDIDLabelDivs oDIDDivs">
+                            Date
+                        </div>
+        
+                        <div class="oDValue oDIDValueDivs oDIDDivs">
+                            {{this.cartDetails.orderdate}}
+                        </div>
+        
+                    </div>
 
-            <div class="oDOrgName oDDivs">
-                Dalali Wine House
-            </div>
-
-            <div class="oDOrgLoc oDDivs">
-                Nairobi West Mall
-            </div>
-
-            <div class="oDOrgPostalDetails oDDivs">
-                P O Box 26264 - 00100, Nairobi
-            </div>
+                    <div class="oDCustomerName oDInfoDivs">
+        
+                        <div class="cNLabel oDIDLabelDivs oDIDDivs">
+                            Customer
+                        </div>
+        
+                        <div class="cNValue oDIDValueDivs oDIDDivs">
+                            {{this.userName}}
+                        </div>
+        
+                    </div>
+        
+                </div>
+        
+                <div class="orderProductsDetails cORVDivs">
+        
+                    <div class="oPDHeader pOInfoDivs">
+        
+                        <div class="pOHNumber pONumber pOSubInfos">
+                            S.N
+                        </div>
+        
+                        <div class="pOHDescription pODescription pOSubInfos">
+                            Description
+                        </div>
+        
+                        <div class="pOHPrice pOPrice pOSubInfos">
+                            Price
+                        </div>
+        
+                        <div class="pOHQty pOQty pOSubInfos">
+                            Qty
+                        </div>
+        
+                        <div class="pOHTotal pOTotal pOSubInfos">
+                            Total
+                        </div>
+        
+                    </div>
+        
+                    <div class="oPDBody">
+                        <div
+                        *ngFor="let productDetails of this.productsDetailsArray">
+                            <div class="oPPelete pOInfoDivs">
             
-            <a href="tel:+254718575876" class="oDOrgNumber oDDivs">
-                Phone Number : +254718575876
-            </a>
-
-            <div class="oDOrgSaleType oDDivs">
-                Cash Sale
-            </div>
-
-        </div>
-
-        <div class="orderDetails cORVDivs">
-
-            <div class="oDOrderId oDInfoDivs">
-                
-                <div class="oILabel oDIDLabelDivs oDIDDivs">
-                    Order Id
-                </div>
-
-                <div class="oDValue oDIDValueDivs oDIDDivs">
-                    Order Id Value
-                </div>
-
-            </div>
-
-            <div class="oDOrderDate oDInfoDivs">
-
-                <div class="oDLabel oDIDLabelDivs oDIDDivs">
-                    Date
-                </div>
-
-                <div class="oDValue oDIDValueDivs oDIDDivs">
-                    Date of purchase
-                </div>
-
-            </div>
-
-            <div class="oDOrderTime oDInfoDivs ">
-
-                <div class="oTLAbel oDIDLabelDivs oDIDDivs">
-                    Time
-                </div>
-
-                <div class="oTValue oDIDValueDivs oDIDDivs">
-                    Time of purchase
-                </div>
-
-            </div>
-
-            <div class="oDCustomerName oDInfoDivs">
-
-                <div class="cNLabel oDIDLabelDivs oDIDDivs">
-                    Customer
-                </div>
-
-                <div class="cNValue oDIDValueDivs oDIDDivs">
-                    Customer Name
-                </div>
-
-            </div>
-
-        </div>
-
-        <div class="orderProductsDetails cORVDivs">
-
-            <div class="oPDHeader pOInfoDivs">
-
-                <div class="pOHNumber pONumber pOSubInfos">
-                    S.N
-                </div>
-
-                <div class="pOHDescription pODescription pOSubInfos">
-                    Description
-                </div>
-
-                <div class="pOHPrice pOPrice pOSubInfos">
-                    Price
-                </div>
-
-                <div class="pOHQty pOQty pOSubInfos">
-                    Qty
-                </div>
-
-                <div class="pOHTotal pOTotal pOSubInfos">
-                    Total
-                </div>
-
-            </div>
-
-            <div class="oPDBody">
-                 <div class="oPPelete pOInfoDivs">
-
-                     <div class="oPPVNumber pONumber pOSubInfos">
-                         1
-                     </div>
-
-                     <div class="oPPVDescr pODescription pOSubInfos">
-                         Product Description
-                     </div>
-
-                     <div class="oPPVPrice pOPrice pOSubInfos">
-                         Prod Price
-                     </div>
-
-                     <div class="oPPVQty pOQty pOSubInfos">
-                         Prod Qty
-                     </div>
-
-                     <div class="oPPVToatal pOTotal pOSubInfos">
-                         Total price
-                     </div>
-
-                 </div>
-            </div>
-
-        </div>
-
+                                <div class="oPPVNumber pONumber pOSubInfos">
+                                    {{this.productsDetailsArray.indexOf(productDetails)}}
+                                </div>
             
-        <div class="transactionDetails cORVDivs">
-
-            <div class="tDTotalProducts oDInfoDivs">
-                
-                <div class="tPLable  oDIDLabelDivs oDIDDivs">
-                    Total Products
-                </div>
-
-                <div class="tPValue  oDIDValueDivs oDIDDivs">
-                    Total Products Order
-                </div>
-
-            </div>
-
-            <div class="tDTotalBillAmount oDInfoDivs">
-                
-                <div class="tBALable  oDIDLabelDivs oDIDDivs">
-                    Total Bill
-                </div>
-
-                <div class="tBAValue  oDIDValueDivs oDIDDivs">
-                    Total Order Amount
-                </div>
-
-            </div>
+                                <div class="oPPVDescr pODescription pOSubInfos">
+                                    {{this.productsDetails[productDetails].productDescription}}
+                                </div>
             
-            <div class="tDTotalTendered oDInfoDivs">
-                
-                <div class="tTLabel  oDIDLabelDivs oDIDDivs">
-                    Total Tendered
+                                <div class="oPPVPrice pOPrice pOSubInfos">
+                                    {{this.productsDetails[productDetails].productPrice}}
+                                </div>
+            
+                                <div class="oPPVQty pOQty pOSubInfos">
+                                    {{this.productsDetails[productDetails].quantityOrdered}}
+                                </div>
+            
+                                <div class="oPPVToatal pOTotal pOSubInfos">
+                                    {{(this.productsDetails[productDetails].quantityOrdered)*
+                                        this.productsDetails[productDetails].productPrice}}
+                                </div>
+            
+                            </div>
+                        </div>
+                    </div>
+        
                 </div>
-
-                <div class="tTValue  oDIDValueDivs oDIDDivs">
-                    User Payment Amount
+        
+                    
+                <div class="transactionDetails cORVDivs">
+        
+                    <div class="tDTotalProducts oDInfoDivs">
+                        
+                        <div class="tPLable  oDIDLabelDivs oDIDDivs">
+                            Total Products
+                        </div>
+        
+                        <div class="tPValue  oDIDValueDivs oDIDDivs">
+                            {{this.cartDetails.totalProductsOrdered}}
+                        </div>
+        
+                    </div>
+        
+                    <div class="tDTotalBillAmount oDInfoDivs">
+                        
+                        <div class="tBALable  oDIDLabelDivs oDIDDivs">
+                            Total Bill
+                        </div>
+        
+                        <div class="tBAValue  oDIDValueDivs oDIDDivs">
+                            {{this.cartDetails.totalBill}}
+                        </div>
+        
+                    </div>
+                    
+                    <div class="tDTotalTendered oDInfoDivs">
+                        
+                        <div class="tTLabel  oDIDLabelDivs oDIDDivs">
+                            Total Tendered
+                        </div>
+        
+                        <div class="tTValue  oDIDValueDivs oDIDDivs">
+                            {{this.cartDetails.paidAmount}}
+                        </div>
+        
+                    </div>
+        
+                    <div class="tTChange oDInfoDivs">
+                        
+                        <div class="cLabel  oDIDLabelDivs oDIDDivs">
+                            Change
+                        </div>
+        
+                        <div class="cValue  oDIDValueDivs oDIDDivs">
+                            {{this.cartDetails.paidAmount-this.cartDetails.totalBill}}
+                        </div>
+        
+                    </div>
+        
                 </div>
-
+        
+                <div class="gvtPolicies cORVInfos">
+        
+                    <div class="gPDisclaimer">
+                        Prices inclusive of VAT where applicable
+                    </div>
+        
+                </div>
+        
+                <div class="retailerServer cORVInfos">
+        
+                    <div class="rSNameText">
+                        Searved by {{this.cartDetails.serverName}}
+                    </div>
+        
+                </div>
+        
+                <div class="retailerServerContact cORVInfos">
+        
+                    <div class="rSContactText">
+                        Server contact {{this.cartDetails.serverContact}}
+                    </div>
+        
+                </div>
+        
+                <div class="helpLineContact cORVInfos">
+        
+                    <div class="hLContactText">
+                        For complains or appreciation contact +254791687707
+                    </div>
+        
+                </div>
+        
+                <div class="userAppreciassion cORVInfos">
+        
+                    <div class="uAThanksText">
+                        Thank you for choosing us.
+                    </div>
+        
+                </div>
+        
             </div>
 
-            <div class="tTChange oDInfoDivs">
-                
-                <div class="cLabel  oDIDLabelDivs oDIDDivs">
-                    Change
-                </div>
-
-                <div class="cValue  oDIDValueDivs oDIDDivs">
-                    Change Value
-                </div>
-
+            <div class="closeorderView"
+            (click)="this.closeOrderView()">
+                <i class="fas fa-times"></i>                  
             </div>
 
         </div>
 
-        <div class="gvtPolicies cORVInfos">
-
-            <div class="gPDisclaimer">
-                Prices inclusive of VAT where applicable
-            </div>
-
-        </div>
-
-        <div class="userAppreciassion cORVInfos">
-
-            <div class="uAThanksText">
-                Thank you for choosing us.
-            </div>
-
+        <div class="closecontrolsView"
+        (click)="this.closeReceiptView()">
+            <i class="fas fa-times"></i>            
         </div>
 
     </div>
-    <div class="bottomDiv hiddenClass">
-        <button 
-        (click)="this.printWindow()">
-            Print
-        </button>
-    </div>
-    <!-- orderId orderDate,OrderTime,RetailerName -->
+    
 </div>

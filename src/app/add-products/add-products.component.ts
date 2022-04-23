@@ -352,12 +352,11 @@ export class AddProductsComponent implements OnInit {
     let catSectBtnNext:any=this.eleRef.nativeElement.querySelector(".catSectBtnNext")
     let aCSCatImgHolder:any=this.eleRef.nativeElement.querySelector(".aCSCatImgHolder")
     let catDetailsSect:any=this.eleRef.nativeElement.querySelector(".catDetailsSect")
-    this.renderer.listen(catSectBtnNext,"click",()=>{
-      console.log(this.catPicUploaded);      
+    this.renderer.listen(catSectBtnNext,"click",()=>{    
       if(this.catPicUploaded==false){
         console.log(this.catPicUploaded);
         console.log("Calling img reducer");   
-        console.log(this.currentFile);        
+        console.log(this.currentFile);
         this.imgReducer(this.currentFile).then(fTSend=>{
           console.log("called img reducer");   
           let cat_details:FormData= new FormData()

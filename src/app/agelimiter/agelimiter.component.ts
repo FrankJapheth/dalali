@@ -148,7 +148,8 @@ export class AgelimiterComponent implements OnInit {
     this.elRef.nativeElement.querySelector("#DOBTextInputPicker").value=`${this.currentDayValue+1} / ${this.currentMonthValue+1} / ${this.yearValue}`
   }
   storeDateAndClose(){
-    let userBirthDate:any=new Date(`${this.monthsList[this.currentMonthValue+1]} ${this.currentDayValue+1}, ${this.yearValue}`)
+    let userBirthDate:any=new Date(`${this.monthsList[this.currentMonthValue]} ${this.currentDayValue+1}, ${this.yearValue}`)
+    console.log(`${this.currentMonthValue} ${this.monthsList[this.currentMonthValue]} ${this.currentDayValue+1}, ${this.yearValue}`,userBirthDate);    
     let currentDate:any=new Date()
     let userAge:any=Math.abs(currentDate-userBirthDate)
     let userAgeInYears:any=userAge/(1000*3600*24*365)
