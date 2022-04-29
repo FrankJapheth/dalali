@@ -25,6 +25,7 @@ export class AppComponent {
   ngAfterViewInit(){
     this.getOffsetTop()
     this.checkDetails()
+    
   }
 
   getOffsetTop():void{

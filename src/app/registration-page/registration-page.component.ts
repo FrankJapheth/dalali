@@ -73,6 +73,7 @@ export class RegistrationPageComponent implements OnInit {
   }
   signUpButton(evt:any): void{
     if(evt.type==='click'){
+      const loaderDiv: HTMLElement = this.elRef.nativeElement.querySelector(".loaderDiv");
       this.emptyValues=[]
       let signUpData:FormData= new FormData
       let signUpFormData:FormData=this.eppendData(signUpData,this.signUpFunc());
@@ -80,13 +81,18 @@ export class RegistrationPageComponent implements OnInit {
       if(this.contactType!="undetermined"){
         if(this.emptyValues.length==0){
           if(this.checkSignUpPassword()){
+            this.renderer.removeClass(loaderDiv,'nosite');
             this.backendCommunicator.backendCommunicator(signUpFormData,'post',`${this.backendCommunicator.backendBaseLink}/signUp`).then(resp=>{
-            this.userOTP=resp[2]
-            this.userContact=resp[1]
-            this.regResponse=resp[0]
-            let userOTPItems:Array<string>=[this.userContact,this.userOTP]
-            localStorage.setItem("userOTPItems",JSON.stringify(userOTPItems))
-            this.elRef.nativeElement.querySelector(".homeBut").click()
+              this.renderer.addClass(loaderDiv,'nosite');
+              this.userOTP=resp[2]
+              this.userContact=resp[1]
+              this.regResponse=resp[0]
+              this.signUpAlert(resp[0])           
+              let userOTPItems:Array<string>=[this.userContact,this.userOTP]
+              localStorage.setItem("userOTPItems",JSON.stringify(userOTPItems))
+              if (resp[0] !== 'Already registered'){
+                this.elRef.nativeElement.querySelector(".homeBut").click()
+              }
             })
           }else{
             this.signUpAlert("Wrong password match")

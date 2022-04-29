@@ -67,23 +67,38 @@ export class SignInPageComponent implements OnInit {
   }
   signInButton(evt:any): void{
     if(evt.type==='click'){
+      const loaderDiv: HTMLElement = this.elRef.nativeElement.querySelector(".loaderDiv");
       this.emptyValues=[]
       let signInData:FormData= new FormData
       let signInFormData:FormData=this.eppendData(signInData,this.signInFunc());
       this.contactType=this.contactChecker((<HTMLInputElement>document.getElementById("SignInContact")).value)
       if(this.contactType!="undetermined"){
         if(this.emptyValues.length==0){
-            this.backendCommunicator.backendCommunicator(signInFormData,'post',`${this.backendCommunicator.backendBaseLink}/signIn`).then(resp=>{
-              this.userOTP=resp[2]
-              this.userContact=resp[1]
-              this.regResponse=resp[0]
-              let userOTPItems:Array<string>=[this.userContact,this.userOTP]
-              localStorage.setItem("userOTPItems",JSON.stringify(userOTPItems))
-              this.clearData(this.signInFunc())
-              this.signInRouter("Successfully signed in",true).then(()=>{
-                this.closeFeedbackLoop()
-                this.elRef.nativeElement.querySelector(".homeBut").click()
-              })
+          this.renderer.removeClass(loaderDiv,'nosite');
+            this.backendCommunicator.backendCommunicator(signInFormData,'post',`${this.backendCommunicator.backendBaseLink}/signIn`).then((resp: any)=>{
+              this.renderer.addClass(loaderDiv,'nosite');
+              if(resp === null){
+                this.signInRouter('You are not registered',true).then(()=>{
+                  this.closeFeedbackLoop()
+                })  
+              }else{
+                this.userOTP=resp[2]
+                this.userContact=resp[1]
+                this.regResponse=resp[0]
+                let userOTPItems:Array<string>=[this.userContact,this.userOTP]
+                localStorage.setItem("userOTPItems",JSON.stringify(userOTPItems))
+                this.clearData(this.signInFunc())
+                if( resp.length > 1){
+                  this.signInRouter('Logged in successfully',true).then(()=>{
+                    this.closeFeedbackLoop()
+                    this.elRef.nativeElement.querySelector(".homeBut").click()
+                  })
+                }else{
+                  this.signInRouter('Log in Failed please check your details and try again',true).then(()=>{
+                    this.closeFeedbackLoop()
+                  })                
+                }
+             }
             })
           }else{
             this.signInRouter("There are some empty values",false).then(()=>{

@@ -1,6 +1,7 @@
 import { Component, OnInit,ElementRef,Renderer2 } from '@angular/core';
 import { BackendcommunicatorService } from '../backendcommunicator.service';
 import { DalalidataService } from '../dalalidata.service';
+import imageCompression   from 'browser-image-compression'
 
 @Component({
   selector: 'app-add-products',
@@ -91,10 +92,11 @@ export class AddProductsComponent implements OnInit {
   }
   
   productManipulator(displayfile:File):any{
+
+      this.currentFile=displayfile
       let prodImgData=new FileReader()
       prodImgData.onload=()=>{
         let displayfileData:any=prodImgData.result
-        this.currentFile=displayfileData
 
         if(this.dataServices.sectionToOpen=="Categories"){
           let prodCatImg:any=this.eleRef.nativeElement.querySelector(".prodCatImg")
@@ -111,54 +113,26 @@ export class AddProductsComponent implements OnInit {
       prodImgData.readAsDataURL(displayfile)
   }
 
+
+  setCompressionOptions(): any {
+
+    const options: any ={
+
+      maxSizeMB: 1,
+      maxWidthOrHeight: 800,
+      useWebWorker: true,
+
+    }
+
+    return options;
+  }
+
+
   imgReducer(imgData:any):Promise<Blob>{
     return new Promise((fTSResp,fTSRej)=>{
-      let imgToResize:any=new Image()
-      let imgholdertest:any=this.eleRef.nativeElement.querySelector(".imgholdertest")
-      imgToResize.onload=()=>{ 
-        let docImgToResize:any=this.eleRef.nativeElement.querySelector(".imgTosend")
-        console.log(imgholdertest,docImgToResize);        
-        if(docImgToResize!=null){ 
-          this.renderer.removeChild(imgholdertest,docImgToResize)
-          this.docPicAdded=false
-        }
-        let iTRNH:number=imgToResize.naturalHeight
-        let iTRNW:number=imgToResize.naturalWidth
-        imgToResize.classList="imgTosend"
-        let newImgHeight:number=400
-        let newImgWidth:number=400
-        console.log("img Set up");
-        if(iTRNH>iTRNW){
-          imgToResize.style.height=newImgHeight+"px"
-          imgToResize.style.width="auto"
-        }else if(iTRNH<iTRNW){
-          imgToResize.style.width=newImgWidth+"px"
-          imgToResize.style.height="auto"
-        }else{
-          imgToResize.style.width=newImgWidth+"px"
-          imgToResize.style.height="auto"
-        }
-        console.log(this.docPicAdded); 
-        console.log("value");         
-        if(this.docPicAdded==false){
-          console.log("after condition");  
-          this.renderer.appendChild(imgholdertest,imgToResize)
-          console.log("img appended");          
-          let imgTosend:any=this.eleRef.nativeElement.querySelector(".imgTosend")
-          let reducedHeight:number=imgTosend.offsetHeight
-          let reducedWidth:number=imgTosend.offsetWidth
-          let reducedImgCanvas:any=document.createElement("canvas")
-          reducedImgCanvas.height=reducedHeight
-          reducedImgCanvas.width=reducedWidth
-          let resizerContext:any=reducedImgCanvas.getContext("2d")
-          resizerContext.drawImage(imgToResize, 0, 0, reducedWidth, reducedHeight)
-          reducedImgCanvas.toBlob((imgtostore:any)=>{
-            fTSResp(imgtostore)
-        },'image/png',0.7)
-          this.docPicAdded=true
-        }
-      }
-      imgToResize.src=imgData
+      imageCompression(imgData,this.setCompressionOptions()).then((compressedFile: any)=>{
+        fTSResp(compressedFile)
+      })
     })
   }
 
@@ -223,13 +197,16 @@ export class AddProductsComponent implements OnInit {
     let docProductetailsSect:any=this.eleRef.nativeElement.querySelector(".productetailsSect")
     this.renderer.listen(docbtnNext,"click",()=>{
       if(!this.prodUploaded){
+        const loaderDiv: HTMLElement = this.eleRef.nativeElement.querySelector(".loaderDiv");
         this.imgReducer(this.currentFile).then(fTSend=>{
           let prod_details:FormData= new FormData()
           prod_details.append("typeOfUpload","partial")
           prod_details.append("productImg",fTSend)
           prod_details.append("retailerId",this.dataServices.userData.userContact)
           prod_details.append("retailerName",this.dataServices.userData.userName)
+          this.renderer.removeClass(loaderDiv,'nosite');
           this.backComs.backendCommunicator(prod_details,"post",`${this.backComs.backendBaseLink}/addProd`).then(resp=>{
+            this.renderer.addClass(loaderDiv,'nosite');
             this.prodId=resp
             this.prodUploaded=true
             this.renderer.addClass(docImgHolderSect,"nosite")
@@ -286,9 +263,12 @@ export class AddProductsComponent implements OnInit {
     this.renderer.listen(docproductDetailsSubmmiter,"click",()=>{
       let docProdDetTextInputs:any=this.eleRef.nativeElement.querySelectorAll(".prodDetTextInput")
       let prodFormData:FormData=this.checkProdInput(docProdDetTextInputs)
+      const loaderDiv: HTMLElement = this.eleRef.nativeElement.querySelector(".loaderDiv");
       if(this.emptyProdValues==false){
+        this.renderer.removeClass(loaderDiv,'nosite');
         this.backComs.backendCommunicator(prodFormData,"post",`${this.backComs.backendBaseLink}/addProd`).then(resp=>{
-            let pUtoolsSect:any=this.eleRef.nativeElement.querySelector(".pUtoolsSect")
+          this.renderer.addClass(loaderDiv,'nosite');  
+          let pUtoolsSect:any=this.eleRef.nativeElement.querySelector(".pUtoolsSect")
             this.renderer.addClass(pUtoolsSect,"nosite")
             let pUPNewProdPg:any=this.eleRef.nativeElement.querySelector(".pUPNewProdPg")
             this.renderer.removeClass(pUPNewProdPg,"nosite")
@@ -327,13 +307,6 @@ export class AddProductsComponent implements OnInit {
         this.renderer.addClass(docCategoryAnsDiv,"nosite")
       }
   }
-  // cADTExit():void{
-  //   let docCADTExit:any=this.eleRef.nativeElement.querySelector(".cADTExit")
-  //   let docCategoryAnsDiv:any=this.eleRef.nativeElement.querySelector(".categoryAnsDiv")
-  //   this.renderer.listen(docCADTExit,"click",()=>{
-  //     this.renderer.addClass(docCategoryAnsDiv,"nosite")
-  //   })
-  // }
   cTResultTab(evt:any){
     let tabDetails:any=evt.target
     this.chosenCatId=tabDetails.id.slice(4)
@@ -353,17 +326,15 @@ export class AddProductsComponent implements OnInit {
     let aCSCatImgHolder:any=this.eleRef.nativeElement.querySelector(".aCSCatImgHolder")
     let catDetailsSect:any=this.eleRef.nativeElement.querySelector(".catDetailsSect")
     this.renderer.listen(catSectBtnNext,"click",()=>{    
-      if(this.catPicUploaded==false){
-        console.log(this.catPicUploaded);
-        console.log("Calling img reducer");   
-        console.log(this.currentFile);
+      if(this.catPicUploaded===false){
+        const loaderDiv: HTMLElement = this.eleRef.nativeElement.querySelector(".loaderDiv");
         this.imgReducer(this.currentFile).then(fTSend=>{
-          console.log("called img reducer");   
           let cat_details:FormData= new FormData()
           cat_details.append("typeOfUpload","partial")
           cat_details.append("categoryImg",fTSend)
+          this.renderer.removeClass(loaderDiv,'nosite');
           this.backComs.backendCommunicator(cat_details,"post",`${this.backComs.backendBaseLink}/addCat`).then(resp=>{
-            console.log(resp); 
+            this.renderer.addClass(loaderDiv,'nosite');
             this.catId=resp
             this.catPicUploaded=true
             console.log(this.catPicUploaded);   
@@ -392,13 +363,13 @@ export class AddProductsComponent implements OnInit {
       let cat_details:FormData= new FormData()
       cat_details.append("typeOfUpload","full")
       cat_details.append("categoryName",categoryName)
-      cat_details.append("categoryid",this.catId)
+      cat_details.append("categoryid",this.catId);
+      const loaderDiv: HTMLElement = this.eleRef.nativeElement.querySelector(".loaderDiv");
       if(categoryName!=""){
+        this.renderer.removeClass(loaderDiv,'nosite');
         this.backComs.backendCommunicator(cat_details,"post",`${this.backComs.backendBaseLink}/addCat`).then(resp=>{
-          console.log(resp); 
-          console.log(this.catPicUploaded); 
+          this.renderer.addClass(loaderDiv,'nosite');
           this.catPicUploaded=false
-          console.log(this.catPicUploaded); 
           let addingCategoriesSect:any=this.eleRef.nativeElement.querySelector(".addingCategoriesSect")
           this.renderer.addClass(addingCategoriesSect,"nosite")
           let pUPNewProdPg:any=this.eleRef.nativeElement.querySelector(".pUPNewProdPg")
