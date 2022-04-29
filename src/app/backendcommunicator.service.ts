@@ -11,7 +11,6 @@ export class BackendcommunicatorService {
   backendCommunicator(msgBody:FormData,method:string,link:string):Promise< string>{
     return new Promise((searchResolve,searchReject)=>{
       const cachePresent: any = 'caches' in self;
-      const dalaliGenCache: Cache = new Cache;
       if (cachePresent === true) {
       }      
         const searchXhr=new XMLHttpRequest();
