@@ -44,8 +44,8 @@ export class HomeCategoriesComponent implements OnInit {
   ngAfterViewChecked():void{
     let storedProds:any=this.dataServices.getSiteProdsList()
     storedProds.forEach((storedProd:any) => {
-      let ele:any=this.eleRef.nativeElement.querySelector(`#cPC${storedProd[0]}`)
-      let addBut:any=this.eleRef.nativeElement.querySelector(`#aTCB${storedProd[0]}`)
+      let ele:any=this.eleRef.nativeElement.querySelector(`#cPC${storedProd[0].trim()}`)
+      let addBut:any=this.eleRef.nativeElement.querySelector(`#aTCB${storedProd[0].trim()}`)
       if(ele!=null){
         if(this.dataServices.cartProductsArray.includes(storedProd[0])){
           this.renderer.removeClass(ele,"nosite")

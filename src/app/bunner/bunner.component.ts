@@ -20,9 +20,7 @@ export class BunnerComponent implements OnInit {
     this.bunnerMover()
   }
   bunnerMover():any{
-    let intId:any=setInterval(()=>{this.bunnerClicker()},5000)
-    console.log(intId);
-    
+    setInterval(()=>{this.bunnerClicker()},5000);
   }
   bunnerClicker():any{  
     this.eleRef.nativeElement.querySelector(`#song-${this.clickImage}`).click()
@@ -39,14 +37,6 @@ export class BunnerComponent implements OnInit {
       prevId=3
       nextId= this.clickImage+1
     }
-
-    // let timerDivToProcess:any=this.eleRef.nativeElement.querySelector(`#timer${this.clickImage}`)
-    // let nextDiv:any=this.eleRef.nativeElement.querySelector(`#timer${nextId}`)
-    // let prevDiv:any=this.eleRef.nativeElement.querySelector(`#timer${prevId}`)
-
-    // this.renderer.removeClass(timerDivToProcess,"nosite")
-    // this.renderer.addClass(nextDiv,"nosite")
-    // this.renderer.addClass(prevDiv,"nosite")
     if(this.clickImage<3){
       this.clickImage+=1
     }else{
