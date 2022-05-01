@@ -2,6 +2,7 @@
 
 import { Injectable} from '@angular/core';
 import { BackendcommunicatorService } from './backendcommunicator.service';
+import { DalaliCachesService } from './dalali-caches.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,7 @@ export class DalalidataService {
 
   constructor(
     private backendCommunicator:BackendcommunicatorService,
+    private dalaliCache: DalaliCachesService
   ) { }
 
   public userData:any={
@@ -78,12 +80,38 @@ export class DalalidataService {
   }
   getProductCategories(){
     return new Promise((catResp,catRej)=>{
-      this.backendCommunicator.backendCommunicator(new FormData,"get",
-      `${this.backendCommunicator.backendBaseLink}/catProducts`).then(resp=>{
-        catResp(resp)
-      }).catch(err=>{
-        catRej(err)
-      })
+      const requestLink: string = `${this.backendCommunicator.backendBaseLink}/catProducts`;
+      const sessionCacheName: string = this.dalaliCache.cacheName;
+      const rawDalaliSessionCache: any =sessionStorage.getItem('dalaliSessionCache')
+      const dalaliSessionCache: any =JSON.parse(rawDalaliSessionCache)
+      if ( dalaliSessionCache !== null ){
+        if(!dalaliSessionCache.includes(requestLink)){
+          this.backendCommunicator.backendCommunicator(new FormData,"get",
+          requestLink ).then(resp=>{
+            this.dalaliCache.storeLinkToCache(requestLink);
+            this.dalaliCache.putContent(sessionCacheName,requestLink,resp).then(() => {
+              catResp(resp)
+            });
+          }).catch(err=>{
+            catRej(err)
+          })
+        }else {
+
+          this.dalaliCache.getCacheResponse(sessionCacheName,requestLink).then((cacheResp: any) => {
+            catResp(cacheResp)
+          });
+        };
+      }else {
+        this.backendCommunicator.backendCommunicator(new FormData,"get",
+        requestLink ).then(resp=>{
+          this.dalaliCache.storeLinkToCache(requestLink);
+          this.dalaliCache.putContent(sessionCacheName,requestLink,resp).then(() => {
+            catResp(resp)
+          });
+        }).catch(err=>{
+          catRej(err)
+        })
+      };
 
     })
   }

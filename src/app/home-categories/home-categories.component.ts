@@ -1,6 +1,7 @@
 import { Component, ElementRef, Input, OnInit, Renderer2 } from '@angular/core';
 import { DalalidataService } from '../dalalidata.service';
 import { BackendcommunicatorService } from '../backendcommunicator.service';
+import { DalaliCachesService } from '../dalali-caches.service';
 
 @Component({
   selector: 'app-home-categories',
@@ -13,7 +14,8 @@ export class HomeCategoriesComponent implements OnInit {
     private eleRef:ElementRef,
     private renderer:Renderer2,
     private dataServices:DalalidataService,
-    private backEndComms:BackendcommunicatorService
+    private backEndComms:BackendcommunicatorService,
+    private dalaliCache: DalaliCachesService
   ) { }
   
   public bEBaseLink=this.backEndComms.backendBaseLink
@@ -28,7 +30,7 @@ export class HomeCategoriesComponent implements OnInit {
   ngOnInit(): void {
   }
   ngAfterViewInit():void{
-    this.dataServices.getMaxProdIndex().then((respmax:any)=>{
+    this.dataServices.getMaxProdIndex().then((respmax:any)=>{ 
       this.getCategoryProducts(respmax).then((resp:any)=>{
         if(resp.length>0){
           this.catProdsArray=resp
@@ -56,13 +58,43 @@ export class HomeCategoriesComponent implements OnInit {
   }
   getCategoryProducts(maxIndex:string):Promise<string>{  
     return new Promise((res:any,rej:any)=>{
-      let catProdFormData:FormData=new FormData()
-      catProdFormData.append("categoryProductId",this.catId)
-      catProdFormData.append("prodMaxIndex",maxIndex)
-      catProdFormData.append("cartName",this.catName)
-      this.backEndComms.backendCommunicator(catProdFormData,"post",`${this.backEndComms.backendBaseLink}/getCatProds`).then(resp=>{
-        res(resp)
-      }) 
+      const cacheRequestLink: string = `${this.backEndComms.backendBaseLink}/getCatProds${this.catId}`;
+      const sessionCacheName: string = this.dalaliCache.cacheName;
+      const rawDalaliSessionCache: any =sessionStorage.getItem('dalaliSessionCache')
+      const dalaliSessionCache: any =JSON.parse(rawDalaliSessionCache)
+      if ( dalaliSessionCache !== null ){
+        if(!dalaliSessionCache.includes(cacheRequestLink)){
+          const requestLink: string = `${this.backEndComms.backendBaseLink}/getCatProds`;
+          let catProdFormData:FormData=new FormData()
+          catProdFormData.append("categoryProductId",this.catId)
+          catProdFormData.append("prodMaxIndex",maxIndex)
+          catProdFormData.append("cartName",this.catName)
+          this.backEndComms.backendCommunicator(catProdFormData,"post",requestLink).then(resp=>{
+            const responseData: any = resp
+            this.dalaliCache.storeLinkToCache(cacheRequestLink);
+            this.dalaliCache.putContent(sessionCacheName,cacheRequestLink,responseData).then(() => {
+              res(resp)
+            });
+          });
+        }else{
+          this.dalaliCache.getCacheResponse(sessionCacheName,cacheRequestLink).then((cacheResp: any) => {
+            res(cacheResp)
+          });
+        }
+      }else{
+        const requestLink: string = `${this.backEndComms.backendBaseLink}/getCatProds`;
+        let catProdFormData:FormData=new FormData()
+        catProdFormData.append("categoryProductId",this.catId)
+        catProdFormData.append("prodMaxIndex",maxIndex)
+        catProdFormData.append("cartName",this.catName)
+        this.backEndComms.backendCommunicator(catProdFormData,"post",requestLink).then(resp=>{
+          const responseData: any = resp
+          this.dalaliCache.storeLinkToCache(cacheRequestLink);
+          this.dalaliCache.putContent(sessionCacheName,cacheRequestLink,responseData).then(() => {
+            res(resp)
+          });
+        });
+      }
     })
   }
   storeFetchedProdDetails(prodsDetails:Array<any>):Array<any>{

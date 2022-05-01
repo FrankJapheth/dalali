@@ -1,4 +1,4 @@
-import { Component,ElementRef, Renderer2 } from '@angular/core';
+import { Component,ElementRef, Renderer2, OnInit, AfterContentInit, AfterViewInit } from '@angular/core';
 import { DalalidataService } from './dalalidata.service';
 import { BackendcommunicatorService } from './backendcommunicator.service';
 import { DalaliWebSocketsService } from './dalali-web-sockets.service';
@@ -8,7 +8,7 @@ import { DalaliWebSocketsService } from './dalali-web-sockets.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit,AfterViewInit{
   title = 'dalali';
   private userOTP: string="";
   private userContact: string="";
@@ -21,6 +21,8 @@ export class AppComponent {
     private renderer:Renderer2
   ) {}
   public displayText:string="Display Text"
+
+  ngOnInit(): void { };
 
   ngAfterViewInit(){
     this.getOffsetTop()
