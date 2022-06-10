@@ -27,7 +27,6 @@ export class AddProductsComponent implements OnInit {
   public chosenMetric:string=""
   public productCategories:any=""
   public currentFile:any=null
-  private docPicAdded:boolean=false
   private catId:any=0
   private catPicUploaded:boolean=false
   private prodId: string="";
@@ -132,6 +131,8 @@ export class AddProductsComponent implements OnInit {
     return new Promise((fTSResp,fTSRej)=>{
       imageCompression(imgData,this.setCompressionOptions()).then((compressedFile: any)=>{
         fTSResp(compressedFile)
+      }).catch((err: any) => {
+        fTSRej(err)
       })
     })
   }
@@ -266,7 +267,7 @@ export class AddProductsComponent implements OnInit {
       const loaderDiv: HTMLElement = this.eleRef.nativeElement.querySelector(".loaderDiv");
       if(this.emptyProdValues==false){
         this.renderer.removeClass(loaderDiv,'nosite');
-        this.backComs.backendCommunicator(prodFormData,"post",`${this.backComs.backendBaseLink}/addProd`).then(resp=>{
+        this.backComs.backendCommunicator(prodFormData,"post",`${this.backComs.backendBaseLink}/addProd`).then(()=>{
           this.renderer.addClass(loaderDiv,'nosite');  
           let pUtoolsSect:any=this.eleRef.nativeElement.querySelector(".pUtoolsSect")
             this.renderer.addClass(pUtoolsSect,"nosite")
@@ -367,7 +368,7 @@ export class AddProductsComponent implements OnInit {
       const loaderDiv: HTMLElement = this.eleRef.nativeElement.querySelector(".loaderDiv");
       if(categoryName!=""){
         this.renderer.removeClass(loaderDiv,'nosite');
-        this.backComs.backendCommunicator(cat_details,"post",`${this.backComs.backendBaseLink}/addCat`).then(resp=>{
+        this.backComs.backendCommunicator(cat_details,"post",`${this.backComs.backendBaseLink}/addCat`).then(()=>{
           this.renderer.addClass(loaderDiv,'nosite');
           this.catPicUploaded=false
           let addingCategoriesSect:any=this.eleRef.nativeElement.querySelector(".addingCategoriesSect")

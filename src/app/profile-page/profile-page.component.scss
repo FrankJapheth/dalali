@@ -2,22 +2,46 @@
 .wholeProfilePage{
     width: 100%;
     height: auto;
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
+}
+@media all and (min-width:500px) {
+    .wholeProfilePage{
+        width: 100%;
+        height: auto;
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+    }
+    
 }
 .profileButtons{
-    width: 150px;
-    height: 70px;
+    width: 100%;
+    height: 45px;
     border-radius: 3px;
-    margin-left: 20px;
+    margin-bottom: 10px;
+    margin-top: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
-    box-shadow:  7px 7px 11px #b3b3b3,
-                 -7px -7px 11px #ffffff;
+    box-shadow:  5px 5px 7px #b3b3b3,
+                 -5px -5px 7px #ffffff;
     cursor: pointer;
     font-family: 'Open Sans', sans-serif;
+}
+@media all and (min-width:500px) {
+    .profileButtons{
+        width: 150px;
+        height: 70px;
+        border-radius: 3px;
+        margin-left: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow:  7px 7px 11px #b3b3b3,
+                     -7px -7px 11px #ffffff;
+        cursor: pointer;
+        font-family: 'Open Sans', sans-serif;
+    }
+    
 }
 .linkButtons{
     text-decoration: none;

@@ -1,0 +1,177 @@
+.daysChanges{
+    width: 100%;
+    height: auto;
+    padding: 10px;
+    box-sizing: border-box;
+}
+.daysChangesHead{
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.daysChangesBody{
+    width: 100%;
+    height: auto;
+    margin-top: 30px;
+    position: relative;
+}
+.chnagesPelletsHolder{
+    width: 60%;
+    height: auto;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.changesPellete{
+    width: 70%;
+    height: auto;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #e2e2e2f6;
+    border-radius: 3px;
+    padding: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.pInfoTab{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.pITLable{
+    width: 40%;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #393c4e;
+}
+.pITValue{
+    width: 40%;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.retailerIdValue{
+    font-size: 150%;
+    color: #69001e;
+}
+.viewChangesButton{
+    width: 60%;
+    height: 80%;
+    border-radius: 2px;
+    background-color: #121420;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+.viewAttribChangesButton{
+    width: 70%;
+    height: 80%;
+    border-radius: 2px;
+    background-color: #121420;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 90%;
+}
+.productsChangedPelletHolder{
+    width: 90%;
+    height: auto;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.pCPellet{
+    width: 90%;
+    height: auto;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #7e7e7e;
+    border-radius: 3px;
+    padding: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: #fff;
+}
+.pInfoTab{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.pCPLable{
+    width: 40%;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #e6e6e6;
+}
+.pCPValue{
+    width: 40%;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.changedAttributes{
+    width: 90%;
+    height: auto;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.attributesTab{
+    width: 90%;
+    height: auto;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #e2e2e2f6;
+    border-radius: 3px;
+    padding: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: #121420;
+}
+.attInfoTab{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.attrbLabel{
+    width: 40%;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #3f3f3f;
+}
+.attrbVal{
+    width: 40%;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

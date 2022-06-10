@@ -1,0 +1,72 @@
+<div class="dalaliCalendar">
+
+    <div class="dCHeader">
+
+        <div class="dCControllers">
+
+            <div class="dCYearBack moveControllers"
+            (click)="this.getPrevYear()">
+                <div>
+                    <i class="fas fa-arrow-left"></i>
+                </div>
+
+                <div>
+                    Year
+                </div>
+            </div>
+
+            <div class="dCMonthBack moveControllers"
+            (click)="this.getPrevMonth()">
+                <div>
+                    <i class="fas fa-arrow-left"></i>
+                </div>
+                <div>
+                    Month
+                </div>
+            </div>
+
+            <div class="monthYearDisplay">
+
+                <div class="yearDisplay">
+                    2022
+                </div>
+
+                <div class="monthDisplay">
+                    June
+                </div>
+
+            </div>
+
+            <div class="dCMonthFront moveControllers"
+            (click)="this.getNextMonth()">
+                <div>
+                    Month
+                </div>
+                <div>
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+            </div>
+
+            <div class="dCYearFront moveControllers"
+            (click)="this.getNextYear()">
+                <div>
+                    Year
+                </div>
+                <div>
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="dCBody">
+
+        <div class="calenderHolder">
+
+        </div>
+
+    </div>
+
+</div>

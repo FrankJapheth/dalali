@@ -162,6 +162,30 @@
     top: 50%;
     transform: translateY(-50%);
 }
+.eyeBoxes{
+    width: 50px;
+    height: 50px;
+    background-color: transparent;
+    color: #121420;
+    position: absolute;
+    right: 10px;
+    top: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+.passwordHolder{
+    width: 100%;
+    height: 50px;
+    padding: 5px;
+    box-sizing: border-box;
+    font-size: 100%;
+    outline: none;
+    margin-bottom: 15px;
+    border: 0px solid;
+    position: relative;
+}
 .nosite{
     display: none;
 }

@@ -43,6 +43,7 @@ export class DalalidataService {
   public retailerColumnToEdit:Array<any>=[
     "name","metrics","quantity","ImgUrl"
   ]
+  public daysDate:string=''
 
   public mWFLAns:boolean=false
 

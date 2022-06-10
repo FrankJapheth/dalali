@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ElementRef } from '@angular/core';
 import { DalalidataService } from '../dalalidata.service';
+import { BackendcommunicatorService } from '../backendcommunicator.service';
 
 @Component({
   selector: 'app-products-categories',
@@ -7,11 +8,14 @@ import { DalalidataService } from '../dalalidata.service';
   styleUrls: ['./products-categories.component.scss']
 })
 export class ProductsCategoriesComponent implements OnInit {
+  public prodCats:any=[]
 
   constructor(
-    private dalaliData:DalalidataService
+    private dalaliData:DalalidataService,
+    private backComms: BackendcommunicatorService,
+    private eleRef: ElementRef
   ) { }
-  public prodCats:any=[]
+  public bEBaseLink: string = this.backComms.backendBaseLink
   
   ngOnInit(): void {
     this.getProductCat()
@@ -20,6 +24,16 @@ export class ProductsCategoriesComponent implements OnInit {
     this.dalaliData.getProductCategories().then(resp=>{
       this.prodCats=resp  
     })
+  }
+  catTitleSeeMore(evt:any):void{
+    let docCatTitleSeeMoreId:any=evt.target.id
+    let cDTCTNID=`#cDTCTN${docCatTitleSeeMoreId.slice(4)}`
+    let cDTCTNEle=this.eleRef.nativeElement.querySelector(cDTCTNID)
+    this.dalaliData.chosenCategory=cDTCTNEle.innerText
+    this.dalaliData.chosenCategoryId=docCatTitleSeeMoreId.slice(4)
+    let pCTSMID=`#pCTSM${docCatTitleSeeMoreId.slice(4)}`
+    let pCTSMEle=this.eleRef.nativeElement.querySelector(pCTSMID)
+    pCTSMEle.click()
   }
 
 }

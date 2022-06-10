@@ -10,8 +10,8 @@ export class DalaliWebSocketsService {
     private dataService:DalalidataService
   ) { }
   public dalaliSockets:any=null
-  public hostName='dalaliwinehouse.com/wsbackend'
-  public wsBackendBaseLink:string=`wss://${this.hostName}`
+  public hostName='127.0.0.1:8000'
+  public wsBackendBaseLink:string=`ws://${this.hostName}`
   public websocketOpen:boolean=false
 
   wsBackEndCommunicator(userContact:string,userName:string,userType:string):void{
@@ -19,14 +19,14 @@ export class DalaliWebSocketsService {
     this.dalaliSockets = new WebSocket(`${this.wsBackendBaseLink}/ws/orders?contact=${userContact}&name=${userName}&userType=${userType}`);
   
     
-    this.dalaliSockets.onopen = (event:any) => {
+    this.dalaliSockets.onopen = () => {
 
       this.websocketOpen=true    
           
       
     };
     
-    this.dalaliSockets.onclose = (event:any) => {
+    this.dalaliSockets.onclose = () => {
   
       this.websocketOpen=false
       console.error('Chat socket closed unexpectedly');

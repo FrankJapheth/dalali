@@ -1,8 +1,8 @@
-import { Component,ElementRef, Renderer2, OnInit, AfterContentInit, AfterViewInit } from '@angular/core';
+import { Component,ElementRef, Renderer2, OnInit, AfterViewInit } from '@angular/core';
 import { DalalidataService } from './dalalidata.service';
-import { BackendcommunicatorService } from './backendcommunicator.service';
-import { DalaliWebSocketsService } from './dalali-web-sockets.service';
-
+import { DalaliSessionStorageService } from './dalali-session-storage.service';
+import { Router } from '@angular/router';
+import { SwUpdate } from "@angular/service-worker";
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -10,23 +10,30 @@ import { DalaliWebSocketsService } from './dalali-web-sockets.service';
 })
 export class AppComponent implements OnInit,AfterViewInit{
   title = 'dalali';
-  private userOTP: string="";
-  private userContact: string="";
   private windowWidth:any=window.innerWidth
   constructor(
     private eleRef:ElementRef,
     private dataService:DalalidataService,
-    private backendCommunicator:BackendcommunicatorService,
-    private dWebSockets:DalaliWebSocketsService,
-    private renderer:Renderer2
+    private renderer:Renderer2,
+    private dalaliSession:DalaliSessionStorageService,
+    private dalaliRouter:Router,
+    private swUpdate: SwUpdate
   ) {}
   public displayText:string="Display Text"
 
-  ngOnInit(): void { };
+  ngOnInit(): void { 
+    if (this.swUpdate.isEnabled) {
+      this.swUpdate.versionUpdates.subscribe(() => {
+        if (confirm("A New version of site is available. Load New Version?")) {
+          window.location.reload();
+        }
+      });
+    }
+  };
 
   ngAfterViewInit(){
     this.getOffsetTop()
-    this.checkDetails()
+    this.checkSessionLogIn()
     
   }
 
@@ -37,40 +44,6 @@ export class AppComponent implements OnInit,AfterViewInit{
   }
   redirect(){
     this.eleRef.nativeElement.querySelector(".homeLinkSignIn").click()    
-  }
-  checkDetails(){
-    let otpDetails:any=localStorage.getItem("userOTPItems")
-    if(otpDetails!=null){    
-      this.otpSignIn()
-    }
-  }
-  otpSignIn(){
-    let userOTPDetails:any=localStorage.getItem("userOTPItems")
-    if (userOTPDetails!=null){
-      let parsedUserOTPDetails:any= JSON.parse(userOTPDetails)
-      let userContact:string=parsedUserOTPDetails[0]
-      let userOTP:string=parsedUserOTPDetails[1]
-      let formToAppend:FormData=new FormData();
-      formToAppend.append("userContact",userContact)
-      formToAppend.append("userOTP",userOTP)
-      this.backendCommunicator.backendCommunicator(formToAppend,"post",`${this.backendCommunicator.backendBaseLink}/otpSignIn`).then(resp=>{
-        if(resp[0]=="success"){
-          this.dataService.setUserBasicInfo([resp[1],resp[2],resp[3],resp[4]])
-          this.userOTP=resp[5]
-          this.userContact=resp[6]
-          let userOTPItems:Array<string>=[this.userContact,this.userOTP]
-          localStorage.setItem("userOTPItems",JSON.stringify(userOTPItems))
-          this.dWebSockets.wsBackEndCommunicator(
-            this.dataService.userData.userContact,
-            this.dataService.userData.userName,
-            this.dataService.userData.userType,
-          )
-        }
-        this.eleRef.nativeElement.querySelector(".homeLink").click()
-      })
-    }else{
-      this.eleRef.nativeElement.querySelector(".homeLink").click()      
-    }
   }
   
   openNavBar():void{
@@ -91,5 +64,15 @@ export class AppComponent implements OnInit,AfterViewInit{
       }, 330);
     }
 
+  }
+  checkSessionLogIn():void{
+    const rawSessionLogIn: any = sessionStorage.getItem('sessionLogIn')
+    if(rawSessionLogIn === null || this.dalaliSession.sessionLogIn===false){
+      this.dalaliSession.sessionLogIn=false
+      sessionStorage.setItem('sessionLogIn',JSON.stringify(this.dalaliSession.sessionLogIn))
+      this.dalaliRouter.navigateByUrl('')
+    }else{
+      this.dalaliSession.sessionLogIn=JSON.parse(rawSessionLogIn)
+    }
   }
 }

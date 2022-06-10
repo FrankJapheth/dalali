@@ -1,0 +1,174 @@
+<div class="daysChanges">
+
+    <div class="daysChangesHead">
+        {{this.daysDate}}
+    </div>
+
+    <div class="daysChangesBody">
+
+        <div class="chnagesPelletsHolder">
+            
+            <div class="changesPellete" *ngFor="let dayRecord of dayRecords">
+
+                <div class="retailerId pInfoTab">
+
+                    <div class="pITLable retailerIdLabel">
+                        Retailer Id
+                    </div>
+
+                    <div class="pITValue retailerIdValue"
+                    [id]="'rIV'+dayRecords.indexOf(dayRecord)">
+                        {{dayRecord[3]}}
+                    </div>
+
+                </div>
+
+                <div class="dateOfChange pInfoTab">
+
+                    <div class="pITLable dateOfChangeLabel">
+                        Date of change
+                    </div>
+
+                    <div class="pITValue dateOfChangeValue"
+                    [id]="'dOCV'+dayRecords.indexOf(dayRecord)">
+                        {{dayRecord[2]}}
+                    </div>
+
+                </div>
+
+                <div class="numberOfChanges pInfoTab">
+
+                    <div class="pITLable numberOfChangesLabel">
+                        Number of Changes
+                    </div>
+
+                    <div class="pITValue numberOfChangesValue">
+                        {{dayRecord[4]}}
+                    </div>
+
+                </div>
+
+                <div class="viewChanges pInfoTab">
+
+                    <div class="pITLable viewChangesLabel">
+                        View changes
+                    </div>
+
+                    <div class="pITValue viewChangesValue">
+                        <div class="viewChangesButton" [id]="'vC'+dayRecords.indexOf(dayRecord)"
+                        (click)="this.getRetailerChanges($event)">
+                            View Changes
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="productsChangedPelletHolder">
+
+                    <div class="pCPellet" *ngFor="let changeRecords of changesRecordsDict[dayRecords.indexOf(dayRecord)]">
+
+
+                        <div class="timeOfChangedProdTab pInfoTab">
+
+                            <div class="pCPLable timeOfprodChangeLabel">
+                                Time of change
+                            </div>
+        
+                            <div class="pCPValue timeOfprodChangeValue">
+                                {{changeRecords[1]}}
+                            </div>
+        
+                        </div>
+
+                        <div class="prodNameTab pInfoTab">
+
+                            <div class="pCPLable prodNameLabel">
+                                Product Name
+                            </div>
+        
+                            <div class="pCPValue prodNameValue">
+                                {{changeRecords[5]}}
+                            </div>
+        
+                        </div>
+
+                        <div class="viewChanges pInfoTab">
+
+                            <div class="pCPLable viewChangesLabel">
+                                View Attributes Edited
+                            </div>
+        
+                            <div class="pCPValue viewChangesValue">
+                                <input type="hidden" [id]="'aD'+changesRecordsDict[dayRecords.indexOf(dayRecord)].indexOf(changeRecords)"
+                                value="{{changeRecords[6]}}">
+                                <div class="viewAttribChangesButton"
+                                [id]="'vB'+changesRecordsDict[dayRecords.indexOf(dayRecord)].indexOf(changeRecords)"
+                                (click)="this.parseAttribValue($event)">
+                                    View Records
+                                </div>
+                            </div>
+        
+                        </div>
+
+                        <div class="changedAttributes">
+                            
+                            <div class="attributesTab"
+                            *ngFor="let attribDetails of changedAttrib[changesRecordsDict[dayRecords.indexOf(dayRecord)].indexOf(changeRecords)]">
+
+                                <div class="aTName attInfoTab">
+                                    <div class="attrbLabel">
+                                        Name
+                                    </div>
+
+                                    <div class="attrbVal">
+                                        {{attribDetails[0]}}
+                                    </div>
+                                </div>
+
+                                <div class="aTInitValue attInfoTab">
+                                    <div class="attrbLabel">
+                                        Initial value
+                                    </div>
+
+                                    <div class="attrbVal">
+                                        {{attribDetails[1]}}
+                                    </div>
+                                </div>
+
+                                <div class="aTFinalValue attInfoTab">
+
+                                    <div class="attrbLabel">
+                                        Current value
+                                    </div>
+
+                                    <div class="attrbVal">
+                                        {{attribDetails[2]}}
+                                    </div>
+                                </div>
+
+                                <div class="aTDifference attInfoTab"
+                                *ngIf="attribDetails[0]=='Quantity' || attribDetails[0]=='Price'">
+
+                                    <div class="attrbLabel">
+                                        Changed by
+                                    </div>
+
+                                    <div class="attrbVal">
+                                        {{attribDetails[2]-attribDetails[1]}}
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

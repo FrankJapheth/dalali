@@ -37,6 +37,14 @@ import { ProductsCategoriesComponent } from './products-categories/products-cate
 import { SingleWayFeedbackLoopComponent } from './single-way-feedback-loop/single-way-feedback-loop.component';
 import { MultiWaysFeedbackLoopComponent } from './multi-ways-feedback-loop/multi-ways-feedback-loop.component';
 import { CustomersOrdersComponent } from './customers-orders/customers-orders.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
+import { ProductsAddedComponent } from './products-added/products-added.component';
+import { ProductsOrderedComponent } from './products-ordered/products-ordered.component';
+import { ProductsSoldComponent } from './products-sold/products-sold.component';
+import { InventoryComponent } from './inventory/inventory.component';
+import { DaysChangesComponent } from './days-changes/days-changes.component';
+import { DalaliCalenderComponent } from './dalali-calender/dalali-calender.component';
 
 @NgModule({
   declarations: [
@@ -74,11 +82,24 @@ import { CustomersOrdersComponent } from './customers-orders/customers-orders.co
     ProductsCategoriesComponent,
     SingleWayFeedbackLoopComponent,
     MultiWaysFeedbackLoopComponent,
-    CustomersOrdersComponent
+    CustomersOrdersComponent,
+    ProductsAddedComponent,
+    ProductsOrderedComponent,
+    ProductsSoldComponent,
+    InventoryComponent,
+    DaysChangesComponent,
+    DalaliCalenderComponent,
+    
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]

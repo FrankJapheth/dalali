@@ -3,6 +3,10 @@
         <input type="text" name="productSearchInput"
         id="productSearchInput" class="productSearchInput"
         placeholder="Search products" (keyup)="this.productSearchInput($event)">
+        <div class="closeResults nosite"
+        (click)="this.closeResults()">
+            <i class="fas fa-times"></i>
+        </div>
         <div class="searchBtn">
             <i class="fas fa-search"></i>
             <a routerLink="/searchResult"  class="linkItemSearch nosite"></a>

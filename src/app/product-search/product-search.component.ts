@@ -25,7 +25,19 @@ export class ProductSearchComponent implements OnInit {
   ngAfterViewInit():void{
     this.searchBtn()
   }
+  closeResults(): void{
+    const docSearchedProductsHolder:any=this.eleRef.nativeElement.querySelector(".searchedProductsHolder")
+    const docProductSearchInput: any = this.eleRef.nativeElement.querySelector("#productSearchInput")
+    const docCloseResults: any = this.eleRef.nativeElement.querySelector('.closeResults')
+    docProductSearchInput.value=''
+    this.renderer.setStyle(docSearchedProductsHolder,"height","0px")
+    setTimeout(() => {
+      this.renderer.addClass(docSearchedProductsHolder,"nosite")
+    }, 200);
+    this.renderer.addClass(docCloseResults,'nosite')
+  }
   productSearchInput(evt:any):void{
+    const docCloseResults: any = this.eleRef.nativeElement.querySelector('.closeResults')
     if(this.maxProdIndexSet==false){
       this.dataService.getMaxProdIndex().then((resp:any)=>{
         this.maxProdIndexSet=true
@@ -41,11 +53,13 @@ export class ProductSearchComponent implements OnInit {
             this.renderer.removeClass(docSearchedProductsHolder,"nosite")
             this.renderer.setStyle(docSearchedProductsHolder,"height","auto")
           })
+          this.renderer.removeClass(docCloseResults,'nosite')
         }else{
           this.renderer.setStyle(docSearchedProductsHolder,"height","0px")
           setTimeout(() => {
             this.renderer.addClass(docSearchedProductsHolder,"nosite")
           }, 200);
+          this.renderer.addClass(docCloseResults,'nosite')
         }
       })
     }else{
@@ -60,11 +74,13 @@ export class ProductSearchComponent implements OnInit {
           this.renderer.removeClass(docSearchedProductsHolder,"nosite")
           this.renderer.setStyle(docSearchedProductsHolder,"height","auto")
         })
+        this.renderer.removeClass(docCloseResults,'nosite')
       }else{
         this.renderer.setStyle(docSearchedProductsHolder,"height","0px")
         setTimeout(() => {
           this.renderer.addClass(docSearchedProductsHolder,"nosite")
         }, 200);
+        this.renderer.addClass(docCloseResults,'nosite')
       }
     }
   }

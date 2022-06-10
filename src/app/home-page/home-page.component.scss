@@ -8,12 +8,13 @@
     width: 95%;
     min-height: 40px;
     position: relative;
-    background-color: #ffffff;
+    background-color: transparent;
     position: absolute;
     top: 0px;
     left: 50%;
     transform: translate(-50%);
     z-index: 10;
+    border-radius: 5px;
 }
 @media all and (min-width:600px) {
     .searchHolder{

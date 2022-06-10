@@ -24,6 +24,12 @@ import { TermsOfServiceComponent } from './terms-of-service/terms-of-service.com
 import { AboutDalaliComponent } from './about-dalali/about-dalali.component';
 import { ProductsCategoriesComponent } from './products-categories/products-categories.component';
 import { CustomersOrdersComponent } from './customers-orders/customers-orders.component';
+import { ProductsAddedComponent } from './products-added/products-added.component';
+import { ProductsOrderedComponent } from './products-ordered/products-ordered.component';
+import { ProductsSoldComponent } from './products-sold/products-sold.component';
+import { InventoryComponent } from './inventory/inventory.component';
+import { DaysChangesComponent } from './days-changes/days-changes.component';
+import { DalaliCalenderComponent } from './dalali-calender/dalali-calender.component';
 const routes: Routes = [
   {
     path:'' , 
@@ -58,6 +64,10 @@ const routes: Routes = [
     component: CustomersOrdersComponent
   },
   {
+    path:'dalaliCalender' , 
+    component: DalaliCalenderComponent,
+  },
+  {
     path:'errorCorrection' ,
     component: ErrorCorectionComponent
   },
@@ -78,8 +88,24 @@ const routes: Routes = [
     component: ProductsComponent
   },
   {
+    path:'productsAdded' , 
+    component: ProductsAddedComponent
+  },
+  {
+    path:'productsOrdered' , 
+    component: ProductsOrderedComponent
+  },
+  {
+    path:'productsSold' , 
+    component: ProductsSoldComponent
+  },
+  {
     path:'productManagement' , 
     component: ProductManagementComponent
+  },
+  {
+    path:'daysChanges',
+    component:DaysChangesComponent
   },
   {
     path:'retailerManagement' , 
@@ -110,6 +136,10 @@ const routes: Routes = [
     component: SearchResultComponent
   },
   {
+    path:'stockManagement' , 
+    component: InventoryComponent
+  },
+  {
     path:'termsOfService' , 
     component: TermsOfServiceComponent
   },
@@ -121,47 +151,11 @@ const routes: Routes = [
     path:'updating' , 
     component: UpdatingSiteComponent
   },
-  /* {
-    path:'userhome', 
-    component:HomePageComponent,
-    children:[
-      {
-        path:''
-      }
-    ]
-  } */
+    { 
+      path: '**', 
+      component: LoaderComponent
+    }
 ];
-
-// class routingConf {
-//   constructor(
-//     private dalaliData:any,
-//   ) {}
-//   getRoutedLinks():void{
-//     this.dalaliData.getRoutedLinks().then((resp:any)=>{
-//       let typeOfRedirect:any=resp.typeOfRedirect
-//       let redirectedLinks:any=resp.redirectLinks
-//       let appRouterLinks:any=routes
-//       for (let index = 0; index < appRouterLinks.length; index++) {
-//         const appRouter:any = appRouterLinks[index]; 
-//         let routerpath:any=appRouter.path
-//         for (let index = 0; index < redirectedLinks.length; index++) {
-//           const routedLink = redirectedLinks[index];
-//           if(routerpath!="" && routerpath==routedLink){
-//             for (let index = 0; index < this.dalaliData.systemRepairTypes.length; index++) {
-//               const errorType = this.dalaliData.systemRepairTypes[index];
-//               if(typeOfRedirect==errorType){
-//                 appRouter.component=null
-//                 appRouter.redirectTo=`/${errorType}`
-//               }              
-//             }       
-//           }
-//         }
-//       } 
-//     })
-//   }
-// }
-// let routerConf:any=new routingConf(DalalidataService)
-// routerConf.getRoutedLinks()
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

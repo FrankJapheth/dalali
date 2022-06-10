@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnInit, Renderer2 } from '@angular/core';
 import { BackendcommunicatorService } from '../backendcommunicator.service';
 import { DalalidataService } from '../dalalidata.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sign-in-page',
@@ -20,7 +21,8 @@ export class SignInPageComponent implements OnInit {
     private elRef:ElementRef, 
     private renderer:Renderer2,
     private dalaliData:DalalidataService,
-    private backendCommunicator:BackendcommunicatorService
+    private backendCommunicator:BackendcommunicatorService,
+    private dalaliRouter:Router
               
   ) { }
 
@@ -91,7 +93,7 @@ export class SignInPageComponent implements OnInit {
                 if( resp.length > 1){
                   this.signInRouter('Logged in successfully',true).then(()=>{
                     this.closeFeedbackLoop()
-                    this.elRef.nativeElement.querySelector(".homeBut").click()
+                    this.dalaliRouter.navigateByUrl('home')
                   })
                 }else{
                   this.signInRouter('Log in Failed please check your details and try again',true).then(()=>{
@@ -103,13 +105,11 @@ export class SignInPageComponent implements OnInit {
           }else{
             this.signInRouter("There are some empty values",false).then(()=>{
               this.closeFeedbackLoop()
-              this.elRef.nativeElement.querySelector(".homeBut").click()
             })
           }
       }else{
         this.signInRouter("We only allow phone number or email",false).then(()=>{
           this.closeFeedbackLoop()
-          this.elRef.nativeElement.querySelector(".homeBut").click()
         })
       }
     }
@@ -142,6 +142,24 @@ export class SignInPageComponent implements OnInit {
     this.displayText=textToDisplay
     let fBLoop:any=this.elRef.nativeElement.querySelector(".sWFLMain")
     this.renderer.removeClass(fBLoop,"nosite")
+  }
+
+  openedEye():void{
+    const openEyeDiv: any = this.elRef.nativeElement.querySelector('.openEye')
+    this.renderer.addClass(openEyeDiv,'nosite')
+    const closedEyeDiv: any = this.elRef.nativeElement.querySelector('.closedEye')
+    this.renderer.removeClass(closedEyeDiv,'nosite')
+    const signInPasswordInput: any = this.elRef.nativeElement.querySelector('#signInPassword')
+    signInPasswordInput.type='password'
+  }
+
+  closedEye():void{
+    const closedEyeDiv: any = this.elRef.nativeElement.querySelector('.closedEye')
+    this.renderer.addClass(closedEyeDiv,'nosite')
+    const openEyeDiv: any = this.elRef.nativeElement.querySelector('.openEye')
+    this.renderer.removeClass(openEyeDiv,'nosite')
+    const signInPasswordInput: any = this.elRef.nativeElement.querySelector('#signInPassword')
+    signInPasswordInput.type='text'
   }
   
 }

@@ -1,9 +1,28 @@
 
     <div class="homeCategories">
-        <div *ngFor="let catDet of this.prodCats" class="catTablet">
-            <app-home-categories
-                [catId]="catDet[0]"
-                [catName]="catDet[1]">
-            </app-home-categories>
+
+        <div class="hCHead">
+            Dalali Categories
+        </div>
+
+        <div class="hCBody">
+            <div class="hCHolder">
+                <div *ngFor="let catDet of this.prodCats" class="catTablet">
+                    <div class="catDetDiv">
+                        <div class="catImg">
+                            <img src="{{this.bEBaseLink}}{{catDet[2]}}" alt="" class="catImgEle">
+                        </div>
+                        <div class="catAtt"id="cTSM{{catDet[0]}}"
+                        (click)="this.catTitleSeeMore($event)">
+                            <div class="catName"
+                            id="cDTCTN{{catDet[0]}}">
+                                {{catDet[1]}}
+                            </div>
+                        </div>
+
+                        <a routerLink="/products" class="productsLinkItem nosite" id="pCTSM{{catDet[0]}}"></a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>

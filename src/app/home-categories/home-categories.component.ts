@@ -57,7 +57,7 @@ export class HomeCategoriesComponent implements OnInit {
     });  
   }
   getCategoryProducts(maxIndex:string):Promise<string>{  
-    return new Promise((res:any,rej:any)=>{
+    return new Promise((res:any)=>{
       const cacheRequestLink: string = `${this.backEndComms.backendBaseLink}/getCatProds${this.catId}`;
       const sessionCacheName: string = this.dalaliCache.cacheName;
       const rawDalaliSessionCache: any =sessionStorage.getItem('dalaliSessionCache')
@@ -77,7 +77,7 @@ export class HomeCategoriesComponent implements OnInit {
             });
           });
         }else{
-          this.dalaliCache.getCacheResponse(sessionCacheName,cacheRequestLink).then((cacheResp: any) => {
+          this.dalaliCache.getCacheResponse(sessionCacheName,cacheRequestLink).then((cacheResp: any) => {            
             res(cacheResp)
           });
         }
@@ -211,7 +211,7 @@ export class HomeCategoriesComponent implements OnInit {
         let productQauntity:number=Number(productDetails[3])
         
         if(valueToset>0){
-          let changed:boolean=this.dataServices.setCartProdNumb(eleId,valueToset)
+          this.dataServices.setCartProdNumb(eleId,valueToset)
         }else if(valueToset<=0){
           let cPCRPBDId:string=evt.target.id.slice(9)
           let removedCartProddetails:Array<any>=this.dataServices.removeCartProd(cPCRPBDId)
@@ -225,7 +225,7 @@ export class HomeCategoriesComponent implements OnInit {
           }        
         }
         if(valueToset>productQauntity){
-          let changed:boolean=this.dataServices.setCartProdNumb(eleId,productQauntity)
+          this.dataServices.setCartProdNumb(eleId,productQauntity)
           evt.target.value=productQauntity
           this.displayText="The quantity of the products you are requesting is more than the number in stock"
           this.openFeedBackLoop()          

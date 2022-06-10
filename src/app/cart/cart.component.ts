@@ -25,6 +25,7 @@ export class CartComponent implements OnInit,AfterViewInit {
   private userId: string=this.dataService.userData.userContact;
   private formattedCartProdDetails: any ={};
   private prodNumbFailedOrder: any = {};
+  public calcHeight: number = window.innerHeight-70
 
   constructor(
     private dataService: DalalidataService,
@@ -40,6 +41,7 @@ export class CartComponent implements OnInit,AfterViewInit {
 
   ngAfterViewInit(): void{
     this.pDTPVDDIcon();
+    this.renderer.setStyle(this.eleRef.nativeElement.querySelector('.cartPage'),'height',this.calcHeight+'px')
   }
 
   getProdsArray(): void{
@@ -91,7 +93,7 @@ export class CartComponent implements OnInit,AfterViewInit {
       cDBObjectStore =cartDB.createObjectStore(storeUrl,{keyPath:'orderdate'});
     }
 
-    cDBObjectStore.transaction.oncomplete=(onCompleteEvent: any)=>{
+    cDBObjectStore.transaction.oncomplete=()=>{
 
       const cartObjectStoreTransaction: any=cartDB.transaction(
         storeUrl,'readwrite').objectStore(storeUrl
@@ -117,7 +119,7 @@ export class CartComponent implements OnInit,AfterViewInit {
 
       const failedcDBObjectStore: any=cartDB.createObjectStore(failedStoreUrl,{keyPath:'orderdate'});
 
-      failedcDBObjectStore.transaction.oncomplete=(onCompleteEvent: any)=>{
+      failedcDBObjectStore.transaction.oncomplete=()=>{
 
         const failedcartObjectStoreTransaction: any=cartDB.transaction(
           failedStoreUrl,'readwrite').objectStore(failedStoreUrl
@@ -190,7 +192,7 @@ export class CartComponent implements OnInit,AfterViewInit {
         console.log('Storage was not accessed becouse of the following'+errorEvt.target.errorCode);
       };
       cartDBRequest.onupgradeneeded=(upgradeEvt: any)=>{
-        const stored: boolean=this.dbDataStorage(upgradeEvt,userDbVersions);
+        this.dbDataStorage(upgradeEvt,userDbVersions);
       };
     }else{
       const textToDisplay='Enter the correct phone number (format is 2547XXXXXXXX ).';
@@ -303,7 +305,7 @@ export class CartComponent implements OnInit,AfterViewInit {
     if(valueToset!==''){
       if(isNaN(valueToset)===false){
         if(valueToset>0){
-          const changed: boolean=this.dataService.setCartProdNumb(eleId,valueToset);
+          this.dataService.setCartProdNumb(eleId,valueToset);
         }else if(valueToset<=0){
           const cPCRPBDId: string=evt.target.id.slice(9);
           const removedCartProddetails: Array<any>=this.dataService.removeCartProd(cPCRPBDId);
@@ -317,7 +319,7 @@ export class CartComponent implements OnInit,AfterViewInit {
           }
         }
         if(valueToset>productQauntity){
-          const changed: boolean=this.dataService.setCartProdNumb(eleId,productQauntity);
+          this.dataService.setCartProdNumb(eleId,productQauntity);
           const textToDisplay='The quantity of the products you are requesting is more than the number in stock';
           this.openFeedBackLoop(textToDisplay);
         }
@@ -435,11 +437,12 @@ export class CartComponent implements OnInit,AfterViewInit {
           this.backComms.backendCommunicator(
             mpesaDammy,'post',`${this.backComms.backendBaseLink}/mPesaConfirmation`).then((resp: any)=>{
               if( resp ==='complete'){
+                console.log(cartDetails.totalBill);
                 const mpesacompleteDammy: FormData = new FormData();
                 mpesacompleteDammy.append('paidValue',cartDetails.totalBill);
                 mpesacompleteDammy.append('confirmationCode','2CL2WUS1FRK8');
                 this.backComms.backendCommunicator(mpesacompleteDammy,
-                  'post',`${this.backComms.backendBaseLink}/completeMPesaPayment`).then((compResp: any)=>{
+                  'post',`${this.backComms.backendBaseLink}/completeMPesaPayment`).then(()=>{
                   });
               }
             });

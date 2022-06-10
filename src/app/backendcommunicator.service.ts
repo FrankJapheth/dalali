@@ -4,8 +4,8 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class BackendcommunicatorService {
-  public hostName: string='dalaliwinehouse.com/backend'
-  public backendBaseLink:string=`https://${this.hostName}`
+  public hostName: string='127.0.0.1:8000'
+  public backendBaseLink:string=`http://${this.hostName}`
   constructor( ) { }
 
   backendCommunicator(msgBody:FormData,method:string,link:string):Promise< string>{
@@ -13,9 +13,8 @@ export class BackendcommunicatorService {
         const searchXhr=new XMLHttpRequest();
         searchXhr.open(method,link)
         searchXhr.onreadystatechange=()=>{
-            if(searchXhr.status==200 && searchXhr.readyState==4){               
-              let firtResponseFilter: any=JSON.parse(searchXhr.response);
-              let secondResponseFilter:string=JSON.parse(firtResponseFilter)["backendResponse"];
+            if(searchXhr.status==200 && searchXhr.readyState==4){
+              let secondResponseFilter:string=JSON.parse(searchXhr.response)["backendResponse"];
               searchResolve(secondResponseFilter)
             }
             searchXhr.onerror=evt=>{
@@ -25,6 +24,5 @@ export class BackendcommunicatorService {
         searchXhr.send(msgBody)
     })
   }
-
 
 }

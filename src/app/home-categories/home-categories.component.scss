@@ -14,7 +14,16 @@
     width: 100%;
     height: 50px;
     display: grid;
-    grid-template-columns: 85% 15%;
+    grid-template-columns: 60% 40%;
+}
+@media all and (min-width: 600px) {
+    .categoryTitle{
+        width: 100%;
+        height: 50px;
+        display: grid;
+        grid-template-columns: 85% 15%;
+    }
+    
 }
 .catTitleName{
     width: 100%;
@@ -176,8 +185,8 @@
 .prodControlButton{
     width: 100%;
     height: 20%;
-    display: grid;
-    grid-template-columns: 30% 70%;
+    // display: grid;
+    // grid-template-columns: 30% 70%;
 }
 .pCBHolderBoxes{
     width: 100%;

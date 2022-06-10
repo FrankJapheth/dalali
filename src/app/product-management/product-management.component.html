@@ -195,7 +195,8 @@
 
                             <input type="text" name="{{tableColumn}}" 
                             id="pDCBDSI{{this.nativeColumnIndeces.indexOf(tableColumn)}}" class="pDCBDSInput {{tableColumn}}"
-                            placeholder="{{tableColumn}}">
+                            placeholder="{{tableColumn}}" (keydown)="this.pACKBEvents($event)"
+                            (keyup)="this.kEKU($event)">
 
                         </div>
 

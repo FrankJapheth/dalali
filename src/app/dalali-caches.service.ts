@@ -12,7 +12,7 @@ export class DalaliCachesService {
 
   cacheInit (): Promise<any> {
 
-    return new Promise ((chacheNameRes: any, cacheInitError: any) => {
+    return new Promise ((chacheNameRes: any) => {
     
       const rawCacheVersion = localStorage.getItem('dalaliChachesVersion');
       let cacheVersion: number = 0;
@@ -27,12 +27,10 @@ export class DalaliCachesService {
         const cacheAvailable: any = 'caches' in self
         if (cacheAvailable){
           const oldCachesFullName: string = cacheName + cacheVersion;
-          console.log(oldCachesFullName);
           
           caches.delete(oldCachesFullName);
           cacheVersion+=1;
           const newCachesFullName: string = cacheName + cacheVersion;
-          console.log(newCachesFullName);
           
           caches.open(newCachesFullName).then(() => {
             
@@ -53,7 +51,7 @@ export class DalaliCachesService {
       if (cacheAvailable){
         const jsonResponse: Response = this.createJsonResp(responseData)
         caches.open(cachesName).then((currentCaches: any)=>{
-          currentCaches.put(requestLink,jsonResponse)          
+          currentCaches.put(requestLink,jsonResponse)
           contentRes(currentCaches);
         });
       }else{
@@ -85,7 +83,6 @@ export class DalaliCachesService {
             cacheResponse.json().then((responseData: any) => {
               cacheResp(responseData);
             });
-            
           });
         });
 

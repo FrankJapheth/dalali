@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, Renderer2 } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 
 @Component({
   selector: 'app-bunner',
@@ -8,8 +8,7 @@ import { Component, OnInit, ElementRef, Renderer2 } from '@angular/core';
 export class BunnerComponent implements OnInit {
 
   constructor(
-    private eleRef:ElementRef,
-    private renderer:Renderer2
+    private eleRef:ElementRef
   ) { }
   
   private clickImage:number=1
@@ -42,5 +41,6 @@ export class BunnerComponent implements OnInit {
     }else{
       this.clickImage=1
     }
+    return [prevId,nextId]
   }
 }

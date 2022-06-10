@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnInit, Renderer2 } from '@angular/core';
 import { DalalidataService } from '../dalalidata.service';
 import { BackendcommunicatorService } from '../backendcommunicator.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-registration-page',
@@ -20,7 +21,8 @@ export class RegistrationPageComponent implements OnInit {
   constructor(private elRef:ElementRef, 
               private renderer:Renderer2,
               private dalaliData:DalalidataService,
-              private backendCommunicator:BackendcommunicatorService
+              private backendCommunicator:BackendcommunicatorService,
+              private dalaliRouter: Router
               ) {  }
 
   ngOnInit(): void {     
@@ -91,7 +93,7 @@ export class RegistrationPageComponent implements OnInit {
               let userOTPItems:Array<string>=[this.userContact,this.userOTP]
               localStorage.setItem("userOTPItems",JSON.stringify(userOTPItems))
               if (resp[0] !== 'Already registered'){
-                this.elRef.nativeElement.querySelector(".homeBut").click()
+                this.dalaliRouter.navigateByUrl('signIn')
               }
             })
           }else{

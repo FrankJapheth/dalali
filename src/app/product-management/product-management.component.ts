@@ -32,6 +32,9 @@ export class ProductManagementComponent implements OnInit {
   public currentEditingProduct:Array<any>=[]
   public columnsToAsk:Array<string>=[]  
   public nativeColumnIndeces:Array<string>=[]
+  private specialKeysOn:boolean=false
+  private specialKey: string =''
+  private initVal: number=0
   ngOnInit(): void {
   }
   ngAfterViewInit():void{
@@ -328,6 +331,7 @@ export class ProductManagementComponent implements OnInit {
     let productImgForm:FormData=new FormData()
     productImgForm.append("Barcode",this.imgProdId)
     productImgForm.append("imgdata",this.imgPicToSend)
+    productImgForm.append('retailerId',this.dataService.userData.userContact)
     this.backendComms.backendCommunicator(productImgForm,"post",
     `${this.backendComms.backendBaseLink}/changeImg`).then((resp:any)=>{
       this.currentEditingProduct[7]=resp
@@ -355,6 +359,8 @@ export class ProductManagementComponent implements OnInit {
     prodChangedInf.append("productId",this.imgProdId)
     prodChangedInf.append("columnsToEdit",JSON.stringify(columnNames))
     prodChangedInf.append("columnValues",JSON.stringify(columnValues))
+    prodChangedInf.append('retailerId',this.dataService.userData.userContact)
+  
     
     this.backendComms.backendCommunicator(prodChangedInf,"post",
     `${this.baseLink}/changeInfo`).then((resp:any)=>{
@@ -382,5 +388,56 @@ export class ProductManagementComponent implements OnInit {
         this.eleRef.nativeElement.querySelector(`#cTCTCT${cTId}`),"nosite"
       )    
     }
+  }
+
+  //productAttributesChangesKeyboardEvents
+  pACKBEvents(evt:any): void{    
+    const keyPressed: any = evt.key;
+    if (keyPressed === 'Control'){
+      this.specialKeysOn=true
+      this.specialKey=keyPressed
+    }
+    if( this.specialKeysOn){
+      if(this.specialKey==='Control' && keyPressed.toLowerCase()==='z'){
+        evt.target.value=this.initVal
+      }
+    }
+    if (keyPressed=== 'Enter'){
+      let searchString: any =evt.target.value;
+      let firstSplit: any = searchString.split(":")
+      this.initVal = Number(firstSplit.shift());
+      
+      let indexOfSign: number = firstSplit[0].search("[/+]")
+      let fromIndexSignToEnd: string = firstSplit[0].substring(indexOfSign+1)
+
+      let multResult: number = this.numberMultiplication(fromIndexSignToEnd)
+
+      if ( String(this.initVal) != 'NaN'){ 
+        let finalVal: number = this.initVal+multResult
+        evt.target.value=finalVal
+      }else{
+        alert("Initial value is not a number, it should be a number")
+      }
+    }
+  }
+
+  kEKU(evt: any): void{  
+
+    const keyPressed: any = evt.key;
+    if (keyPressed === 'Control'){
+      this.specialKeysOn=false
+    }
+
+  }
+
+  numberMultiplication( textToPerform: string): number{
+    
+    let result: number = 0;
+    let multSignIndex: number = textToPerform.search("[/*]")
+    let firstArg: number = Number(textToPerform.substring(0,multSignIndex))
+    let secondArg: number = Number(textToPerform.substring(multSignIndex+1))
+    result=firstArg*secondArg
+    
+    return result
   }
 }
