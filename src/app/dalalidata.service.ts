@@ -47,6 +47,8 @@ export class DalalidataService {
 
   public mWFLAns:boolean=false
 
+  public calenderTypeMode:string=""
+
   setUserBasicInfo(userBasicInfo:Array<string>){
     this.userData.userDob=userBasicInfo[4]
     this.userData.userContact=userBasicInfo[0]

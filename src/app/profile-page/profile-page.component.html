@@ -12,17 +12,17 @@
     
     <a routerLink="/superuser" class="linkButtons" *ngIf="this.userType=='superuser'">            
         <div class="superUserButton profileButtons">
-            Tools
+            Superuser Tools
         </div>
     </a>
-    <a routerLink="/admin" class="linkButtons" *ngIf="this.userType=='admin'">            
+    <a routerLink="/admin" class="linkButtons" *ngIf="this.userType=='admin' || this.userType=='superuser'">            
         <div class="adminButton profileButtons">
-            Tools
+            Admin Tools
         </div>
     </a>
-    <a routerLink="/retailerTools" class="linkButtons" *ngIf="this.userType=='retailer'">            
+    <a routerLink="/retailerTools" class="linkButtons" *ngIf="this.userType=='retailer' || this.userType=='admin'  || this.userType=='superuser'">            
         <div class="retailerButton profileButtons">
-            Tools
+            Retailer Tools
         </div>
     </a>
 </div>

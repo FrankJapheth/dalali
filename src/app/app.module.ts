@@ -45,6 +45,7 @@ import { ProductsSoldComponent } from './products-sold/products-sold.component';
 import { InventoryComponent } from './inventory/inventory.component';
 import { DaysChangesComponent } from './days-changes/days-changes.component';
 import { DalaliCalenderComponent } from './dalali-calender/dalali-calender.component';
+import { DaysProductSoldComponent } from './days-product-sold/days-product-sold.component';
 
 @NgModule({
   declarations: [
@@ -89,6 +90,7 @@ import { DalaliCalenderComponent } from './dalali-calender/dalali-calender.compo
     InventoryComponent,
     DaysChangesComponent,
     DalaliCalenderComponent,
+    DaysProductSoldComponent,
     
   ],
   imports: [

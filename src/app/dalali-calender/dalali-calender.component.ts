@@ -154,7 +154,11 @@ export class DalaliCalenderComponent implements OnInit {
             let dateString: string = this.year+"/"+String(Number(this.month)+1)+"/"+evt.target.innerText
             
             this.dataService.daysDate=dateString
-            this.dRoutes.navigateByUrl('daysChanges')
+            if(this.dataService.calenderTypeMode===""){
+              this.dRoutes.navigateByUrl('daysChanges')
+            }else if (this.dataService.calenderTypeMode=="prodSold"){
+              this.dRoutes.navigateByUrl('daysProductSold')
+            }
           })
     });
 

@@ -11,11 +11,10 @@
             Today
         </div>
 
-        <a routerLink="/dalaliCalender" class="cPToolsLink">
-            <div class="aPToolsBut calenderViewBut">
-                Other days
-            </div>
-        </a>
+        <div class="aPToolsBut calenderViewBut"
+        (click)="this.viewOtherDays()">
+            Other days
+        </div>
 
     </div>
 

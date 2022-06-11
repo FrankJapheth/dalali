@@ -1,0 +1,133 @@
+<div class="daysProdSold">
+
+    <div class="dPSHead">
+        {{this.daysDate}}
+    </div>
+
+    <div class="dPSBody">
+
+        <div class="dPSPelletsHolder">
+
+            <div class="daysProdSoldPellete" *ngFor="let dayRecord of dayRecords">
+
+                <div class="userId pDSInfoTab">
+
+                    <div class="pDSLable userIdLabel">
+                        User Id
+                    </div>
+
+                    <div class="pDSValue userIdValue">
+                        {{dayRecord.fields.user_id}}
+                    </div>
+
+                </div>
+
+                <div class="orderId pDSInfoTab">
+
+                    <div class="pDSLable orderIdLabel">
+                        Order Id
+                    </div>
+
+                    <div class="pDSValue orderIdValue">
+                        {{dayRecord.fields.order_id}}
+                    </div>
+
+                </div>
+
+
+                <div class="totalProductsNumber pDSInfoTab">
+
+                    <div class="pDSLable totalProductsNumberLabel">
+                        Total products number
+                    </div>
+
+                    <div class="pDSValue totalProductsNumberValue">
+                        {{dayRecord.fields.total_products_number}}
+                    </div>
+
+                </div>
+
+
+                <div class="totalOderPrice pDSInfoTab">
+
+                    <div class="pDSLable totalOderPriceLabel">
+                        Total order price
+                    </div>
+
+                    <div class="pDSValue totalOderPriceValue">
+                        Ksh.{{dayRecord.fields.total_order_price}}
+                    </div>
+
+                </div>
+
+
+                <div class="paymentType pDSInfoTab">
+
+                    <div class="pDSLable paymentTypeLabel">
+                        Payment type
+                    </div>
+
+                    <div class="pDSValue paymentTypeValue">
+                        {{dayRecord.fields.payment_type}}
+                    </div>
+
+                </div>
+
+
+                <div class="retailerId pDSInfoTab nosite">
+
+                    <div class="pDSLable retailerIdLabel">
+                        Retailer Id
+                    </div>
+
+                    <div class="pDSValue retailerIdValue">
+                        {{dayRecord.fields.retailer_id}}
+                    </div>
+
+                </div>
+
+
+                <div class="retailerName pDSInfoTab nosite">
+
+                    <div class="pDSLable retailerNameLabel">
+                        Retailer Name
+                    </div>
+
+                    <div class="pDSValue retailerNameValue">
+                        {{dayRecord.fields.retailer_name}}
+                    </div>
+
+                </div>
+
+
+                <div class="dateOfSale pDSInfoTab">
+
+                    <div class="pDSLable dateOfSaleLabel">
+                        Date Of Sale
+                    </div>
+
+                    <div class="pDSValue dateOfSaleValue">
+                        {{dayRecord.fields.date_of_sale}}
+                    </div>
+
+                </div>
+
+                <div class="timeOfSale pDSInfoTab">
+
+                    <div class="pDSLable timeOfSaleLabel">
+                        Time Of Sale
+                    </div>
+
+                    <div class="pDSValue timeOfSaleValue">
+                        {{dayRecord.pk.slice(0,dayRecord.pk.indexOf(":id:"))}}
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

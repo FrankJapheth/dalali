@@ -21,5 +21,9 @@ export class ProductsAddedComponent implements OnInit {
     this.dataService.daysDate='Today'
     this.dRoutes.navigateByUrl('daysChanges')
   }
+  viewOtherDays():void{
+    this.dataService.calenderTypeMode=""
+    this.dRoutes.navigateByUrl("dalaliCalender")
+  }
 
 }

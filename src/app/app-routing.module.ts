@@ -30,6 +30,7 @@ import { ProductsSoldComponent } from './products-sold/products-sold.component';
 import { InventoryComponent } from './inventory/inventory.component';
 import { DaysChangesComponent } from './days-changes/days-changes.component';
 import { DalaliCalenderComponent } from './dalali-calender/dalali-calender.component';
+import { DaysProductSoldComponent } from './days-product-sold/days-product-sold.component';
 const routes: Routes = [
   {
     path:'' , 
@@ -68,6 +69,14 @@ const routes: Routes = [
     component: DalaliCalenderComponent,
   },
   {
+    path:'daysChanges',
+    component:DaysChangesComponent
+  },
+  {
+    path:'daysProductSold',
+    component:DaysProductSoldComponent
+  },
+  {
     path:'errorCorrection' ,
     component: ErrorCorectionComponent
   },
@@ -102,10 +111,6 @@ const routes: Routes = [
   {
     path:'productManagement' , 
     component: ProductManagementComponent
-  },
-  {
-    path:'daysChanges',
-    component:DaysChangesComponent
   },
   {
     path:'retailerManagement' , 
