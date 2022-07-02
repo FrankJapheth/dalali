@@ -1,9 +1,9 @@
 import { Component, ElementRef, Renderer2, OnInit } from '@angular/core';
-import { BackendcommunicatorService } from '../backendcommunicator.service';
-import { DalalidataService } from '../dalalidata.service';
+import { BackendcommunicatorService } from '../service/communications/backendcommunicator.service';
+import { DalalidataService } from '../service/data/dalalidata.service';
 import { Router } from '@angular/router';
-import { DalaliWebSocketsService } from '../dalali-web-sockets.service';
-import { DalaliSessionStorageService } from '../dalali-session-storage.service';
+import { DalaliWebSocketsService } from '../service/webSocket/dalali-web-sockets.service';
+import { DalaliSessionStorageService } from '../service/sessions/dalali-session-storage.service';
 
 @Component({
   selector: 'app-loader',

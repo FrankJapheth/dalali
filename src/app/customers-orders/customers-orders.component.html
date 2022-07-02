@@ -5,17 +5,17 @@
 
         <div class="cMyOrders cDivs"
         (click)="this.getSuccessfulCartIds()">
-            Successful Orders
-        </div>
-
-        <div class="failedOders cDivs"
-        (click)="this.getFailedCartIds()">
-            Failed orders
+            Purchases
         </div>
 
         <div class="pendingOders cDivs"
         (click)="this.getPendingCartIds()">
             Pending orders
+        </div>
+
+        <div class="failedOders cDivs"
+        (click)="this.getFailedCartIds()">
+            Failed orders
         </div>
 
     </div>
@@ -228,7 +228,7 @@
         
                     </div>
                     
-                    <div class="tDTotalTendered oDInfoDivs">
+                    <!-- <div class="tDTotalTendered oDInfoDivs">
                         
                         <div class="tTLabel  oDIDLabelDivs oDIDDivs">
                             Total Tendered
@@ -238,9 +238,9 @@
                             {{this.cartDetails.paidAmount}}
                         </div>
         
-                    </div>
+                    </div> -->
         
-                    <div class="tTChange oDInfoDivs">
+                    <!-- <div class="tTChange oDInfoDivs">
                         
                         <div class="cLabel  oDIDLabelDivs oDIDDivs">
                             Change
@@ -250,7 +250,7 @@
                             {{this.cartDetails.paidAmount-this.cartDetails.totalBill}}
                         </div>
         
-                    </div>
+                    </div> -->
         
                 </div>
         
@@ -262,7 +262,7 @@
         
                 </div>
         
-                <div class="retailerServer cORVInfos">
+                <!-- <div class="retailerServer cORVInfos">
         
                     <div class="rSNameText">
                         Searved by {{this.cartDetails.serverName}}
@@ -276,7 +276,7 @@
                         Server contact {{this.cartDetails.serverContact}}
                     </div>
         
-                </div>
+                </div> -->
         
                 <div class="helpLineContact cORVInfos">
         

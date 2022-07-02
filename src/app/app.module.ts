@@ -46,6 +46,8 @@ import { InventoryComponent } from './inventory/inventory.component';
 import { DaysChangesComponent } from './days-changes/days-changes.component';
 import { DalaliCalenderComponent } from './dalali-calender/dalali-calender.component';
 import { DaysProductSoldComponent } from './days-product-sold/days-product-sold.component';
+import { UserToolComponent } from './user-tool/user-tool.component';
+import { UserOdersComponent } from './user-oders/user-oders.component';
 
 @NgModule({
   declarations: [
@@ -91,6 +93,8 @@ import { DaysProductSoldComponent } from './days-product-sold/days-product-sold.
     DaysChangesComponent,
     DalaliCalenderComponent,
     DaysProductSoldComponent,
+    UserToolComponent,
+    UserOdersComponent,
     
   ],
   imports: [

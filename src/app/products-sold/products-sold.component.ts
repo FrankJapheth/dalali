@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DalalidataService } from '../dalalidata.service';
+import { DalalidataService } from '../service/data/dalalidata.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -18,11 +18,12 @@ export class ProductsSoldComponent implements OnInit {
   }
 
   dayRecordView():void{
-    let dateToday: Date =new Date()
+    let dateToday: any =new Date().toLocaleDateString()
+    dateToday=dateToday.split("/")
 
-    let todayFullYear: any = dateToday.getFullYear()
-    let todayMonth: any = dateToday.getMonth()+1
-    let todayDay: any =dateToday.getDay()
+    let todayFullYear: any = dateToday[2]
+    let todayMonth: any = dateToday[0]
+    let todayDay: any =dateToday[1]
 
     let todaysDate: string = todayFullYear + "/" + todayMonth + "/" + todayDay
     this.dataService.daysDate=todaysDate

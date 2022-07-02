@@ -1,7 +1,7 @@
 import { Component, ElementRef, Input, OnInit, Renderer2 } from '@angular/core';
-import { DalalidataService } from '../dalalidata.service';
-import { BackendcommunicatorService } from '../backendcommunicator.service';
-import { DalaliCachesService } from '../dalali-caches.service';
+import { DalalidataService } from '../service/data/dalalidata.service';
+import { BackendcommunicatorService } from '../service/communications/backendcommunicator.service';
+import { DalaliCachesService } from '../service/caches/dalali-caches.service';
 
 @Component({
   selector: 'app-home-categories',

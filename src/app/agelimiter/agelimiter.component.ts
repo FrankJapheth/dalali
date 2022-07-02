@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, Renderer2 } from '@angular/core';
-import { DalalidataService } from '../dalalidata.service';
+import { DalalidataService } from '../service/data/dalalidata.service';
 
 @Component({
   selector: 'app-agelimiter',

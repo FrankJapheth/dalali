@@ -1,7 +1,7 @@
 import { Component, OnInit, ElementRef, Renderer2, AfterViewInit } from '@angular/core';
-import { DalalidataService } from '../dalalidata.service';
-import { BackendcommunicatorService } from '../backendcommunicator.service';
-import { DalaliWebSocketsService } from '../dalali-web-sockets.service';
+import { DalalidataService } from '../service/data/dalalidata.service';
+import { BackendcommunicatorService } from '../service/communications/backendcommunicator.service';
+import { DalaliWebSocketsService } from '../service/webSocket/dalali-web-sockets.service';
 
 @Component({
   selector: 'app-cart',
@@ -110,27 +110,6 @@ export class CartComponent implements OnInit,AfterViewInit {
       }
 
     };
-
-    const failedStoreUrl: string = 'fialed'+cartDBDetails.orderdate;
-
-    const prodNumbFailedOrderKeys = Object.keys(this.prodNumbFailedOrder);
-
-    if( prodNumbFailedOrderKeys.length > 0){
-
-      const failedcDBObjectStore: any=cartDB.createObjectStore(failedStoreUrl,{keyPath:'orderdate'});
-
-      failedcDBObjectStore.transaction.oncomplete=()=>{
-
-        const failedcartObjectStoreTransaction: any=cartDB.transaction(
-          failedStoreUrl,'readwrite').objectStore(failedStoreUrl
-        );
-
-        failedcartObjectStoreTransaction.add(this.prodNumbFailedOrder);
-
-        this.storeCartsId([{orderId:cartDBDetails.orderdate,totalBill:cartDBDetails.totalBill}],'failed');
-
-      };
-    }
     return stored;
   }
 
@@ -383,38 +362,44 @@ export class CartComponent implements OnInit,AfterViewInit {
       orderFormData.append('customerName',this.dataService.userData.userName);
       orderFormData.append('cartDetails',JSON.stringify(cartDetails));
 
-      const msgType = 'placedOrder';
-      const orderDeatils: any = {
-        orderId,
-        userId,
-        customerName:this.dataService.userData.userName,
-        cartDetails:JSON.stringify(cartDetails)
-      };
-      this.dWebSockets.wsSendMsg(msgType,orderDeatils);
       this.backComms.backendCommunicator(orderFormData,'post',
       `${this.baseLink}/placeOrders`).then((orderPlacedResp: any)=>{
         this.closingPayingWithMpesaPrompt();
 
-        this.openFeedBackLoop(orderPlacedResp);
-        if (orderPlacedResp === 'failed'){
+        if (orderPlacedResp == 'failed'){
+          this.openFeedBackLoop("Failed to place order.");
           const rawPendingOrders: any = localStorage.getItem('cartIds');
           const pendingOrders: Array<any> = JSON.parse(rawPendingOrders);
           for (const pendingOrder of pendingOrders){
-            if (pendingOrder.orderId === orderId){
+            if (pendingOrder.orderId == orderId){
               pendingOrders.splice(pendingOrders.indexOf(pendingOrder),1);
             }
           }
           localStorage.setItem('cartIds',JSON.stringify(pendingOrders));
 
           const rawFailedOrders: any = localStorage.getItem('failedOrders');
-          if(rawFailedOrders === null){
+          if(rawFailedOrders == null){
             const failedOrders: Array<any> = [{orderId,totalBill:cartDetails.totalBill}];
             localStorage.setItem('failedOrders',JSON.stringify(failedOrders));
           }else{
             const failedOrders: Array<any> = JSON.parse(rawFailedOrders);
             failedOrders.push({orderId,totalBill:cartDetails.totalBill});
+            localStorage.setItem('failedOrders',JSON.stringify(failedOrders));
           }
-        }else{
+        }else if(orderPlacedResp=="pending order"){
+          this.openFeedBackLoop("You have an order that is being processed");
+        }else if (orderPlacedResp=="success"){
+
+          const msgType = 'placedOrder';
+          const orderDeatils: any = {
+            orderId,
+            userId,
+            customerName:this.dataService.userData.userName,
+            cartDetails:JSON.stringify(cartDetails)
+          };
+          this.dWebSockets.wsSendMsg(msgType,orderDeatils);
+          
+          this.openFeedBackLoop("Order Placed successfully please wait while we process your payment.We will notify you when it's complete.");
 
           const prodTiles: any= this.eleRef.nativeElement.querySelectorAll('.cartProdItemHolder');
           const prodTilesHolder: any = this.eleRef.nativeElement.querySelector('.cPBProductTileHolder');
@@ -437,7 +422,6 @@ export class CartComponent implements OnInit,AfterViewInit {
           this.backComms.backendCommunicator(
             mpesaDammy,'post',`${this.backComms.backendBaseLink}/mPesaConfirmation`).then((resp: any)=>{
               if( resp ==='complete'){
-                console.log(cartDetails.totalBill);
                 const mpesacompleteDammy: FormData = new FormData();
                 mpesacompleteDammy.append('paidValue',cartDetails.totalBill);
                 mpesacompleteDammy.append('confirmationCode','2CL2WUS1FRK8');

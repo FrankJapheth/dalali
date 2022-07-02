@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, Renderer2 } from '@angular/core';
-import { BackendcommunicatorService } from '../backendcommunicator.service';
-import { DalalidataService } from '../dalalidata.service';
+import { BackendcommunicatorService } from '../service/communications/backendcommunicator.service';
+import { DalalidataService } from '../service/data/dalalidata.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -71,7 +71,7 @@ export class SignInPageComponent implements OnInit {
     if(evt.type==='click'){
       const loaderDiv: HTMLElement = this.elRef.nativeElement.querySelector(".loaderDiv");
       this.emptyValues=[]
-      let signInData:FormData= new FormData
+      let signInData:FormData= new FormData()
       let signInFormData:FormData=this.eppendData(signInData,this.signInFunc());
       this.contactType=this.contactChecker((<HTMLInputElement>document.getElementById("SignInContact")).value)
       if(this.contactType!="undetermined"){

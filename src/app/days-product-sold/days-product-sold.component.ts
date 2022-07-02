@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { DalalidataService } from '../dalalidata.service';
-import { BackendcommunicatorService } from '../backendcommunicator.service';
+import { DalalidataService } from '../service/data/dalalidata.service';
+import { BackendcommunicatorService } from '../service/communications/backendcommunicator.service';
 
 @Component({
   selector: 'app-days-product-sold',

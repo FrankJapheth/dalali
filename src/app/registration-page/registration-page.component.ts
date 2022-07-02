@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, Renderer2 } from '@angular/core';
-import { DalalidataService } from '../dalalidata.service';
-import { BackendcommunicatorService } from '../backendcommunicator.service';
+import { DalalidataService } from '../service/data/dalalidata.service';
+import { BackendcommunicatorService } from '../service/communications/backendcommunicator.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -65,9 +65,9 @@ export class RegistrationPageComponent implements OnInit {
     const mailformat:RegExp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
     let userContactType:string=""
         if(userContact.match(phoneexpression)){
-            userContactType="phone"
+            userContactType="Phone number"
         }else if(userContact.match(mailformat)){
-            userContactType="email"
+            userContactType="Email"
         }else{
           userContactType="undetermined"
         }
@@ -79,22 +79,40 @@ export class RegistrationPageComponent implements OnInit {
       this.emptyValues=[]
       let signUpData:FormData= new FormData
       let signUpFormData:FormData=this.eppendData(signUpData,this.signUpFunc());
+      signUpFormData.append('contactType',this.contactType)
       this.contactType=this.contactChecker((<HTMLInputElement>document.getElementById("userContact")).value)
       if(this.contactType!="undetermined"){
         if(this.emptyValues.length==0){
           if(this.checkSignUpPassword()){
             this.renderer.removeClass(loaderDiv,'nosite');
-            this.backendCommunicator.backendCommunicator(signUpFormData,'post',`${this.backendCommunicator.backendBaseLink}/signUp`).then(resp=>{
+            this.backendCommunicator.backendCommunicator(signUpFormData,'post',`${this.backendCommunicator.backendBaseLink}/signUp`).then((resp:any)=>{
               this.renderer.addClass(loaderDiv,'nosite');
-              this.userOTP=resp[2]
-              this.userContact=resp[1]
-              this.regResponse=resp[0]
-              this.signUpAlert(resp[0])           
-              let userOTPItems:Array<string>=[this.userContact,this.userOTP]
-              localStorage.setItem("userOTPItems",JSON.stringify(userOTPItems))
-              if (resp[0] !== 'Already registered'){
-                this.dalaliRouter.navigateByUrl('signIn')
+
+              if (resp.status == 0){
+
+                this.signUpAlert("Welcome to dalali")
+
+                const userResp:boolean=window.confirm("Do you want to add this account to this device?")
+                if (userResp === true){
+                  console.log(resp.userContact,resp.userPassword);
+                }
+                
+
+              }else if (resp.status == 1){
+
+                this.signUpAlert("Welcome back to dalali")
+
+                const userResp:boolean=window.confirm("Do you want to add this account to this device?")
+
+                if (userResp == true){
+                  console.log(resp.userContact,resp.userPassword);
+                }
+                
+
+              }else if (resp.status == 2){
+                this.signUpAlert("This account exists in our system use a different contact")
               }
+
             })
           }else{
             this.signUpAlert("Wrong password match")

@@ -1,6 +1,6 @@
 import { Component, OnInit, ElementRef, Renderer2 } from '@angular/core';
-import { BackendcommunicatorService } from '../backendcommunicator.service';
-import { DalalidataService } from '../dalalidata.service';
+import { BackendcommunicatorService } from '../service/communications/backendcommunicator.service';
+import { DalalidataService } from '../service/data/dalalidata.service';
 
 @Component({
   selector: 'app-product-management',

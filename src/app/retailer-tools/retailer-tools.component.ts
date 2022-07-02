@@ -1,5 +1,5 @@
 import { Component, OnInit,ElementRef,Renderer2 } from '@angular/core';
-import { DalalidataService } from '../dalalidata.service';
+import { DalalidataService } from '../service/data/dalalidata.service';
 
 @Component({
   selector: 'app-retailer-tools',
@@ -48,8 +48,5 @@ export class RetailerToolsComponent implements OnInit {
       this.dataService.uploadType="newProduct"
       this.eleRef.nativeElement.querySelector(".addingProductLink").click()
     })
-  }
-  customerOrdersLink():void{
-    this.eleRef.nativeElement.querySelector(".customerOrdersLink").click()
   }
 }

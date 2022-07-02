@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BackendcommunicatorService } from './backendcommunicator.service';
+import { BackendcommunicatorService } from '../communications/backendcommunicator.service';
 
 @Injectable({
   providedIn: 'root'

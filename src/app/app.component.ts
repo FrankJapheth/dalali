@@ -1,6 +1,6 @@
 import { Component,ElementRef, Renderer2, OnInit, AfterViewInit } from '@angular/core';
-import { DalalidataService } from './dalalidata.service';
-import { DalaliSessionStorageService } from './dalali-session-storage.service';
+import { DalalidataService } from './service/data/dalalidata.service';
+import { DalaliSessionStorageService } from './service/sessions/dalali-session-storage.service';
 import { Router } from '@angular/router';
 import { SwUpdate } from "@angular/service-worker";
 @Component({

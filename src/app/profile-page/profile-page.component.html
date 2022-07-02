@@ -10,9 +10,15 @@
         </div>
     </a>
     
-    <a routerLink="/superuser" class="linkButtons" *ngIf="this.userType=='superuser'">            
-        <div class="superUserButton profileButtons">
-            Superuser Tools
+    <a routerLink="/userTools" class="linkButtons">            
+        <div class="userButton profileButtons">
+            User Tools
+        </div>
+    </a>
+
+    <a routerLink="/retailerTools" class="linkButtons" *ngIf="this.userType=='retailer' || this.userType=='admin'  || this.userType=='superuser'">            
+        <div class="retailerButton profileButtons">
+            Retailer Tools
         </div>
     </a>
     <a routerLink="/admin" class="linkButtons" *ngIf="this.userType=='admin' || this.userType=='superuser'">            
@@ -20,9 +26,9 @@
             Admin Tools
         </div>
     </a>
-    <a routerLink="/retailerTools" class="linkButtons" *ngIf="this.userType=='retailer' || this.userType=='admin'  || this.userType=='superuser'">            
-        <div class="retailerButton profileButtons">
-            Retailer Tools
+    <a routerLink="/superuser" class="linkButtons" *ngIf="this.userType=='superuser'">            
+        <div class="superUserButton profileButtons">
+            Superuser Tools
         </div>
     </a>
 </div>

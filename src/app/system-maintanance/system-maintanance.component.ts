@@ -1,6 +1,6 @@
 import { Component, OnInit,ElementRef,Renderer2 } from '@angular/core';
 import { AppRoutingModule } from '../app-routing.module';
-import { DalalidataService } from '../dalalidata.service';
+import { DalalidataService } from '../service/data/dalalidata.service';
 
 @Component({
   selector: 'app-system-maintanance',

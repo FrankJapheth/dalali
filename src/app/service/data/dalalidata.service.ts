@@ -1,8 +1,8 @@
 //index 13 is for product in cart
 
 import { Injectable} from '@angular/core';
-import { BackendcommunicatorService } from './backendcommunicator.service';
-import { DalaliCachesService } from './dalali-caches.service';
+import { BackendcommunicatorService } from '../communications/backendcommunicator.service';
+import { DalaliCachesService } from '../caches/dalali-caches.service';
 
 @Injectable({
   providedIn: 'root'
@@ -48,6 +48,7 @@ export class DalalidataService {
   public mWFLAns:boolean=false
 
   public calenderTypeMode:string=""
+  public successOrderDetails:any =null
 
   setUserBasicInfo(userBasicInfo:Array<string>){
     this.userData.userDob=userBasicInfo[4]
