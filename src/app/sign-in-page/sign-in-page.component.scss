@@ -6,8 +6,7 @@
 .SignInForm{
     width: 90%;
     height: auto;
-    box-shadow:  7px 7px 11px #b3b3b3,
-                 -7px -7px 11px #ffffff;
+    background-color: #e7e7e7;
     font-family: 'Open Sans', sans-serif; 
     padding: 10px;
     box-sizing: border-box;
@@ -15,13 +14,13 @@
     left: 50%;
     top: 30px;
     transform: translate(-50%);
+    border-radius: 3px;
 }
 @media all and (min-width:600px) {
     .SignInForm{
         width: 400px;
         height: auto;
-        box-shadow:  7px 7px 11px #b3b3b3,
-                     -7px -7px 11px #ffffff;
+        background-color: #e7e7e7;
         font-family: 'Open Sans', sans-serif; 
         padding: 10px;
         box-sizing: border-box;
@@ -59,12 +58,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    box-shadow:  7px 7px 11px #b3b3b3,
-                 -7px -7px 11px #ffffff;
+    background-color: #121420;
+    color: #e7e7e7;
     cursor: pointer;   
     position: relative;
     left: 30%; 
     margin-bottom: 30px;
+    border-radius: 3px;
 }
 
 

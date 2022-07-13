@@ -10,17 +10,17 @@
                 <div *ngFor="let catDet of this.prodCats" class="catTablet">
                     <div class="catDetDiv">
                         <div class="catImg">
-                            <img src="{{this.bEBaseLink}}{{catDet[2]}}" alt="" class="catImgEle">
+                            <img src="{{this.bEBaseLink}}{{catDet.img}}" alt="" class="catImgEle">
                         </div>
-                        <div class="catAtt"id="cTSM{{catDet[0]}}"
+                        <div class="catAtt"id="cTSM{{catDet.id}}"
                         (click)="this.catTitleSeeMore($event)">
                             <div class="catName"
-                            id="cDTCTN{{catDet[0]}}">
-                                {{catDet[1]}}
+                            id="cDTCTN{{catDet.id}}">
+                                {{catDet.name}}
                             </div>
                         </div>
 
-                        <a routerLink="/products" class="productsLinkItem nosite" id="pCTSM{{catDet[0]}}"></a>
+                        <a routerLink="/products" class="productsLinkItem nosite" id="pCTSM{{catDet.id}}"></a>
                     </div>
                 </div>
             </div>

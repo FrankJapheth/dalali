@@ -35,7 +35,6 @@ import { TermsOfServiceComponent } from './terms-of-service/terms-of-service.com
 import { AboutDalaliComponent } from './about-dalali/about-dalali.component';
 import { ProductsCategoriesComponent } from './products-categories/products-categories.component';
 import { SingleWayFeedbackLoopComponent } from './single-way-feedback-loop/single-way-feedback-loop.component';
-import { MultiWaysFeedbackLoopComponent } from './multi-ways-feedback-loop/multi-ways-feedback-loop.component';
 import { CustomersOrdersComponent } from './customers-orders/customers-orders.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
@@ -48,6 +47,9 @@ import { DalaliCalenderComponent } from './dalali-calender/dalali-calender.compo
 import { DaysProductSoldComponent } from './days-product-sold/days-product-sold.component';
 import { UserToolComponent } from './user-tool/user-tool.component';
 import { UserOdersComponent } from './user-oders/user-oders.component';
+import { MultiWaysFeedbackLoopComponent } from './multi-ways-feedback-loop/multi-ways-feedback-loop.component';
+import { DLoaderComponent } from './d-loader/d-loader.component';
+import { OrderDetailsComponent } from './order-details/order-details.component';
 
 @NgModule({
   declarations: [
@@ -84,7 +86,6 @@ import { UserOdersComponent } from './user-oders/user-oders.component';
     AboutDalaliComponent,
     ProductsCategoriesComponent,
     SingleWayFeedbackLoopComponent,
-    MultiWaysFeedbackLoopComponent,
     CustomersOrdersComponent,
     ProductsAddedComponent,
     ProductsOrderedComponent,
@@ -95,7 +96,9 @@ import { UserOdersComponent } from './user-oders/user-oders.component';
     DaysProductSoldComponent,
     UserToolComponent,
     UserOdersComponent,
-    
+    MultiWaysFeedbackLoopComponent,
+    DLoaderComponent,
+    OrderDetailsComponent
   ],
   imports: [
     BrowserModule,

@@ -65,9 +65,9 @@
                     </div>
                     <div class="cADBody">
                         <div *ngFor="let catResults of this.predictedCategories">
-                            <div class="cTResultTab" id="cTRT{{catResults[0]}}"
+                            <div class="cTResultTab" id="cTRT{{catResults.id}}"
                             (click)="this.cTResultTab($event)">
-                                {{catResults[1]}}
+                                {{catResults.name}}
                             </div>
                         </div>
                     </div>

@@ -20,6 +20,7 @@
     left: 2.5%;
     padding: 10px;
     box-sizing: border-box;
+    background-color: #e4e4e4;
 }
 @media all and (min-width:600px) {
     .cPBody{
@@ -35,10 +36,26 @@
 }
 .cPBProductTileHolder{
     width: 100%;
-    height: 60%;
+    height: 85%;
     overflow-x: hidden;
     overflow-y: scroll;
+    border-bottom: 1px solid #121420;
 }
+
+
+@media all and (min-width:500px) {
+
+    .cPBProductTileHolder::-webkit-scrollbar{
+        width: 7px;
+        background-color: transparent;
+    }
+    .cPBProductTileHolder::-webkit-scrollbar-thumb{
+        background-color: #121420;
+        border-radius: 2px;
+    }
+    
+}
+
 .cPBPTHProductTile{
     width: 95%;
     height: 120px;
@@ -262,49 +279,93 @@
         font-size: 100%;
     }    
 }
-.payoutDiv{
+
+.checkoutOpener{
+
     width: 100%;
-    height: 40%;
+    height: 15%;
+    position: relative;
+
+}
+
+.totalPriceHint{
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
     overflow: hidden;
-    background-color: #ffffff;
-    box-shadow:  5px 5px 7px #b3b3b3,
-                 -5px -5px 7px #ffffff;
-    overflow: hidden;
-    border-radius: 3px;
-    padding: 5px;
-    box-sizing: border-box;
+}
+.totalPriceHint div {
+    width: 50%;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
 }
-.pDTile{
-    width: 95%;
-    height: 90%;
+
+.checkoutBut{
+
+    width: 150px;
+    height: 40px;
+    background-color: #121420;
+    border-radius: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    color: #f7f7f7;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+
+}
+
+.payoutDiv{
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 3px;
     padding: 5px;
     box-sizing: border-box;
-    overflow-y: scroll;
-    overflow-x: hidden;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    z-index: 10;
+    background-color: #12142033;
+}
+.pDTile{
+    width: 0px;
+    max-width: 400px;
+    height: 0px;
+    padding: 5px;
+    box-sizing: border-box;
+    overflow: hidden;
+    background-color: #fff;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border-radius: 3px;
+    transition: all ease 0.2s;
 }
 .pDTInfoTab{
-    width: 100%;
-    height: 20%;
+    width: 90%;
+    height: 40px;
     display: grid;
-    grid-template-columns: 60% 40%;
-    margin-bottom: 1%;
+    grid-template-columns: 55% 45%;
+    margin-bottom: 3px;
+    margin-top: 5px;
     position: relative;
+    left: 5%;
     font-size: 90%;
-    margin-bottom: 1%;
+    background-color: #e4e4e4;
+    border-radius: 3px;
 }
 @media all and (min-width:600px) {
     .pDTInfoTab{
-        width: 100%;
-        height: 20%;
         display: grid;
         grid-template-columns: 70% 30%;
-        margin-bottom: 1%;
         position: relative;
         font-size: 100%;
-        margin-bottom: 1%;
     }
     
 }
@@ -314,13 +375,10 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    background-color: #b3b3b3;
     padding: 5px;
     box-sizing: border-box;
 }
-.pDTITMiddleTab{
-    border-right: 1px solid #121420;
-}
+
 .pDTPMValue{
     width: 100%;
     height: 100%;
@@ -336,30 +394,150 @@
     align-items: center;
     cursor: pointer;
 }
-.orderSubmitBut{
+
+.pDTPaymentMethod{
+
+    width: 90%;
+    height: 200px;
+    background-color: #e4e4e4;
+    border-radius: 3px;
+    position: relative;
+    left: 5%;
+    margin-top: 7px;
+
+}
+
+.pDTPMString{
+
     width: 100%;
-    height: 18%;
+    height: 20%;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 1%;
-    margin-top: 5%;
+
 }
+
+.pDTPMValue{
+
+    width: 100%;
+    height: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.paymentMethodsList{
+
+    width: 90%;
+    height: 60%;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    position: relative;
+    left: 5%;
+    outline: none;
+    padding: 0px;
+    box-sizing: border-box;
+    list-style: none;
+    margin: 0px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+
+}
+
+@media all and (min-width:500px) {
+
+    .paymentMethodsList::-webkit-scrollbar{
+        height: 7px;
+        background-color: transparent;
+    }
+    .paymentMethodsList::-webkit-scrollbar-thumb{
+        background-color: #121420;
+        border-radius: 1px;
+    }
+    
+}
+
+.pMListItem{
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 2px;
+    background-color: #fafafa;
+    margin-left: 3px;
+    margin-right: 3px;
+}
+
+.pMListItem:hover{
+    background-color: #121420;
+    color: #ffffff;
+}
+
+.closeCeckout{
+    width: 100%;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 5px;
+    margin-top: 10px;
+}
+
 @media all and (min-width:600px) {
-    .orderSubmitBut{
+
+    .closeCeckout{
+
         width: 100%;
-        height: 18%;
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-bottom: 1%;
-        margin-top: 2%;
+        margin-bottom: 5px;
+        margin-top: 10px;
+
+    }
+    
+}
+.closeCheckOutBut{
+    width: 80%;
+    height: 50px;
+    border: 1px solid #121420;
+    color: #121420;
+    border-radius: 3px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.orderSubmitBut{
+    width: 100%;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
+@media all and (min-width:600px) {
+
+    .orderSubmitBut{
+
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
     }
     
 }
 .oSBDiv{
-    width: 100px;
-    height: 30px;
+    width: 80%;
+    height: 50px;
     background-color: #121420;
     color: #ffffff;
     border-radius: 3px;
@@ -367,40 +545,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-}
-.paymentMethodsList{
-    width: 120px;
-    height: 100px;
-    overflow-x: hidden;
-    overflow-y: scroll;
-    position: absolute;
-    top: 0px;
-    right: 0px;
-    background-color: #ffffff;
-    border: 1px solid #121420;
-    z-index: 10;
-}
-.paymentMethodsList{
-    outline: none;
-    padding: 5px;
-    box-sizing: border-box;
-    list-style: none;
-}
-.pMListItem{
-    width: 100%;
-    height: 25px;
-    border-bottom: 1px solid #121420;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    padding: 3px;
-    box-sizing: border-box;
-    cursor: pointer;
-    border-radius: 2px;
-}
-.pMListItem:hover{
-    background-color: #121420;
-    color: #ffffff;
 }
 .prodQuantTxtIpt{
     width: 100%;
@@ -474,8 +618,7 @@
 .mNBBody{
     width: 100%;
     height: 65%;
-    overflow-y: scroll;
-    overflow-x: hidden;
+    overflow: hidden;
 }
 .mNBBPara{
     width: 100%;
@@ -517,85 +660,6 @@
     background-color: #121420;
     color: #ffffff;
     border-radius: 2px;
-    cursor: pointer;
-}
-
-
-
-.sWFLMain{
-    width: 100%;
-    height: 100vh;
-    position: fixed;
-    top: 0px;
-    left: 0px;
-    z-index: 101;
-    background-color: #12142046;
-}
-.sWFLMBody{
-    width: 250px;
-    height: 250px;
-    background-color: #fff;
-    border-radius: 5px;
-    position: relative;
-    left: 50%;
-    top: 80px;
-    transform: translate(-50%);
-}
-@media all and (min-width:600px) {
-    .sWFLMBody{
-        width: 350px;
-        height: 250px;
-        background-color: #fff;
-        border-radius: 5px;
-        position: relative;
-        left: 50%;
-        top: 80px;
-        transform: translate(-50%);
-    }    
-}
-.sWFLMHead{
-    width: 100%;
-    height: 15%;
-    padding: 3px;
-    box-sizing: border-box;
-    display: grid;
-    grid-template-columns: 90% 10%;
-}
-.sWFLDiv{
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 100%;
-}
-.sWFLBody{
-    width: 100%;
-    height: 65%;
-    padding: 3px;
-    box-sizing: border-box;
-    overflow-y: scroll;
-    overflow-x: hidden;
-}
-.sWFLFooter{
-    width: 100%;
-    height: 20%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.sWFLFCloseAns{
-    width: 100px;
-    height: 35px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 3px;
-    background-color: #121420;
-    color: #fff;
-    cursor: pointer;
-}
-.sWFLClose{
     cursor: pointer;
 }
 

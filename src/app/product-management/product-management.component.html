@@ -27,17 +27,17 @@
                 *ngFor="let chosenprod of this.editListToDisplay">
                     <div class="sPSProductDetailsTap">
                         <div class="sPSPDTImageHolder">
-                            <img src="{{this.baseLink}}{{chosenprod[7]}}" class="sPSPDTIHImgTag">
+                            <img src="{{this.baseLink}}{{chosenprod.img}}" class="sPSPDTIHImgTag">
                         </div>
                         <div class="sPSTDTProdDetails">
                             <div class="sPSTDTPDProdName sPSTDTPDDivs">
-                                {{chosenprod[1]}}
+                                {{chosenprod.name}}
                             </div>
                             <div class="sPSTDTPDProdBarcode sPSTDTPDDivs">
-                                {{chosenprod[0]}}
+                                {{chosenprod.barcode}}
                             </div>
                         </div>
-                        <div class="sPSPDTClickable" id="sPSPDTC{{chosenprod[0]}}">
+                        <div class="sPSPDTClickable" id="sPSPDTC{{chosenprod.id}}">
 
                         </div>
                     </div>
@@ -74,25 +74,25 @@
                             *ngFor="let productDetails of this.prodSearchResult">
                             <div class="sRProductDetailsTab">
                                 <div class="sRPDTProductImgHolder sRPDTDiv">
-                                    <img src="{{this.baseLink}}{{productDetails[7]}}" class="sRProductImage">
+                                    <img src="{{this.baseLink}}{{productDetails.img}}" class="sRProductImage">
                                 </div>
                                 <div class="sRPDTProductsDetails sRPDTDiv">
                                     <div class="sRPDTPDProdName">
-                                        {{productDetails[1]}}
+                                        {{productDetails.name}}
                                     </div>
                                     <div class="sRPDTPDProdBarcode">
-                                        {{productDetails[0]}}
+                                        {{productDetails.barcode}}
                                     </div>
                                 </div>
-                                <div class="sRPDTabClicker" id="sRPDTC{{productDetails[0]}}"
+                                <div class="sRPDTabClicker" id="sRPDTC{{productDetails.id}}"
                                 (click)="this.addToEditList($event)">
 
-                                    <div class="pressenceTick" id="sRPDTCPT{{productDetails[0]}}"
-                                    *ngIf="productDetails[productDetails.length-1]; else elseBlock">
+                                    <div class="pressenceTick" id="sRPDTCPT{{productDetails.id}}"
+                                    *ngIf="productDetails.serchSelect; else elseBlock">
                                         &#10004;
                                     </div>
                                     <ng-template #elseBlock>
-                                        <div class="pressenceTickAlt nosite"  id="RPDTCPTA{{productDetails[0]}}">
+                                        <div class="pressenceTickAlt nosite"  id="RPDTCPTA{{productDetails.id}}">
                                             &#10004;                                            
                                         </div>
                                     </ng-template>
@@ -125,8 +125,10 @@
                         *ngFor="let columnToAsk of this.columnsToAsk">
 
                             <div class="textDiv" id="tD{{this.nativeColumnIndeces.indexOf(columnToAsk)}}">
-                                {{columnToAsk}}
+                                {{columnToAsk.display}}
                             </div>
+
+                            <input type="hidden" id="tDI{{this.nativeColumnIndeces.indexOf(columnToAsk)}}" value="{{columnToAsk.table}}">
 
                             <div class="chosenTick nosite"
                             id="cTCTCT{{this.nativeColumnIndeces.indexOf(columnToAsk)}}">
@@ -193,9 +195,9 @@
                         *ngFor="let tableColumn of this.productColumns" 
                         id="pDCBDSIH{{this.nativeColumnIndeces.indexOf(tableColumn)}}">
 
-                            <input type="text" name="{{tableColumn}}" 
-                            id="pDCBDSI{{this.nativeColumnIndeces.indexOf(tableColumn)}}" class="pDCBDSInput {{tableColumn}}"
-                            placeholder="{{tableColumn}}" (keydown)="this.pACKBEvents($event)"
+                            <input type="text" name="{{tableColumn.table}}" 
+                            id="pDCBDSI{{this.nativeColumnIndeces.indexOf(tableColumn)}}" class="pDCBDSInput {{tableColumn.table}}"
+                            placeholder="{{tableColumn.display}}" (keydown)="this.pACKBEvents($event)"
                             (keyup)="this.kEKU($event)">
 
                         </div>

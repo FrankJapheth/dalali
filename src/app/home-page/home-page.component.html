@@ -14,20 +14,17 @@
     <div class="homeCategories">
         <div *ngFor="let catDet of this.prodCats" class="catTablet">
             <app-home-categories
-                [catId]="catDet[0]"
-                [catName]="catDet[1]">
+                [catId]="catDet.id"
+                [catName]="catDet.name">
             </app-home-categories>
         </div>
     </div>
+
+    <app-agelimiter>
+
+    </app-agelimiter>
+    
 </main>
-
-<div class="ageLimiter nosite">
-    <div class="ageLimiterInnerDiv">
-        <app-agelimiter>
-
-        </app-agelimiter>
-    </div>
-</div>
 
 <footer class="dalaliFooter">
     <app-contact-page>

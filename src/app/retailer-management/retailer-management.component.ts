@@ -9,6 +9,8 @@ import { BackendcommunicatorService } from '../service/communications/backendcom
 })
 export class RetailerManagementComponent implements OnInit {
 
+  public opType:string=''
+
   constructor(
     private eleRef:ElementRef,
     private renderer:Renderer2,
@@ -26,7 +28,8 @@ export class RetailerManagementComponent implements OnInit {
   }
   addRtailer():void{
     this.renderer.listen(this.eleRef.nativeElement.querySelector(".addRtailer"),"click",()=>{
-      this.dataService.typeOfSelectedUserSearch="retailer"
+      this.dataService.typeOfSelectedUserSearch="retailers"
+      this.opType='add'
       this.renderer.addClass(this.eleRef.nativeElement.querySelector(".rMPBody"),"nosite")
       this.renderer.removeClass(this.eleRef.nativeElement.querySelector(".rMPControls"),"nosite")
       this.renderer.removeClass(this.eleRef.nativeElement.querySelector(".setOrRemoveRetailer"),"nosite")
@@ -34,7 +37,8 @@ export class RetailerManagementComponent implements OnInit {
   }
   removeRtailer():void{
     this.renderer.listen(this.eleRef.nativeElement.querySelector(".removeRtailer"),"click",()=>{
-      this.dataService.typeOfSelectedUserSearch="buyer"
+      this.dataService.typeOfSelectedUserSearch="retailers"
+      this.opType='remove'
       this.renderer.addClass(this.eleRef.nativeElement.querySelector(".rMPBody"),"nosite")
       this.renderer.removeClass(this.eleRef.nativeElement.querySelector(".rMPControls"),"nosite")
       this.renderer.removeClass(this.eleRef.nativeElement.querySelector(".setOrRemoveRetailer"),"nosite")
@@ -52,9 +56,9 @@ export class RetailerManagementComponent implements OnInit {
     this.renderer.listen(this.eleRef.nativeElement.querySelector(".setOrRemoveRetailerControllersDoneBut"),"click",()=>{
       let usersData:FormData=new FormData()
       usersData.append("typeToChange",this.dataService.typeOfSelectedUserSearch)
+      usersData.append("opType",this.opType)
       usersData.append("selectedUsers",JSON.stringify(this.dataService.selectedUsers))
-      this.backendComms.backendCommunicator(usersData,"post",`${this.backendComms.backendBaseLink}/changeUserType`).then(resp=>{
-        console.log(resp);
+      this.backendComms.backendCommunicator(usersData,"post",`${this.backendComms.backendBaseLink}/changeUserType`).then(()=>{
         this.renderer.removeClass(this.eleRef.nativeElement.querySelector(".rMPBody"),"nosite")
         this.renderer.addClass(this.eleRef.nativeElement.querySelector(".rMPControls"),"nosite")
         this.renderer.addClass(this.eleRef.nativeElement.querySelector(".setOrRemoveRetailer"),"nosite")

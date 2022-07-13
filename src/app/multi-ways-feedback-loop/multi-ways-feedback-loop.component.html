@@ -7,7 +7,7 @@
                 DALALI
             </div>
 
-            <div class="mWFLPBHClose mWFLPBHDiv"
+            <div class="mWFLPBHClose mWFLPBHDiv nosite"
             (click)="this.closeFeedbackLoop()">
                 <i class="fas fa-times"></i>                  
             </div>
@@ -16,23 +16,21 @@
 
         <div class="mWFLPBBody">
             <p>
-                {{this.displayText}}
+                {{this.dataService.multiwayfLoopMsg}}
             </p>
         </div>
 
         <div class="mWFLPBFooter">
 
             <div class="mWFLPBFClose mWFLPBFDiv">
-                <div class="mWFLPBFCBut mWFLPBFBut"
-                (click)="this.closeFeedbackLoop()">
-                    Cancel
+                <div class="mWFLPBFCBut mWFLPBFBut">
+                    {{this.rejDisplay}}
                 </div>
             </div>
 
             <div class="mWFLPBFAccept mWFLPBFDiv">
-                <div class="mWFLPBFABut mWFLPBFBut"
-                (click)="this.acceptAndClose()">
-                    Accept
+                <div class="mWFLPBFABut mWFLPBFBut">
+                    {{this.respDisplay}}
                 </div>
             </div>
 

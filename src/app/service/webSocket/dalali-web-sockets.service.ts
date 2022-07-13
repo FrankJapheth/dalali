@@ -18,7 +18,7 @@ export class DalaliWebSocketsService {
 
   wsBackEndCommunicator(userContact:string,userName:string,userType:string):void{
     
-    this.dalaliSockets = new WebSocket(`${this.wsBackendBaseLink}/ws/orders?contact=${userContact}&name=${userName}&userType=${userType}`);
+    this.dalaliSockets = new WebSocket(`${this.wsBackendBaseLink}/ws/orders?contact=${userContact}&userType=${userType}`);
   
     
     this.dalaliSockets.onopen = () => {
@@ -37,50 +37,49 @@ export class DalaliWebSocketsService {
     
     this.dalaliSockets.onmessage = (event:any) => {
 
-        const data = JSON.parse(event.data);
+      const data = JSON.parse(event.data);
 
-        const msgObject:any = JSON.parse(data.message)
-        console.log(msgObject);
-        if(msgObject.message.length>1){
-          
-          if (msgObject.message[0] == "orderComplete"){
-            const orderDetails: any =msgObject.message[1]
-            this.setOrder(orderDetails)
-            const msg_type:string = "customerOrder"
-            this.wsSendMsg(msg_type,orderDetails)
-          }else if(msgObject.message[0]=="customerOrder"){
-            console.log(msgObject.message);
+      const msg:any = JSON.parse(data.message)
+      
+      const command:string = msg.command
+      const msgBody:any = msg.message
+
+      if (command == 'recordSale'){
+
+        this.dataService.recordSale().then((saleResp:boolean)=>{
+
+          if (saleResp == true){
+
+            this.dataService.sendSale()
+
           }
+          
+        }).catch((err:any)=>{
 
-          // const productsData=JSON.parse(data.message[0]);
+          console.error(err);
+          
+        })
 
-          // productsData.forEach((productData:any) => {
-          //   let prodId:string=productData.prodId
-          //   let prodQuantity:number=productData.prodQuantity
-          //   this.dataService.getSiteProd(prodId)[3]=prodQuantity          
-          // });       
+      }else if (command == 'getDeafultSale'){
 
-        }else{
+        this.dataService.getDefaultSales()
 
-          const productsData=JSON.parse(data.message[0]);
-
-          productsData.forEach((productData:any) => {
-            let prodId:string=productData.prodId
-            let prodQuantity:number=productData.prodQuantity
-            this.dataService.getSiteProd(prodId)[3]=prodQuantity          
-          });
-        }
+      }else if (command == 'newSale'){
+          
+        this.dataService.addSalesToDb([msgBody])
         
+      }
+
     };
   }
 
-  wsSendMsg(message:string,orderDetails:string):boolean{
+  wsSendMsg(messageCommand:string,message:any):boolean{
     let msgSent:boolean=false
 
     if(this.dalaliSockets!==null && this.websocketOpen===true){
 
       this.dalaliSockets.send(JSON.stringify({
-        'message': [message,orderDetails]
+        'message': {command:messageCommand,message:message}
       }));
 
       msgSent=true
@@ -88,28 +87,6 @@ export class DalaliWebSocketsService {
     }
 
     return msgSent
-  }
-
-  setOrder(orderDetails: any):void {
-
-    const rawPendingOrders: any = localStorage.getItem('cartIds');
-    const pendingOrders: Array<any> = JSON.parse(rawPendingOrders);
-    for (const pendingOrder of pendingOrders){
-      if (pendingOrder.orderId == orderDetails.orderId){
-        pendingOrders.splice(pendingOrders.indexOf(pendingOrder),1);
-      }
-    }
-    localStorage.setItem('cartIds',JSON.stringify(pendingOrders));
-
-    const rawSuccessfulOrders: any = localStorage.getItem('successfulOrders');
-    if(rawSuccessfulOrders == null){
-      const successfulOrders: Array<any> = [{orderId:orderDetails.orderId,totalBill:orderDetails.totalBill}];
-      localStorage.setItem('successfulOrders',JSON.stringify(successfulOrders));
-    }else{
-      const successfulOrders: Array<any> = JSON.parse(rawSuccessfulOrders);
-      successfulOrders.push({orderId:orderDetails.orderId,totalBill:orderDetails.totalBill});
-      localStorage.setItem('successfulOrders',JSON.stringify(successfulOrders));
-    }
   }
 
 }

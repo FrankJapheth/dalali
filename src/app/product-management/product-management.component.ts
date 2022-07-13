@@ -29,23 +29,24 @@ export class ProductManagementComponent implements OnInit {
   public docPicAdded:boolean=false
   private imgPicToSend:any=null
   private imgProdId:any=null
-  public currentEditingProduct:Array<any>=[]
-  public columnsToAsk:Array<string>=[]  
+  public currentEditingProduct:any=null
+  public columnsToAsk:Array<any>=[]
   public nativeColumnIndeces:Array<string>=[]
   private specialKeysOn:boolean=false
   private specialKey: string =''
   private initVal: number=0
+  private tableColumnArray:Array<any>=[]
   ngOnInit(): void {
   }
   ngAfterViewInit():void{
     if (this.productColumnsFetched==false) {
       this.dataService.getTableColumnNames("products").then((resp:any)=>{
-        let columnsToEit:Array<string>=this.dataService.getColumnToEdit()
-        columnsToEit.forEach((columnToEdit:string)=>{
-          this.columnsToAsk.push(columnToEdit)
+        // let columnsToEit:Array<string>=this.dataService.getColumnToEdit()
+        resp.forEach((columnToEdit:string)=>{
+          this.columnsToAsk.push(columnToEdit)          
         })
         resp.forEach((column_name:any) => {
-          this.nativeColumnIndeces.push(column_name[0])
+          this.nativeColumnIndeces.push(column_name)
         });       
         this.productColumnsFetched=true
       })
@@ -60,16 +61,17 @@ export class ProductManagementComponent implements OnInit {
         if(searchValue!=""){
           let searchForm:FormData=new FormData()
           searchForm.append("prodIdentity",searchValue)
-          searchForm.append("maxProdIndex",this.maxProdSearchIndex)
+          searchForm.append("maxProdIndex",JSON.stringify(this.maxProdSearchIndex))
           this.backendComms.backendCommunicator(searchForm,"post",`${this.backendComms.backendBaseLink}/searchProds`).then((resp:any)=>{
             this.createProductIndexArray(resp).then(()=>{
+              
               let respFormted:any=[]
               resp.forEach((pSREle:any) => {
-                let prodId:string=pSREle[0]
+                let prodId:string=pSREle.id
                 if(this.selecteProductIndexArray.includes(prodId)==true){
-                  pSREle.push(true)
+                  pSREle.serchSelect=true
                 }else{
-                  pSREle.push(false)
+                  pSREle.serchSelect=false
                 }
                 respFormted.push(pSREle)
               });
@@ -92,16 +94,16 @@ export class ProductManagementComponent implements OnInit {
         }
         let searchForm:FormData=new FormData()
         searchForm.append("prodIdentity",searchValue)
-        searchForm.append("maxProdIndex",this.maxProdSearchIndex)
+        searchForm.append("maxProdIndex",JSON.stringify(this.maxProdSearchIndex))
         this.backendComms.backendCommunicator(searchForm,"post",`${this.backendComms.backendBaseLink}/searchProds`).then((resp:any)=>{
           this.createProductIndexArray(resp).then(()=>{
             let respFormted:any=[]
             resp.forEach((pSREle:any) => {
-              let prodId:string=pSREle[0]
+              let prodId:string=pSREle.id
               if(this.selecteProductIndexArray.includes(prodId)==true){
-                pSREle.push(true)
+                pSREle.serchSelect=true
               }else{
-                pSREle.push(false)
+                pSREle.serchSelect=false
               }
               respFormted.push(pSREle)
             });
@@ -141,12 +143,12 @@ export class ProductManagementComponent implements OnInit {
     }
   }
   createProductIndexArray(arrayOfProductArray:any):Promise<any>{
-    return new Promise((addResp:any,addRej:any)=>{
+    return new Promise((addResp:any)=>{
       this.productIndexArray=[]
       arrayOfProductArray.forEach((productArray:any)=>{
-        this.productIndexArray.push(productArray[0])
+        this.productIndexArray.push(productArray.id)
       })
-      addResp([this.productIndexArray,arrayOfProductArray])
+      addResp(this.productIndexArray)
     })
   }
   pSBCHDCancelBut():void{
@@ -160,6 +162,7 @@ export class ProductManagementComponent implements OnInit {
     this.renderer.addClass(docProdManagementBody,"nosite")
     let docProdManagementControls:any=this.eleRef.nativeElement.querySelector(".prodManagementControls")
     this.renderer.removeClass(docProdManagementControls,"nosite")
+    this.setProdAreaHeight()
   }
 
   closeForm():void{
@@ -223,29 +226,30 @@ export class ProductManagementComponent implements OnInit {
     this.currentEditingProduct=this.getProductToEdit("backward")
     this.displayChosenProduct(this.currentEditingProduct)    
   }
-  displayChosenProduct(productDetails:Array<any>):void{
+  displayChosenProduct(productDetails:any):void{
 
     let docInputs:any=this.eleRef.nativeElement.querySelectorAll(".pDCBDSInput")
     let docprodMediaDiv:any=this.eleRef.nativeElement.querySelector(".prodMediaDiv")
+    let pMDMHMedia=this.eleRef.nativeElement.querySelector(".pMDMHMedia")
+    
+    if (!this.tableColumnArray.includes('img')){
+          this.renderer.addClass(docprodMediaDiv,"nosite")
+    }
     for (let index = 0; index < docInputs.length; index++) {
       let productInput:any=docInputs[index]
-      let unanimousIndex=productInput.id.slice(7)
+      let unanimousIndex=productInput.name
       let producDetail:string=productDetails[unanimousIndex]
-      this.renderer.addClass(docprodMediaDiv,"nosite")      
+
       if(producDetail!=null){
-        this.imgProdId=productDetails[0]
-        if (unanimousIndex==1) {
+        this.imgProdId=productDetails.id
+        if (unanimousIndex=='name') {
           this.eleRef.nativeElement.querySelector(".pDCFHProdName").innerText=productDetails[unanimousIndex]
         }
-        if (unanimousIndex==7) {       
-          let pMDMHMedia=this.eleRef.nativeElement.querySelector(".pMDMHMedia")
+        if (unanimousIndex=='img' && this.tableColumnArray.includes('img')) {
           pMDMHMedia.src=`${this.baseLink}${producDetail}`
           productInput.value=`${producDetail}`
-          let pDCBDSIH=this.eleRef.nativeElement.querySelector(`#pDCBDSIH${unanimousIndex}`)
           this.renderer.removeClass(docprodMediaDiv,"nosite")
-          if(pDCBDSIH!=null){
-            this.renderer.addClass(pDCBDSIH,"nosite")
-          }
+          productInput.classList.add("nosite")
         }else{
           productInput.value=producDetail
         }
@@ -334,7 +338,7 @@ export class ProductManagementComponent implements OnInit {
     productImgForm.append('retailerId',this.dataService.userData.userContact)
     this.backendComms.backendCommunicator(productImgForm,"post",
     `${this.backendComms.backendBaseLink}/changeImg`).then((resp:any)=>{
-      this.currentEditingProduct[7]=resp
+      this.currentEditingProduct.img=resp
       let productInput:any=this.eleRef.nativeElement.querySelector("#pDCBDSI7")
       productInput.value=resp
     })
@@ -364,30 +368,43 @@ export class ProductManagementComponent implements OnInit {
     
     this.backendComms.backendCommunicator(prodChangedInf,"post",
     `${this.baseLink}/changeInfo`).then((resp:any)=>{
-      for (let index = 0; index < resp.length; index++) {
-        const prodDetail:any = resp[index];
-        this.currentEditingProduct[index]=prodDetail
-      } 
+      
+      for (const columnDetails of resp) {
+        for (const columnKeys of Object.keys(columnDetails)) {
+          this.currentEditingProduct[columnKeys]=columnDetails[columnKeys]
+        }
+      }
+
       this.currentEditingProduct=this.getProductToEdit("forward")
       this.displayChosenProduct(this.currentEditingProduct)
+
     })
 
   }
   columnToChooseTile(evt:any):void{
 
     let cTId:string=evt.target.id.slice(4)  
-    let columnNameElem:any=this.eleRef.nativeElement.querySelector(`#tD${cTId}`)    
-    if(this.productColumns.includes(columnNameElem.innerText)==false){
-      this.productColumns.push(columnNameElem.innerText)
+    let columnDisplayElem:any=this.eleRef.nativeElement.querySelector(`#tD${cTId}`)
+    let columnNameElem:any=this.eleRef.nativeElement.querySelector(`#tDI${cTId}`).value
+
+    const tableColumn:any = {display:columnDisplayElem.innerText,table:columnNameElem}
+    
+
+    if(this.tableColumnArray.includes(tableColumn.table)==false){
+      this.productColumns.push(tableColumn)
+      this.tableColumnArray.push(tableColumn.table)
       this.renderer.removeClass(
         this.eleRef.nativeElement.querySelector(`#cTCTCT${cTId}`),"nosite"
       )
     }else{
-      this.productColumns.splice(this.productColumns.indexOf(columnNameElem.innerText),1)  
+      this.productColumns.splice(this.tableColumnArray.indexOf(tableColumn.table),1)
+      this.tableColumnArray.splice(this.tableColumnArray.indexOf(tableColumn.table),1)
+      
       this.renderer.addClass(
         this.eleRef.nativeElement.querySelector(`#cTCTCT${cTId}`),"nosite"
       )    
     }
+    
   }
 
   //productAttributesChangesKeyboardEvents
@@ -439,5 +456,13 @@ export class ProductManagementComponent implements OnInit {
     result=firstArg*secondArg
     
     return result
+  }
+  setProdAreaHeight():void{
+    const bodyHeight:number=Number(this.eleRef.nativeElement.querySelector(".productSelectionBody").offsetHeight)
+
+    const searchResultHolder:any=this.eleRef.nativeElement.querySelector(".searchResultHolder")
+
+    this.renderer.setStyle(searchResultHolder,"height",(bodyHeight-130)+"px")
+    
   }
 }

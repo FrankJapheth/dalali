@@ -30,128 +30,16 @@
     <div class="catBody">
         <div class="catBodyDetails">
 
-            <div *ngFor="let catDet of this.catProdsArray">                    
-                <div class="itemDiv">
+            <div *ngFor="let catDet of this.catProdsArray">
 
-                    <div class="itmePic">
-                        <img src="{{this.bEBaseLink}}{{catDet[7]}}" class="itemImgTag">
-                    </div>
+                <app-product-pellete
+                [productDetails] = catDet>
 
-                    <div class="itemDetails">
-
-                        <div class="itemName">
-
-                            <span style="padding:5px;box-sizing:border-box;
-                            overflow-x:scroll;overflow-y:hidden;white-space: nowrap;"
-                            class="itemNameValue">
-                                {{catDet[1]}} 
-                            </span>
-
-                            <span style="padding:5px;box-sizing:border-box;">
-                                {{catDet[2]}} 
-                            </span>
-                            
-                        </div>
-
-                        <div class="itemPrice">
-                
-                            <div>
-                                <div class="iPPriceDiv">
-                                    <span class="itemPriceCurrency">
-                                        Ksh.{{catDet[5]}}
-                                    </span>
-                                </div>
-
-                                <div class="iPAmountDiv">
-                                    <span class="iPADValue">
-                                        {{catDet[3]}} Pcs
-                                    </span>
-                                </div>
-                
-                            </div>
-                
-                        </div>
-                    </div>
-                    <div class="prodControlButton">
-
-                        <!-- <div class="pCBHolderBoxes">
-                            <div class="detailsButton pCBHBClickBut nosite">
-                                More
-                            </div>
-                        </div> -->
-
-                        <div class="pCBHolderBoxes">
-                            <div class="addToCartBut pCBHBClickBut" id="aTCB{{catDet[0]}}" (click)="this.addToCartBut($event)">
-                                ADD TO CART
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="cartProdControls nosite" id="cPC{{catDet[0]}}">  
-
-                        <div class="cPCAddOrReduce">
-
-                            <div class="cPCAORRuduceBut cPCAORButs">
-                                <div class="cPCAORBDiv" id="cPAORBD{{catDet[0]}}" (click)="this.cPCAORBDiv($event)">
-                                    -
-                                </div>
-                            </div>
-
-                            <div class="cartProdNumber cPCAORButs">
-                                <input type="text" class="cPCAORNumbtxtBox" id="cPCAORNTB{{catDet[0]}}" value="1" (keyup)="this.cPCAORNumbtxtBox($event)">            
-                            </div>
-
-                            <div class="cPCAORAdd cPCAORButs">
-                                <div class="cPAORADiv" id="cPAORAD{{catDet[0]}}" (click)="this.cPAORADiv($event)">
-                                    +
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class="cPCRemoveProBut">
-                            <div class="cPCRPBDiv" id="cPCRBD{{catDet[0]}}" (click)="this.cPCRPBDiv($event)">
-                                Remove
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
+                </app-product-pellete>
             </div>
 
         </div>
     </div>
-
-    <div class="sWFLMain nosite">
-        <div class="sWFLMBody">
     
-            <div class="sWFLMHead">
-    
-                <div class="sWFLHTitle sWFLDiv">
-                    DALALI
-                </div>
-    
-                <div class="sWFLClose sWFLDiv"
-                (click)="this.closeFeedbackLoop()">
-                    <i class="fas fa-times"></i>            
-                </div>
-    
-            </div>
-    
-            <div class="sWFLBody">
-                <p>
-                    {{displayText}}
-                </p>
-            </div>
-    
-            <div class="sWFLFooter">
-                <div class="sWFLFCloseAns"
-                (click)="this.closeFeedbackLoop()">
-                    Okay
-                </div>
-            </div>
-            
-        </div>
-    </div>
 
 </div>

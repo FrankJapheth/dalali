@@ -1,0 +1,49 @@
+<div class="orderDetails">
+
+    <div class="orderHead">
+        General order details
+    </div>
+
+    <div class="orderedProducts">
+
+
+        <div class="orderedProductsHolder">
+
+            <div class="oPPellete"
+            *ngFor="let prodOrdered of this.orderProducts">
+
+                <div class="prodMedia">
+
+                    <img src="{{this.bckComms.backendBaseLink}}{{prodOrdered.img}}" alt="" srcset="" class="orderedProdImg">
+
+                </div>
+
+                <div class="prodInfo">
+
+                    <div class="prodName prodInfoDiv">
+                        Name: {{prodOrdered.name}}
+                    </div>
+
+                    <div class="quantityOrdered prodInfoDiv">
+                        Quantity ordered: {{prodOrdered.quantityOrdered}}
+                    </div>
+
+                    <div class="remaining prodInfoDiv">
+                        Remaining: {{prodOrdered.remaining}}
+                    </div>
+
+                    <div class="prodPrice prodInfoDiv">
+
+                        Price: Product price
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

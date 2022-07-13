@@ -37,23 +37,55 @@ export class ProductSearchComponent implements OnInit {
     this.renderer.addClass(docCloseResults,'nosite')
   }
   productSearchInput(evt:any):void{
+
     const docCloseResults: any = this.eleRef.nativeElement.querySelector('.closeResults')
+
     if(this.maxProdIndexSet==false){
+
       this.dataService.getMaxProdIndex().then((resp:any)=>{
+
         this.maxProdIndexSet=true
         this.maxProdSearchIndex=resp
         let searchValue:string=evt.target.value
         let docSearchedProductsHolder:any=this.eleRef.nativeElement.querySelector(".searchedProductsHolder")
+
         if(searchValue!=""){
+
           let searchForm:FormData=new FormData()
           searchForm.append("prodIdentity",searchValue)
-          searchForm.append("maxProdIndex",this.maxProdSearchIndex)
-          this.backendComms.backendCommunicator(searchForm,"post",`${this.backendComms.backendBaseLink}/searchProds`).then(resp=>{
-            this.prodSearchResult=resp
+          searchForm.append("maxProdIndex",JSON.stringify(this.maxProdSearchIndex))
+
+          this.backendComms.backendCommunicator(searchForm,"post",`${this.backendComms.backendBaseLink}/searchProds`).then((resp:any)=>{
+
+            const newProds:Array<any>=[]
+            const existingProds:Array<any>=[]
+
+            for (const searchedProduct of resp) {
+
+              const sProductId:string = searchedProduct.id
+
+              if (Object.keys(this.dataService.getSiteProds()).includes(sProductId)){
+
+                existingProds.push(this.dataService.getSiteProds()[sProductId])
+
+              }else{
+
+                searchedProduct.inCart=false
+                newProds.push(searchedProduct)
+
+              }
+
+            }
+
+            this.prodSearchResult=newProds.concat(existingProds)
+            
             this.renderer.removeClass(docSearchedProductsHolder,"nosite")
             this.renderer.setStyle(docSearchedProductsHolder,"height","auto")
+
           })
+
           this.renderer.removeClass(docCloseResults,'nosite')
+
         }else{
           this.renderer.setStyle(docSearchedProductsHolder,"height","0px")
           setTimeout(() => {
@@ -65,22 +97,56 @@ export class ProductSearchComponent implements OnInit {
     }else{
       let searchValue:string=evt.target.value
       let docSearchedProductsHolder:any=this.eleRef.nativeElement.querySelector(".searchedProductsHolder")
+
       if(searchValue!=""){
+
         let searchForm:FormData=new FormData()
         searchForm.append("prodIdentity",searchValue)
-        searchForm.append("maxProdIndex",this.maxProdSearchIndex)
-        this.backendComms.backendCommunicator(searchForm,"post",`${this.backendComms.backendBaseLink}/searchProds`).then(resp=>{
-          this.prodSearchResult=resp
+        searchForm.append("maxProdIndex",JSON.stringify(this.maxProdSearchIndex))
+
+        this.backendComms.backendCommunicator(searchForm,"post",`${this.backendComms.backendBaseLink}/searchProds`).then((resp:any)=>{
+
+          const newProds:Array<any>=[]
+          const existingProds:Array<any>=[]
+
+          for (const searchedProduct of resp) {
+
+            const sProductId:string = searchedProduct.id
+
+            if (Object.keys(this.dataService.getSiteProds()).includes(sProductId)){
+
+              existingProds.push(this.dataService.getSiteProds()[sProductId])
+
+            }else{
+
+              searchedProduct.inCart=false
+              newProds.push(searchedProduct)
+
+            }
+
+          }
+
+          this.prodSearchResult=newProds.concat(existingProds)
+
           this.renderer.removeClass(docSearchedProductsHolder,"nosite")
           this.renderer.setStyle(docSearchedProductsHolder,"height","auto")
+
         })
+
         this.renderer.removeClass(docCloseResults,'nosite')
+
       }else{
+
         this.renderer.setStyle(docSearchedProductsHolder,"height","0px")
+
         setTimeout(() => {
+
           this.renderer.addClass(docSearchedProductsHolder,"nosite")
+
         }, 200);
+
         this.renderer.addClass(docCloseResults,'nosite')
+
       }
     }
   }

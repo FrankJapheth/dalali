@@ -1,5 +1,11 @@
-import { Component, ElementRef, OnInit, Renderer2 } from '@angular/core';
+import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
+
 import { DalalidataService } from '../service/data/dalalidata.service';
+import { BackendcommunicatorService } from '../service/communications/backendcommunicator.service';
+import { DalaliWebSocketsService } from '../service/webSocket/dalali-web-sockets.service';
+import { SingleWayFeedbackLoopComponent } from '../single-way-feedback-loop/single-way-feedback-loop.component';
+import { MultiWaysFeedbackLoopComponent } from '../multi-ways-feedback-loop/multi-ways-feedback-loop.component';
 
 @Component({
   selector: 'app-agelimiter',
@@ -7,6 +13,10 @@ import { DalalidataService } from '../service/data/dalalidata.service';
   styleUrls: ['./agelimiter.component.scss']
 })
 export class AgelimiterComponent implements OnInit {
+  
+  @ViewChild(SingleWayFeedbackLoopComponent) singleLoop!:SingleWayFeedbackLoopComponent;
+  
+  @ViewChild(MultiWaysFeedbackLoopComponent) multiLoop!:MultiWaysFeedbackLoopComponent;
 
   private yearsUpperMover:any = null
   private yearsLowerMover:any=null
@@ -28,7 +38,14 @@ export class AgelimiterComponent implements OnInit {
   private DayslowerMover:any=null
   public displayText:string="Display text"
 
-  constructor( private elRef:ElementRef, private renderer:Renderer2,private dalaliData:DalalidataService) { }
+  constructor( 
+    private elRef:ElementRef, 
+    private renderer:Renderer2,
+    public dalaliData:DalalidataService,
+    private backendCommunicator:BackendcommunicatorService,
+    private dWebsockets:DalaliWebSocketsService,
+    private dRouter:Router
+    ) { }
 
   ngOnInit(): void {
   }
@@ -41,6 +58,7 @@ export class AgelimiterComponent implements OnInit {
     this.addingDays()
     this.subtractingDays()
     this.submitterButton()
+    this.autoSignIn()
   }
   gettingDays(){
     let dateToUse:Date=new Date(this.yearValue,this.currentMonthValue)
@@ -154,10 +172,14 @@ export class AgelimiterComponent implements OnInit {
     let userAgeInYears:any=userAge/(1000*3600*24*365)
     if(userAgeInYears>18){
       this.dalaliData.userData.userDob=`${this.currentDayValue+1} / ${this.currentMonthValue+1} / ${this.yearValue}`
-      this.elRef.nativeElement.querySelector(".homeBut").click()
+      this.dalaliData.ageLimiterVisibility='nosite'
+      this.dRouter.navigateByUrl('home')
     }else{
       let textToDisplay:string="You are underage."
-      this.openFeedBackLoop(textToDisplay)      
+
+      this.dalaliData.singlewayfLoopMsg=textToDisplay
+
+      this.singleLoop.openFeedbackLoop()
     }
   }
   submitterButton(){
@@ -166,14 +188,183 @@ export class AgelimiterComponent implements OnInit {
     })
   }
 
-  closeFeedbackLoop():void{
-    let fBLoop:any=this.elRef.nativeElement.querySelector(".sWFLMain")
-    this.renderer.addClass(fBLoop,"nosite")
-  }
+  autoSignIn():void{
+    let currentAccount:any=localStorage.getItem("currentAccount")
 
-  openFeedBackLoop(textToDisplay:string):void{
-    this.displayText=textToDisplay
-    let fBLoop:any=this.elRef.nativeElement.querySelector(".sWFLMain")
-    this.renderer.removeClass(fBLoop,"nosite")
+    if(currentAccount !== null){
+
+      currentAccount=JSON.parse(currentAccount)
+        
+      const signInFormData:FormData = new FormData()
+
+      for (const accountDetail of Object.keys(currentAccount)) {
+
+        if(accountDetail == 'contact'){
+
+          signInFormData.append('SignInContact',currentAccount[accountDetail])
+          
+        }else if (accountDetail == 'password'){
+
+          signInFormData.append('signInPassword',currentAccount[accountDetail])
+          
+        }
+        
+      }
+
+      this.backendCommunicator.backendCommunicator(signInFormData,'post',`${this.backendCommunicator.backendBaseLink}/signIn`).then((resp: any)=>{
+        let userType:string=''
+        if (resp.status === 1){
+          if(resp.userGroups.includes('superUser')){
+
+            this.dalaliData.userData.userType='superuser'
+            userType='superuser'
+
+          }else if (resp.userGroups.includes('admins')){
+
+            this.dalaliData.userData.userType='admin'
+            userType='admin'
+
+          }else if (resp.userGroups.includes('retailers')){
+
+            this.dalaliData.userData.userType='retailer'
+            userType='retailer'
+
+          }else if(resp.userGroups.includes('wholesalers')) {
+
+            this.dalaliData.userData.userType='wholesaler'
+            userType='wholesaler'
+
+          }else{
+
+            this.dalaliData.userData.userType='buyer'
+            userType='buyer'
+
+          }
+
+          const userDetails:any = {
+            "userContact":resp.userContact,
+            "userName":resp.userName,
+            "userDob":resp.userDob,
+            "userType":userType
+          }
+
+          this.dalaliData.setUserBasicInfo(userDetails)
+
+          if (!this.dWebsockets.websocketOpen){
+
+          this.dWebsockets.wsBackEndCommunicator(
+
+            userDetails.userContact,
+            userDetails.userName,
+            userDetails.userType,
+
+          )
+
+            // const cart:Cart = {}
+
+            // for (const cartKey of Object.keys(cart)) {
+
+            //   type ObjectKey = keyof typeof cart;
+
+            //   const myVar = cartKey as ObjectKey;
+
+            //   console.log(myVar);
+
+            // }
+
+          const cartsStoreIndices:any = {
+            cartDate:'cartDate',
+            cartTime:'cartTime',
+            cartAccount:'cartAccount',
+            cartState:'cartState',
+            cartOrderId:'cartOrderId',
+            cartSaleId:'cartSaleId',
+            cartType:'cartType',
+            complete:'complete',
+            retailer:'retailer'
+          }
+
+          this.dalaliData.getCartDbStore('userCarts','id',cartsStoreIndices).then((cartStore:any)=>{
+
+            this.dalaliData.getPendingCart(cartStore[0]).then((currentCart:any)=>{
+
+              if (currentCart != undefined){
+
+                this.dalaliData.multiwayfLoopMsg=`You have a pending cart. Do you want to use it or start a new one.`
+
+                this.multiLoop.openFeedbackLoop("Current", "New").then((ans:boolean)=>{
+
+                  if (ans == false){
+
+                    this.dalaliData.getDbCartProds(currentCart.id).then(()=>{
+
+                      this.dalaliData.currentCartId=currentCart.id
+
+                      this.dalaliData.ageLimiterVisibility='nosite'
+
+                      this.dRouter.navigateByUrl('home')
+
+                    })
+
+                  }else{
+                    this.dalaliData.multiwayfLoopMsg=`Creating a new cart will delete the current one with the ordered products. Do you want to continue ?`
+
+                    this.multiLoop.openFeedbackLoop().then((sAns:boolean)=>{
+
+                      if ( sAns == false){
+
+
+                        this.dalaliData.getDbCartProds(currentCart.id).then(()=>{
+
+                          this.dalaliData.currentCartId=currentCart.id
+
+                          this.dalaliData.ageLimiterVisibility='nosite'
+
+                          this.dRouter.navigateByUrl('home')
+
+                        })
+                      }else{
+
+                        this.dalaliData.deleteCart(currentCart.id).then((resp:boolean)=>{
+
+                          this.dalaliData.singlewayfLoopMsg=" Deleted the cart successfuly"
+
+                          this.singleLoop.openFeedbackLoop().then(()=>{
+
+                            this.dalaliData.ageLimiterVisibility='nosite'
+
+                          })
+
+                        }).catch((err:any)=>{
+
+                          console.error(err);
+
+                        })
+
+                      }
+
+                    })
+                  }
+
+                })
+
+              }else{
+
+                this.dalaliData.ageLimiterVisibility='nosite'
+
+              }
+              
+  
+            })
+
+          })
+
+        }
+
+        }
+
+      })
+
+    }
   }
 }

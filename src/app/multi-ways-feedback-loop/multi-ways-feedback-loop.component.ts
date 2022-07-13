@@ -11,26 +11,52 @@ export class MultiWaysFeedbackLoopComponent implements OnInit {
   constructor(
     private eleRef:ElementRef,
     private renderer:Renderer2,
-    private dataService:DalalidataService
+    public dataService:DalalidataService
   ) { }
-
-  @Input() displayText:any
+  
+  public rejDisplay:string = ''
+  public respDisplay:string=''
 
   ngOnInit(): void {
   }
   ngAfterViewInit():void{
-    let fBLoop:any=this.eleRef.nativeElement.querySelector(".mWFLPage")
-    this.renderer.removeClass(fBLoop,"nosite")    
   }
 
   closeFeedbackLoop():void{
     let fBLoop:any=this.eleRef.nativeElement.querySelector(".mWFLPage")
     this.renderer.addClass(fBLoop,"nosite")
   }
-  acceptAndClose():void{
-    this.dataService.mWFLAns=true
-    this.closeFeedbackLoop()
+
+  openFeedbackLoop(rejDisp?:string,respDisp?:string):Promise<boolean>{
+    
+    if (rejDisp== undefined){
+      rejDisp = 'No'
+    }
+    if ( respDisp == undefined){
+      respDisp='Yes'
+    }
+
+    this.rejDisplay=rejDisp
+    this.respDisplay=respDisp
+
+    const acceptBut:any = this.eleRef.nativeElement.querySelector(".mWFLPBFABut")
+    const denyBut:any = this.eleRef.nativeElement.querySelector(".mWFLPBFCBut")
+    let fBLoop:any=this.eleRef.nativeElement.querySelector(".mWFLPage")
+    
+    return new Promise<boolean>((resolve) => {
+      this.renderer.removeClass(fBLoop,"nosite")
+
+      this.renderer.listen(acceptBut,'click',()=>{
+        this.renderer.addClass(fBLoop,"nosite")
+        resolve(true)
+      })
+
+      this.renderer.listen(denyBut,'click',()=>{
+        this.renderer.addClass(fBLoop,"nosite")
+        resolve(false)
+      })
+      
+    })
   }
   
-
 }

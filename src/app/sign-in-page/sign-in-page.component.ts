@@ -1,7 +1,13 @@
-import { Component, ElementRef, OnInit, Renderer2 } from '@angular/core';
+import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
+
 import { BackendcommunicatorService } from '../service/communications/backendcommunicator.service';
 import { DalalidataService } from '../service/data/dalalidata.service';
-import { Router } from '@angular/router';
+import { DalaliWebSocketsService } from '../service/webSocket/dalali-web-sockets.service';
+
+import { SingleWayFeedbackLoopComponent } from '../single-way-feedback-loop/single-way-feedback-loop.component';
+import { MultiWaysFeedbackLoopComponent } from '../multi-ways-feedback-loop/multi-ways-feedback-loop.component';
+
 
 @Component({
   selector: 'app-sign-in-page',
@@ -9,12 +15,13 @@ import { Router } from '@angular/router';
   styleUrls: ['./sign-in-page.component.scss']
 })
 export class SignInPageComponent implements OnInit {
+  @ViewChild(SingleWayFeedbackLoopComponent) singleLoop!:SingleWayFeedbackLoopComponent;
+  @ViewChild(MultiWaysFeedbackLoopComponent) multiLoop!: MultiWaysFeedbackLoopComponent;
+
+  
   private emptyValues:Array<any>=[]
   private userType:string=""
-  private regResponse:string=""
   private contactType:string=""
-  private userContact:string=""
-  private userOTP:string=""
   public displayText:string="Display text"
 
   constructor(
@@ -22,7 +29,8 @@ export class SignInPageComponent implements OnInit {
     private renderer:Renderer2,
     private dalaliData:DalalidataService,
     private backendCommunicator:BackendcommunicatorService,
-    private dalaliRouter:Router
+    private dalaliRouter:Router,
+    private dWebsockets:DalaliWebSocketsService
               
   ) { }
 
@@ -31,7 +39,7 @@ export class SignInPageComponent implements OnInit {
 
   eppendData(formToAppend:FormData,inputList:NodeList):FormData{
     formToAppend=new FormData();
-    formToAppend.append("userDOB",this.dalaliData.getUserDOB())
+    formToAppend.append("userDOB",this.dalaliData.getUserBasiInfo().userDob)
     inputList.forEach((inputNode:any)=>{
       
       if(inputNode.value!=""){
@@ -79,71 +87,228 @@ export class SignInPageComponent implements OnInit {
           this.renderer.removeClass(loaderDiv,'nosite');
             this.backendCommunicator.backendCommunicator(signInFormData,'post',`${this.backendCommunicator.backendBaseLink}/signIn`).then((resp: any)=>{
               this.renderer.addClass(loaderDiv,'nosite');
-              if(resp === null){
-                this.signInRouter('You are not registered',true).then(()=>{
-                  this.closeFeedbackLoop()
-                })  
-              }else{
-                this.userOTP=resp[2]
-                this.userContact=resp[1]
-                this.regResponse=resp[0]
-                let userOTPItems:Array<string>=[this.userContact,this.userOTP]
-                localStorage.setItem("userOTPItems",JSON.stringify(userOTPItems))
-                this.clearData(this.signInFunc())
-                if( resp.length > 1){
-                  this.signInRouter('Logged in successfully',true).then(()=>{
-                    this.closeFeedbackLoop()
+              
+              if (resp.status === 0){
+                this.userType='buyer'
+                this.dalaliData.userData.userType='buyer'
+
+                this.dalaliData.multiwayfLoopMsg=' This account contact does not exist in our system. Do you want to sign up ?'
+                this.multiLoop.openFeedbackLoop().then((userResp:Boolean)=>{
+
+                  if ( userResp === true ){
+
+                    this.dalaliRouter.navigateByUrl('signUp')
+
+                  }else{
+
                     this.dalaliRouter.navigateByUrl('home')
-                  })
+
+                  }
+
+                })
+
+              }else if (resp.status === 1){
+                
+                if(resp.userGroups.includes('superUser')){
+      
+                  this.dalaliData.userData.userType='superuser'
+                 this.userType='superuser'
+      
+                }else if (resp.userGroups.includes('admins')){
+      
+                  this.dalaliData.userData.userType='admin'
+                  this.userType='admin'
+      
+                }else if (resp.userGroups.includes('retailers')){
+      
+                  this.dalaliData.userData.userType='retailer'
+                  this.userType='retailer'
+      
+                }else if(resp.userGroups.includes('wholesalers')) {
+      
+                  this.dalaliData.userData.userType='wholesaler'
+                  this.userType='wholesaler'
+      
                 }else{
-                  this.signInRouter('Log in Failed please check your details and try again',true).then(()=>{
-                    this.closeFeedbackLoop()
-                  })                
+      
+                  this.dalaliData.userData.userType='buyer'
+                  this.userType='buyer'
+      
                 }
-             }
+          
+                const userDetails:any = {
+                  "userContact":resp.userContact,
+                  "userName":resp.userName,
+                  "userDob":resp.userDob,
+                  "userType":this.userType
+                }
+      
+                this.dalaliData.setUserBasicInfo(userDetails)
+
+                if (!this.dWebsockets.websocketOpen){
+
+                  this.dWebsockets.wsBackEndCommunicator(
+        
+                    resp.userContact,
+                    resp.userName,
+                    this.userType,
+        
+                  )
+                }
+                
+                this.dalaliData.singlewayfLoopMsg=`Welcome back ${resp.userName}`
+
+                this.singleLoop.openFeedbackLoop().then(()=>{
+
+                  let userAccounts:any = localStorage.getItem('userAccounts')
+                  let accountPresent:boolean=false
+
+                  if (userAccounts === null){
+
+                    this.dalaliData.multiwayfLoopMsg="Do you want to add this account to this device"
+                    this.multiLoop.openFeedbackLoop().then((userResp:Boolean)=>{
+                      
+                      if (userResp === true){
+
+                        const userAccount:any={
+                          contact:resp.userContact,
+                          password:resp.userPassword
+                        }
+
+                        userAccounts=[userAccount]
+
+                        localStorage.setItem('userAccounts',JSON.stringify(userAccounts))
+                
+                        this.dalaliData.singlewayfLoopMsg=`Account Added`
+
+                        localStorage.setItem('currentAccount',JSON.stringify(userAccount))
+
+                        this.singleLoop.openFeedbackLoop().then(()=>{
+
+                          this.cartComfirms().then(()=>{
+
+                            this.dalaliRouter.navigateByUrl('home')
+
+                          }).catch((err:any)=>{
+
+                            console.error(err);
+                            
+                          })
+
+                        })
+
+                      }else{
+
+                        this.cartComfirms().then(()=>{
+
+                          this.dalaliRouter.navigateByUrl('home')
+
+                        }).catch((err:any)=>{
+
+                          console.error(err);
+                          
+                        })
+
+                      }
+                    })
+
+                  }else{
+
+                    userAccounts = JSON.parse(userAccounts)
+
+                    for (const userAccount of userAccounts) {
+                      
+                      if (userAccount.contact === resp.userContact){
+                        accountPresent = true
+                      }
+
+                    }
+
+                    if ( accountPresent === false ) {
+
+                      this.dalaliData.multiwayfLoopMsg="Do you want to add this account to this device"
+                      this.multiLoop.openFeedbackLoop().then((userResp:Boolean)=>{
+                      
+                        if (userResp === true){
+
+                          const userAccount:any={
+                            contact:resp.userContact,
+                            password:resp.userPassword
+                          }
+                          
+                          userAccounts.push(userAccount)
+    
+                          localStorage.setItem('userAccounts',JSON.stringify(userAccounts))
+
+                          localStorage.setItem('currentAccount',JSON.stringify(userAccount))
+                
+                          this.dalaliData.singlewayfLoopMsg=`Account Added`
+  
+                          this.singleLoop.openFeedbackLoop().then(()=>{
+
+                            this.cartComfirms().then(()=>{
+  
+                              this.dalaliRouter.navigateByUrl('home')
+  
+                            }).catch((err:any)=>{
+  
+                              console.error(err);
+                              
+                            })
+
+                          })
+
+                        }else{
+
+                          this.cartComfirms().then(()=>{
+
+                            this.dalaliRouter.navigateByUrl('home')
+
+                          }).catch((err:any)=>{
+
+                            console.error(err);
+                            
+                          })
+                        }
+
+                      })
+
+                    }else{
+
+                      this.cartComfirms().then(()=>{
+
+                        this.dalaliRouter.navigateByUrl('home')
+
+                      }).catch((err:any)=>{
+
+                        console.error(err);
+                        
+                      })
+
+                    }
+
+                  }
+
+                })
+
+              }else if (resp.status === 2){
+
+                this.dalaliData.singlewayfLoopMsg="You have used a wrong password please check then try again."
+                this.singleLoop.openFeedbackLoop()
+
+              }
+
             })
           }else{
-            this.signInRouter("There are some empty values",false).then(()=>{
-              this.closeFeedbackLoop()
-            })
+              this.dalaliData.singlewayfLoopMsg="There are some empty values"
+              this.singleLoop.openFeedbackLoop()
           }
       }else{
-        this.signInRouter("We only allow phone number or email",false).then(()=>{
-          this.closeFeedbackLoop()
-        })
+        this.dalaliData.singlewayfLoopMsg="We only allow phone number or email"
+        this.singleLoop.openFeedbackLoop()
       }
     }
   }
-
-  signInAlert(message: string){
-    this.openFeedBackLoop(message)
-  }
-
-  signInRouter(msg: string,signInType: boolean): Promise< any >{
-    return new Promise( (signInResp: any) =>{
-      this.signInAlert(msg)
-      const usrBut: any = this.elRef.nativeElement.querySelector(".sWFLFCloseAns")
-      this.renderer.listen(usrBut,'click',()=>{
-        if(signInType === true){
-          signInResp(true)
-        }else{
-          signInResp(false)
-        }
-      })
-    })
-  }
-
-  closeFeedbackLoop():void{
-    let fBLoop:any=this.elRef.nativeElement.querySelector(".sWFLMain")
-    this.renderer.addClass(fBLoop,"nosite")
-  }
-
-  openFeedBackLoop(textToDisplay:string):void{
-    this.displayText=textToDisplay
-    let fBLoop:any=this.elRef.nativeElement.querySelector(".sWFLMain")
-    this.renderer.removeClass(fBLoop,"nosite")
-  }
-
   openedEye():void{
     const openEyeDiv: any = this.elRef.nativeElement.querySelector('.openEye')
     this.renderer.addClass(openEyeDiv,'nosite')
@@ -160,6 +325,103 @@ export class SignInPageComponent implements OnInit {
     this.renderer.removeClass(openEyeDiv,'nosite')
     const signInPasswordInput: any = this.elRef.nativeElement.querySelector('#signInPassword')
     signInPasswordInput.type='text'
+  }
+
+  cartComfirms():Promise<boolean>{
+
+    return new Promise<boolean>((resolve, reject) => {
+          
+      const cartsStoreIndices:any = {
+        cartDate:'cartDate',
+        cartTime:'cartTime',
+        cartAccount:'cartAccount',
+        cartState:'cartState',
+        cartOrderId:'cartOrderId',
+        cartSaleId:'cartSaleId',
+        cartType:'cartType',
+        complete:'complete',
+        retailer:'retailer'
+      }
+          
+      this.dalaliData.getCartDbStore('userCarts','id',cartsStoreIndices).then((cartStore:any)=>{
+  
+        this.dalaliData.getPendingCart(cartStore[0]).then((currentCart:any)=>{
+  
+          if (currentCart != undefined){
+  
+            this.dalaliData.multiwayfLoopMsg=`You have a pending cart. Do you want to use it or start a new one.`
+      
+            this.multiLoop.openFeedbackLoop("Current", "New").then((ans:boolean)=>{
+              
+              if (ans == false){
+  
+                this.dalaliData.getDbCartProds(currentCart.id).then(()=>{
+                  
+                  this.dalaliData.currentCartId=currentCart.id
+                  
+                  resolve(true)
+  
+                })
+  
+              }else{
+                this.dalaliData.multiwayfLoopMsg=`Creating a new cart will delete the current one with the ordered products. Do you want to continue ?`
+      
+                this.multiLoop.openFeedbackLoop().then((sAns:boolean)=>{
+  
+                  if ( sAns == false){
+  
+  
+                    this.dalaliData.getDbCartProds(currentCart.id).then(()=>{
+                      
+                      this.dalaliData.currentCartId=currentCart.id
+
+                      resolve(true)
+  
+                    })
+                  }else{
+  
+                    this.dalaliData.deleteCart(currentCart.id).then((resp:boolean)=>{
+  
+                      this.dalaliData.singlewayfLoopMsg=" Deleted the cart successfuly"
+  
+                      this.singleLoop.openFeedbackLoop().then(()=>{
+                        
+                        resolve(true)
+  
+                      })
+  
+                    }).catch((err:any)=>{
+  
+                      reject(err);
+  
+                    })
+  
+                  }
+  
+                })
+              }
+  
+            })
+  
+          }else{
+
+            resolve(true)
+  
+          }
+          
+  
+        }).catch((err:any)=>{
+
+          reject(err)
+
+        })
+  
+      }).catch((err:any)=>{
+        reject(err)
+      })
+      
+    })
+
   }
   
 }

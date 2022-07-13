@@ -1,107 +1,91 @@
-<div class="ageLimiter">
-    <div class="aLHead">
-        Age limiter
-    </div>
-    <div class="lowerControlBoard controlBoards">
-        <div class="yearslowerMover valueControlers">
-            <i class="fas fa-arrow-up"></i>
-        </div>
-        <div class="MonthslowerMover valueControlers">
-            <i class="fas fa-arrow-up"></i>
-        </div>
-        <div class="DayslowerMover valueControlers">
-            <i class="fas fa-arrow-up"></i>
-        </div>
-    </div>
-    <div class="aLBody">
-        <div class="aLYear aLHolder">
-            <div class="aLYDown aLVHolder smallerValues">
-                {{this.yearValue-1}}
-            </div>
-            <div class="aLYMiddle aLVHolder">
-                {{this.yearValue}}
-            </div>
-            <div class="aLYUpper aLVHolder smallerValues">
-                {{this.yearValue+1}}
-            </div>
-        </div>
-        <div class="aLMonths aLHolder">
-            <div class="aLMDown aLVHolder smallerValues">
-                {{this.monthsList[this.prevMonthValue]}}
-            </div>
-            <div class="aLMMiddle aLVHolder">
-                {{this.monthsList[this.currentMonthValue]}}
-            </div>
-            <div class="aLMUpper aLVHolder smallerValues">
-                {{this.monthsList[this.nextMonthValue]}}
-            </div>
-    
-        </div>
-        <div class="aLDays aLHolder">
-            <div class="aLDDown aLVHolder smallerValues">
-                {{this.daysList[this.prevDayValue]}}
-            </div>
-            <div class="aLDMiddle aLVHolder">
-                {{this.daysList[this.currentDayValue]}}
-            </div>
-            <div class="aLDUpper aLVHolder smallerValues">
-                {{this.daysList[this.nextDayValue]}}
-            </div>    
-        </div>
-    </div>
-    <div class="upperControlBoard controlBoards">
-        <div class="yearsUpperMover valueControlers">
-            <i class="fas fa-arrow-down"></i>
-        </div>
-        <div class="MonthsUpperMover valueControlers">
-            <i class="fas fa-arrow-down"></i>
-        </div>
-        <div class="DaysUpperMover valueControlers">
-            <i class="fas fa-arrow-down"></i>
-        </div>
-    </div>
-    <div class="pickerAndSubmitter">
-        <div class="pickerInput">
-            <input type="text" id="DOBTextInputPicker">
-        </div>
-        <div class="submitterInput">
-            <div class="submitterButton">
-                Submit
-            </div>
-            <a routerLink="/" routerLinkActive="active-link" class="nosite homeBut">Home</a>
-        </div>
-    </div>
 
+<div class="baseDiv {{this.dalaliData.ageLimiterVisibility}}">
 
-    <div class="sWFLMain nosite">
-        <div class="sWFLMBody">
-    
-            <div class="sWFLMHead">
-    
-                <div class="sWFLHTitle sWFLDiv">
-                    DALALI
-                </div>
-    
-                <div class="sWFLClose sWFLDiv"
-                (click)="this.closeFeedbackLoop()">
-                    <i class="fas fa-times"></i>            
-                </div>
-    
+    <div class="ageLimiterInnerDiv">
+        
+        <div class="ageLimiter">
+            <div class="aLHead">
+                Age limiter
             </div>
-    
-            <div class="sWFLBody">
-                <p>
-                    {{displayText}}
-                </p>
-            </div>
-    
-            <div class="sWFLFooter">
-                <div class="sWFLFCloseAns"
-                (click)="this.closeFeedbackLoop()">
-                    Okay
+            <div class="lowerControlBoard controlBoards">
+                <div class="yearslowerMover valueControlers">
+                    <i class="fas fa-arrow-up"></i>
+                </div>
+                <div class="MonthslowerMover valueControlers">
+                    <i class="fas fa-arrow-up"></i>
+                </div>
+                <div class="DayslowerMover valueControlers">
+                    <i class="fas fa-arrow-up"></i>
                 </div>
             </div>
+            <div class="aLBody">
+                <div class="aLYear aLHolder">
+                    <div class="aLYDown aLVHolder smallerValues">
+                        {{this.yearValue-1}}
+                    </div>
+                    <div class="aLYMiddle aLVHolder">
+                        {{this.yearValue}}
+                    </div>
+                    <div class="aLYUpper aLVHolder smallerValues">
+                        {{this.yearValue+1}}
+                    </div>
+                </div>
+                <div class="aLMonths aLHolder">
+                    <div class="aLMDown aLVHolder smallerValues">
+                        {{this.monthsList[this.prevMonthValue]}}
+                    </div>
+                    <div class="aLMMiddle aLVHolder">
+                        {{this.monthsList[this.currentMonthValue]}}
+                    </div>
+                    <div class="aLMUpper aLVHolder smallerValues">
+                        {{this.monthsList[this.nextMonthValue]}}
+                    </div>
             
+                </div>
+                <div class="aLDays aLHolder">
+                    <div class="aLDDown aLVHolder smallerValues">
+                        {{this.daysList[this.prevDayValue]}}
+                    </div>
+                    <div class="aLDMiddle aLVHolder">
+                        {{this.daysList[this.currentDayValue]}}
+                    </div>
+                    <div class="aLDUpper aLVHolder smallerValues">
+                        {{this.daysList[this.nextDayValue]}}
+                    </div>    
+                </div>
+            </div>
+            <div class="upperControlBoard controlBoards">
+                <div class="yearsUpperMover valueControlers">
+                    <i class="fas fa-arrow-down"></i>
+                </div>
+                <div class="MonthsUpperMover valueControlers">
+                    <i class="fas fa-arrow-down"></i>
+                </div>
+                <div class="DaysUpperMover valueControlers">
+                    <i class="fas fa-arrow-down"></i>
+                </div>
+            </div>
+            <div class="pickerAndSubmitter">
+                <div class="pickerInput">
+                    <input type="text" id="DOBTextInputPicker">
+                </div>
+                <div class="submitterInput">
+                    <div class="submitterButton">
+                        Submit
+                    </div>
+                </div>
+            </div>
+
+            <app-single-way-feedback-loop>
+
+            </app-single-way-feedback-loop>
+
+            <app-multi-ways-feedback-loop>
+
+            </app-multi-ways-feedback-loop>
+
         </div>
+
     </div>
+
 </div>

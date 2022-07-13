@@ -32,10 +32,13 @@ import { DaysChangesComponent } from './days-changes/days-changes.component';
 import { DalaliCalenderComponent } from './dalali-calender/dalali-calender.component';
 import { DaysProductSoldComponent } from './days-product-sold/days-product-sold.component';
 import { UserToolComponent } from './user-tool/user-tool.component';
+import { UserOdersComponent } from './user-oders/user-oders.component';
+import { OrderDetailsComponent } from './order-details/order-details.component';
+
 const routes: Routes = [
   {
     path:'' , 
-    component: LoaderComponent
+    component: HomePageComponent
   },
   {
     path:'aboutUs',
@@ -84,6 +87,10 @@ const routes: Routes = [
   {
     path:'home' , 
     component: HomePageComponent
+  },
+  {
+    path:'orderDetails' , 
+    component: OrderDetailsComponent
   },
   {
     path:'popular' , 
@@ -158,13 +165,17 @@ const routes: Routes = [
     component: ProfilePageComponent
   },
   {
+    path:'userOrders',
+    component:UserOdersComponent
+  },
+  {
     path:'userTools' , 
     component: UserToolComponent
   },
-    { 
-      path: '**', 
-      component: LoaderComponent
-    }
+  { 
+    path: '**', 
+    component: LoaderComponent
+  }
 ];
 
 @NgModule({

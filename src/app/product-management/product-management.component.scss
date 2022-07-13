@@ -52,7 +52,7 @@
 }
 .productSelectionBody{
     width: 95%;
-    max-height: 95%;
+    height: 95%;
     position: relative;
     left: 50%;
     transform: translate(-50%);
@@ -67,7 +67,7 @@
 @media all and (min-width:800px) {
     .productSelectionBody{
         width: 400px;
-        max-height: 95%;
+        height: 95%;
         position: relative;
         left: 50%;
         transform: translate(-50%);
@@ -76,8 +76,7 @@
         border-radius: 3px;
         padding: 5px;
         box-sizing: border-box;
-        overflow-x: hidden;
-        overflow-y: scroll;
+        overflow: hidden;
     }
     
 }
@@ -143,11 +142,11 @@
     overflow: hidden;
     display: grid;
     grid-template-columns: 20% 80%;
-    box-shadow:  5px 5px 7px #b3b3b3,
-                 -5px -5px 7px #ffffff;
+    background-color: #e2e2e2f6;
     margin-top: 15px;
     margin-bottom: 15px;
     position: relative;
+    border-radius: 3px;
 }
 .sRPDTDiv{
     width: 100%;
@@ -161,7 +160,7 @@
 }
 .sRProductImage{
     width: 90%;
-    height: 95%;
+    height: 80%;
     object-fit: contain;
 }
 .sRPDTPDProdName{
@@ -533,7 +532,7 @@
 }
 .eCTCBody{
     width: 95%;
-    height: 50%;
+    height: 70%;
     background-color: #ffffff;
     border-radius: 3px;
     position: relative;
@@ -546,7 +545,7 @@
 @media all and (min-width:800px) {
     .eCTCBody{
         width: 40%;
-        height: 50%;
+        height: 70%;
         background-color: #ffffff;
         border-radius: 3px;
         position: relative;
@@ -592,10 +591,7 @@
 .columnToChooseTile{
     width: 90%;
     height: 60px;
-    box-shadow:  5px 5px 7px #b3b3b3,
-                 -5px -5px 7px #ffffff;
     border-radius: 3px;
-    background-color: #ffffff;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -603,6 +599,9 @@
     left: 5%;
     margin-top: 15px;
     margin-bottom: 15px;
+    background-color: #e2e2e2f6;
+    padding: 5px;
+    box-sizing: border-box;
 }
 .chosenTick{
     width: 40px;

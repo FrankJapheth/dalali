@@ -1,4 +1,6 @@
-import { Component, OnInit,Renderer2,ElementRef, Input } from '@angular/core';
+import { Component, OnInit,Renderer2,ElementRef } from '@angular/core';
+
+import { DalalidataService } from '../service/data/dalalidata.service';
 
 @Component({
   selector: 'app-single-way-feedback-loop',
@@ -9,11 +11,9 @@ export class SingleWayFeedbackLoopComponent implements OnInit {
 
   constructor(
     private eleRef:ElementRef,
-    private renderer:Renderer2
+    private renderer:Renderer2,
+    public dataService:DalalidataService
   ) { }
-
-  @Input() displayText:any
-  @Input() classType:any
 
   ngOnInit(): void {
   }
@@ -23,6 +23,19 @@ export class SingleWayFeedbackLoopComponent implements OnInit {
   closeFeedbackLoop():void{
     let fBLoop:any=this.eleRef.nativeElement.querySelector(".sWFLMain")
     this.renderer.addClass(fBLoop,"nosite")
+  }
+
+  openFeedbackLoop():Promise<boolean>{
+    const acceptBut:any = this.eleRef.nativeElement.querySelector(".sWFLFCloseAns")
+    let fBLoop:any=this.eleRef.nativeElement.querySelector(".sWFLMain")
+    this.renderer.removeClass(fBLoop,"nosite")
+    return new Promise<boolean>((resolve) => {
+      this.renderer.listen(acceptBut,'click',()=>{
+        this.renderer.addClass(fBLoop,"nosite")
+        resolve(true)
+      })
+      
+    })
   }
 
 }

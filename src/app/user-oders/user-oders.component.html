@@ -1,1 +1,72 @@
-<p>user-oders works!</p>
+<div class="userOders">
+
+    <div class="uOMain">
+
+        <div class="ordersHeaders">
+
+            <div class="oHHead">
+
+                <div class="oHButton oHBComplete"
+                (click)="this.getCompleteOrderes()">
+                    Complete
+                </div>
+
+                <div class="oHButton oHBPending"
+                (click)="this.getIncompleteOrders()">
+                    Incomplete
+                </div>
+
+            </div>
+
+            <div class="oHBody">
+
+                <div class="oHBPelleteHolder">
+
+                    <div class="oHBPellete"
+                    *ngFor="let orderDetails of this.userOrders">
+
+                        <div class="oPTotaleAmount oPInfor">
+                            Total amount
+                        </div>
+
+                        <div class="oPOrderDate oPInfor">
+
+                            Order date {{orderDetails.cartDate}}
+
+                        </div>
+
+                        <div class="oPOrderTime oPInfor">
+
+                            Order time {{orderDetails.cartTime}}
+
+                        </div>
+
+                        <div class="oPOrderId oPInfor">
+
+                            Order id {{orderDetails.id}}
+
+                        </div>
+
+                        <div class="contrlButHolder">
+
+                            <div class="viewBut"
+                            id="ov{{orderDetails.id}}"
+                            (click)="this.viewOrder($event)">
+                                View
+                            </div>
+
+                        </div>
+
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

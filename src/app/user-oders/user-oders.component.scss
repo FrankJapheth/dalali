@@ -1,0 +1,116 @@
+.userOders{
+
+    width: 100%;
+    height: auto;
+    margin: 0px;
+    padding: 0px;
+
+}
+
+.uOMain{
+
+    width: 70%;
+    height: auto;
+    position: relative;
+    left: 15%;
+
+}
+.ordersHeaders{
+
+    width: 100%;
+    background-color: #e7e7e7;
+    border-radius: 3px;
+
+}
+.oHHead{
+    width: 100%;
+    height: 50px;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    border-bottom: 1px solid #121420;
+}
+.oHHead div{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+.oHHead div:hover{
+    background-color: #121420;
+    color: #e7e7e7;
+}
+.oHBComplete{
+    border-top-left-radius: 3px;
+    border-right: 1px solid #121420;
+}
+.oHBPending{
+    border-top-right-radius: 3px;
+
+}
+.oHBody{
+
+    width: 90%;
+    height: auto;
+    position: relative;
+    left: 5%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+.oHBPelleteHolder{
+
+    width: 90%;
+    height: auto;
+    position: relative;
+    left: 5%;
+
+}
+.oHBPellete{
+
+    width: 100%;
+    height: 150px;
+    position: relative;
+    overflow: hidden;
+    background-color: #fff;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-radius: 3px;
+}
+.oPInfor{
+
+    width: 100%;
+    height: 25%;
+    padding: 5px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+.contrlButHolder{
+
+    width: 50%;
+    height: 100%;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+
+}
+.viewBut{
+    width: 100px;
+    height: 40px;
+    background-color: #121420;
+    color: #e7e7e7;
+    cursor: pointer;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    border-radius: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.nosite{
+    display: none;
+}

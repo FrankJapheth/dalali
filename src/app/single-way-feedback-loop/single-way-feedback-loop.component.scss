@@ -38,10 +38,16 @@
 .sWFLBody{
     width: 100%;
     height: 65%;
-    padding: 3px;
-    box-sizing: border-box;
-    overflow-y: scroll;
-    overflow-x: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sWFLBody p{
+    width: 80%;
+    height: 100%;
+    overflow: hidden;
+    word-wrap: normal;
 }
 .sWFLFooter{
     width: 100%;

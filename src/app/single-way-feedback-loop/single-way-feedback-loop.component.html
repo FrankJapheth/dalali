@@ -7,7 +7,7 @@
                 DALALI
             </div>
 
-            <div class="sWFLClose sWFLDiv"
+            <div class="sWFLClose sWFLDiv nosite"
             (click)="this.closeFeedbackLoop()">
                 <i class="fas fa-times"></i>            
             </div>
@@ -16,13 +16,12 @@
 
         <div class="sWFLBody">
             <p>
-                {{displayText}}
+                {{this.dataService.singlewayfLoopMsg}}
             </p>
         </div>
 
         <div class="sWFLFooter">
-            <div class="sWFLFCloseAns"
-            (click)="this.closeFeedbackLoop()">
+            <div class="sWFLFCloseAns">
                 Okay
             </div>
         </div>

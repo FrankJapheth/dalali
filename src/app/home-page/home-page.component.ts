@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, Renderer2 } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DalalidataService } from '../service/data/dalalidata.service';
 import { DalaliCachesService } from '../service/caches/dalali-caches.service'
 @Component({
@@ -7,12 +7,9 @@ import { DalaliCachesService } from '../service/caches/dalali-caches.service'
   styleUrls: ['./home-page.component.scss']
 })
 export class HomePageComponent implements OnInit {
-
-  private windowHeight:number=window.innerHeight
+  
   constructor(
     private dalaliData:DalalidataService,
-    private elRef:ElementRef,
-    private renderer:Renderer2,
     private dalaliCaches:DalaliCachesService
   ) { }
   public prodCats:any=[]
@@ -32,21 +29,7 @@ export class HomePageComponent implements OnInit {
         this.getProductCat();
       };
   }
-  ngAfterViewInit(){
-    if(this.dalaliData.getUserDOB()=="not set"){
-      this.renderer.setStyle(this.elRef.nativeElement.querySelector('.ageLimiter'),'height',`${this.windowHeight}px`)
-      this.renderer.removeClass(this.elRef.nativeElement.querySelector('.ageLimiter'),'nosite')
-    }
-  }
-  ngAfterViewChecked():void{ 
-    if(this.dalaliData.getUserDOB()=="not set"){
-      this.renderer.setStyle(this.elRef.nativeElement.querySelector('.ageLimiter'),'height',`${this.windowHeight}px`)
-      this.renderer.removeClass(this.elRef.nativeElement.querySelector('.ageLimiter'),'nosite')
-    }else{
-      this.renderer.setStyle(this.elRef.nativeElement.querySelector('.ageLimiter'),'height',`${this.windowHeight}px`)
-      this.renderer.addClass(this.elRef.nativeElement.querySelector('.ageLimiter'),'nosite')      
-    }
-  }
+
   getProductCat():void{
     this.dalaliData.getProductCategories().then(resp=>{
       this.prodCats=resp  

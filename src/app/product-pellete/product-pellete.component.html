@@ -1,1 +1,101 @@
 
+<div class="itemDiv">
+
+    <div class="itmePic">
+        <img src="{{this.bEBaseLink}}{{productDetails.img}}" class="itemImgTag">
+    </div>
+
+    <div class="itemDetails">
+
+        <div class="itemName">
+
+            <span style="padding:5px;box-sizing:border-box;
+            overflow-x:scroll;overflow-y:hidden;white-space: nowrap;"
+            class="itemNameValue">
+                {{productDetails.name}}
+            </span>
+
+            <span style="padding:5px;box-sizing:border-box;">
+                {{productDetails.metrics}} 
+            </span>
+            
+        </div>
+
+        <div class="itemPrice">
+
+            <div>
+                <div class="iPPriceDiv">
+                    <span class="itemPriceCurrency">
+                        Ksh.{{productDetails.retailPrice}}
+                    </span>
+                </div>
+
+                <div class="iPAmountDiv">
+                    <span class="iPADValue">
+                        {{productDetails.quantity}} Pcs
+                    </span>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    
+    <div class="prodControlButton">
+
+        <!-- <div class="pCBHolderBoxes">
+            <div class="detailsButton pCBHBClickBut nosite">
+                More
+            </div>
+        </div> -->
+
+        <div class="pCBHolderBoxes">
+            <div class="addToCartBut pCBHBClickBut" id="aTCB{{productDetails.id}}" (click)="this.addToCartBut($event)"> 
+                ADD TO CART
+            </div>
+        </div>
+
+    </div>
+    <div class="cartProdControls nosite" id="cPC{{productDetails.id}}">  
+
+        <div class="cPCAddOrReduce">
+
+            <div class="cPCAORRuduceBut cPCAORButs">
+                <div class="cPCAORBDiv" id="cPAORBD{{productDetails.id}}" (click)="this.cPCAORBDiv($event)"> 
+                    -
+                </div>
+            </div>
+
+            <div class="cartProdNumber cPCAORButs" *ngIf="this.productDetails.inCart == false; else elseBlock">
+                <input type="text" class="cPCAORNumbtxtBox" id="cPCAORNTB{{productDetails.id}}" value="{{productDetails.minQuantity}}" (keyup)="this.cPCAORNumbtxtBox($event)">        
+            </div>
+
+            <ng-template #elseBlock>
+                
+                <div class="cartProdNumber cPCAORButs" >
+                    <input type="text" class="cPCAORNumbtxtBox" id="cPCAORNTB{{productDetails.id}}" value="{{productDetails.quantityOrdered}}" (keyup)="this.cPCAORNumbtxtBox($event)">        
+                </div>
+
+            </ng-template>
+
+            <div class="cPCAORAdd cPCAORButs">
+                <div class="cPAORADiv" id="cPAORAD{{productDetails.id}}" (click)="this.cPAORADiv($event)">
+                    +
+                </div>
+            </div>
+
+        </div>
+
+        <div class="cPCRemoveProBut">
+            <div class="cPCRPBDiv" id="cPCRBD{{productDetails.id}}"(click)="this.cPCRPBDiv($event)">
+                Remove
+            </div>
+        </div>
+
+    </div>
+
+    <app-single-way-feedback-loop>
+        
+    </app-single-way-feedback-loop>
+
+</div>

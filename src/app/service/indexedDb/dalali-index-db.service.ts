@@ -7,22 +7,51 @@ export class DalaliIndexDbService {
 
   constructor() { }
 
-  createDatabase(databaseName:string, databaseVersion:number): Promise<IDBDatabase>{
+  public currentDb:any=null
+  public currentTransaction:any=null
+
+  createDatabase(databaseName:string, databaseVersion:number): Promise<Array<any>>{
     return new Promise((dbResp,dbRej)=>{
-      const request:IDBOpenDBRequest = window.indexedDB.open(databaseName, databaseVersion);
-      request.onerror=(event:Event)=>{
-        dbRej(event)
+      
+      if (this.currentDb == null){
+          
+        
+        const request:IDBOpenDBRequest = window.indexedDB.open(databaseName, databaseVersion);
+        request.onerror=(event:Event)=>{
+          dbRej(event)
+        }
+        
+        request.onupgradeneeded=(evt:any)=>{
+
+          const dataBase:IDBDatabase=request.result
+          const dbTransaction:IDBTransaction = evt.target.transaction
+          this.currentDb=dataBase
+          this.currentTransaction=dbTransaction
+          dbResp([dataBase,dbTransaction])
+        }
+      }else{
+
+        const dataBase:IDBDatabase=this.currentDb
+        const dbTransaction:IDBTransaction = this.currentDb.transaction
+        dbResp([dataBase,dbTransaction])
+
       }
-      request.onupgradeneeded=()=>{
-        const dataBase:IDBDatabase=request.result
-        dbResp(dataBase)
-      }
+
     })
   }
 
-  writeToDatabase(databaseName:string,databaseVersion:number): Promise<IDBDatabase> {
+  writeToDatabase(databaseName:string): Promise<Array<any>> {
+    let dbVersion:any = localStorage.getItem(databaseName)
+
+    if ( dbVersion == null){
+      dbVersion=1
+      localStorage.setItem(databaseName,dbVersion)
+    }else{
+      dbVersion= Number(dbVersion)+1
+      localStorage.setItem(databaseName,dbVersion)
+    }
     return new Promise((dbResp,dbRej)=>{
-      this.createDatabase(databaseName,databaseVersion).then((resp:IDBDatabase)=>{
+      this.createDatabase(databaseName,Number(dbVersion)).then((resp:Array<any>)=>{
         dbResp(resp)
       }).catch((err)=>{
         dbRej(err)
@@ -95,49 +124,44 @@ export class DalaliIndexDbService {
 
   addRecord(objectStore:IDBObjectStore,storeData:any):Promise<IDBRequest>{
     return new Promise<any>((resolve, reject) => {
-      objectStore.transaction.oncomplete=()=>{
-          try {
+      try {
 
-                const idbReaquest:IDBRequest=objectStore.add(storeData);
+            const idbReaquest:IDBRequest=objectStore.add(storeData);
 
-                idbReaquest.onsuccess=()=>{
-                  resolve(idbReaquest)
-                }
+            idbReaquest.onsuccess=()=>{
+              resolve(idbReaquest)
+            }
 
-          } catch (error) {
-            reject(error)
-          }
+      } catch (error) {
+        reject(error)
       }
     })
   }
 
   readRecord(objectStore:IDBObjectStore,recordKey:string):Promise<IDBRequest>{
     return new Promise<any>((resolve, reject) => {
-      objectStore.transaction.oncomplete=()=>{
-        try {
-              const idbReaquest:IDBRequest=objectStore.get(recordKey);
-              idbReaquest.onsuccess=()=>{
-                resolve(idbReaquest)
-              }
-        } catch (error) {
-          reject(error)
-        }
+
+      try {
+            const idbReaquest:IDBRequest=objectStore.get(recordKey);
+            idbReaquest.onsuccess=()=>{
+              resolve(idbReaquest)
+            }
+      } catch (error) {
+        reject(error)
       }
       
     })
   }
 
-  updateRecord(objectStore:IDBObjectStore,record:string):Promise<IDBRequest>{
+  updateRecord(objectStore:IDBObjectStore,record:any,):Promise<IDBRequest>{
     return new Promise<any>((resolve, reject) => {
-      objectStore.transaction.oncomplete=()=>{
-          try {
-                const idbReaquest:IDBRequest=objectStore.put(record);
-                idbReaquest.onsuccess=()=>{
-                  resolve(idbReaquest)
-                }
-          } catch (error) {
-            reject(error)
-          }
+      try {
+            const idbReaquest:IDBRequest=objectStore.put(record);
+            idbReaquest.onsuccess=()=>{
+              resolve(idbReaquest)
+            }
+      } catch (error) {
+        reject(error)
       }
       
     })
@@ -145,18 +169,16 @@ export class DalaliIndexDbService {
 
   deleteRecord(objectStore:IDBObjectStore,recordKey:string):Promise<IDBRequest>{
     return new Promise<any>((resolve, reject) => {
-      objectStore.transaction.oncomplete=()=>{
-        try {
+      try {
 
-            const idbReaquest:IDBRequest=objectStore.delete(recordKey);
+          const idbReaquest:IDBRequest=objectStore.delete(recordKey);
 
-            idbReaquest.onsuccess=()=>{
-              resolve(idbReaquest)
-            }
+          idbReaquest.onsuccess=()=>{
+            resolve(idbReaquest)
+          }
 
-        } catch (error) {
-          reject(error)
-        }
+      } catch (error) {
+        reject(error)
       }
       
     })

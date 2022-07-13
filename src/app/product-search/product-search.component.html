@@ -16,13 +16,13 @@
         <div *ngFor="let prodSearched of this.prodSearchResult">
             <div class="searchedProductPelet">
                 <div class="searchedProductName sPPDiv">
-                    <span id="sPNS{{prodSearched[0]}}">{{prodSearched[1]}}</span>
-                    <span >{{prodSearched[2]}}</span>
+                    <span id="sPNS{{prodSearched.id}}">{{prodSearched.name}}</span>
+                    <span >{{prodSearched.metrics}}</span>
                 </div>
                 <div class="searchedProductPrice sPPDiv">
-                    <span class="">KSh. </span><span class="">{{prodSearched[5]}}</span>
+                    <span class="">KSh. </span><span class="">{{prodSearched.retailPrice}}</span>
                 </div>
-                <div class="clickableDiv" id="sPPC{{prodSearched[0]}}" (click)="this.searchPeleteClick($event)">
+                <div class="clickableDiv" id="sPPC{{prodSearched.id}}" (click)="this.searchPeleteClick($event)">
 
                 </div>
             </div>

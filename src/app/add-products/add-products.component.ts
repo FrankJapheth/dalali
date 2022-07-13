@@ -291,19 +291,25 @@ export class AddProductsComponent implements OnInit {
       let pCIValue:string=evt.target.value      
       if(pCIValue!=""){
         this.renderer.removeClass(docCategoryAnsDiv,"nosite")
+        console.log(this.productCategories);
+        
         this.productCategories.forEach((productCategoryDetails:any) => {
-          productCategoryDetails.forEach((productCategoryDetail:any) => {
-            if(productCategoryDetail!=null){
-              let stringedWord:string=productCategoryDetail.toString().toLowerCase()          
+
+          for (const cartDetailsKey of Object.keys(productCategoryDetails)) {
+
+            const cartKeyValues:string = productCategoryDetails[cartDetailsKey]
+
+            if(cartKeyValues!=null){
+              let stringedWord:string=cartKeyValues.toString().toLowerCase()          
               if(stringedWord.includes(pCIValue.toString().toLowerCase())){
                 if(!this.predictedCategories.includes(productCategoryDetails))
                 this.predictedCategories.push(productCategoryDetails)
               }
             }
-          });
+
+          }
+
         });
-        console.log(this.predictedCategories);
-        
       }else{
         this.renderer.addClass(docCategoryAnsDiv,"nosite")
       }

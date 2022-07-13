@@ -1,19 +1,26 @@
-import { Component, ElementRef, OnInit, Renderer2 } from '@angular/core';
-import { DalalidataService } from '../service/data/dalalidata.service';
-import { BackendcommunicatorService } from '../service/communications/backendcommunicator.service';
+import { AfterViewInit, Component, ElementRef, OnInit, QueryList, Renderer2, ViewChildren, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+
+import { BackendcommunicatorService } from '../service/communications/backendcommunicator.service';
+import { DalalidataService } from '../service/data/dalalidata.service';
+import { DalaliWebSocketsService } from '../service/webSocket/dalali-web-sockets.service';
+
+import { SingleWayFeedbackLoopComponent } from '../single-way-feedback-loop/single-way-feedback-loop.component';
+import { MultiWaysFeedbackLoopComponent } from '../multi-ways-feedback-loop/multi-ways-feedback-loop.component';
 
 @Component({
   selector: 'app-registration-page',
   templateUrl: './registration-page.component.html',
   styleUrls: ['./registration-page.component.scss']
 })
-export class RegistrationPageComponent implements OnInit {
+export class RegistrationPageComponent implements OnInit, AfterViewInit {
+  @ViewChild(SingleWayFeedbackLoopComponent) singleLoop!:SingleWayFeedbackLoopComponent;
+  @ViewChild(MultiWaysFeedbackLoopComponent) multiLoop!: MultiWaysFeedbackLoopComponent;
+
   private emptyValues:Array<any>=[]
   private userType:string=""
   private regResponse:string=""
   private contactType:string=""
-  private windowHeight:number=window.innerHeight
   private userContact:string=""
   private userOTP:string=""
   public displayText:string="Display text"
@@ -22,13 +29,14 @@ export class RegistrationPageComponent implements OnInit {
               private renderer:Renderer2,
               private dalaliData:DalalidataService,
               private backendCommunicator:BackendcommunicatorService,
-              private dalaliRouter: Router
+              private dalaliRouter: Router,
+              private dWebsockets:DalaliWebSocketsService
               ) {  }
 
   ngOnInit(): void {     
   }
-  signUpAlert(message:string):void{
-    this.openFeedBackLoop(message)
+
+  ngAfterViewInit(): void {
   }
 
   signUpFunc():NodeList{
@@ -50,7 +58,7 @@ export class RegistrationPageComponent implements OnInit {
 
   eppendData(formToAppend:FormData,inputList:NodeList):FormData{
     formToAppend=new FormData();
-    formToAppend.append("userDOB",this.dalaliData.getUserDOB())
+    formToAppend.append("userDOB",this.dalaliData.getUserBasiInfo().userDob)
     inputList.forEach((inputNode:any)=>{
       if(inputNode.value!=""){
         formToAppend.append(inputNode.id,inputNode.value)
@@ -90,51 +98,257 @@ export class RegistrationPageComponent implements OnInit {
 
               if (resp.status == 0){
 
-                this.signUpAlert("Welcome to dalali")
+                this.userType='buyer'
+                this.dalaliData.userData.userType='buyer'
 
-                const userResp:boolean=window.confirm("Do you want to add this account to this device?")
-                if (userResp === true){
-                  console.log(resp.userContact,resp.userPassword);
-                }
+                if (!this.dWebsockets.websocketOpen){
                 
+                  this.dWebsockets.wsBackEndCommunicator(
+        
+                    resp.userContact,
+                    resp.userName,
+                    this.userType,
+        
+                  )
+                }
+
+                this.dalaliData.singlewayfLoopMsg=`Welcome ${resp.userName}`
+
+                this.singleLoop.openFeedbackLoop().then(()=>{
+
+                  let userAccounts:any = localStorage.getItem('userAccounts')
+                  let accountPresent:boolean=false
+
+                  if (userAccounts === null){
+
+                    this.dalaliData.multiwayfLoopMsg="Do you want to add this account to this device"
+                    this.multiLoop.openFeedbackLoop().then((userResp:Boolean)=>{
+                      
+                      if (userResp === true){
+
+                        const userAccount:any={
+                          contact:resp.userContact,
+                          password:resp.userPassword
+                        }
+
+                        userAccounts=[userAccount]
+
+                        localStorage.setItem('userAccounts',JSON.stringify(userAccounts))
+
+                        localStorage.setItem('currentAccount',JSON.stringify(userAccount))
+
+                        this.dalaliData.singlewayfLoopMsg=`Account Added`
+
+                        this.singleLoop.openFeedbackLoop().then(()=>{
+
+                          this.dalaliRouter.navigateByUrl('home')
+
+                        })
+
+                      }else{
+
+                        this.dalaliRouter.navigateByUrl('home')
+                      
+                      }
+                    })
+
+                  }else{
+
+                    if ( accountPresent === false ) {
+
+                      this.dalaliData.multiwayfLoopMsg="Do you want to add this account to this device"
+                      this.multiLoop.openFeedbackLoop().then((userResp:Boolean)=>{
+                      
+                        if (userResp === true){
+
+                          const userAccount:any={
+                            contact:resp.userContact,
+                            password:resp.userPassword
+                          }
+    
+                          userAccounts.push(userAccount)
+    
+                          localStorage.setItem('userAccounts',JSON.stringify(userAccounts))
+
+                          localStorage.setItem('currentAccount',JSON.stringify(userAccount))
+                          
+                          this.dalaliData.singlewayfLoopMsg=`Account Added`
+  
+                          this.singleLoop.openFeedbackLoop().then(()=>{
+
+                            this.dalaliRouter.navigateByUrl('home')
+
+                          })
+
+                        }else{
+
+                          this.dalaliRouter.navigateByUrl('home')
+
+                        }
+
+                      })
+
+                    }else{
+
+                      this.dalaliRouter.navigateByUrl('home')
+
+                    }
+
+                  }
+                })
 
               }else if (resp.status == 1){
+                
+                if(resp.userGroups.includes('superUser')){
+      
+                  this.dalaliData.userData.userType='superuser'
+                 this.userType='superuser'
+      
+                }else if (resp.userGroups.includes('admins')){
+      
+                  this.dalaliData.userData.userType='admin'
+                  this.userType='admin'
+      
+                }else if (resp.userGroups.includes('retailers')){
+      
+                  this.dalaliData.userData.userType='retailer'
+                  this.userType='retailer'
+      
+                }else if(resp.userGroups.includes('wholesalers')) {
+      
+                  this.dalaliData.userData.userType='wholesaler'
+                  this.userType='wholesaler'
+      
+                }else{
+      
+                  this.dalaliData.userData.userType='buyer'
+                  this.userType='buyer'
+      
+                }
 
-                this.signUpAlert("Welcome back to dalali")
-
-                const userResp:boolean=window.confirm("Do you want to add this account to this device?")
-
-                if (userResp == true){
-                  console.log(resp.userContact,resp.userPassword);
+                if (!this.dWebsockets.websocketOpen){
+                
+                  this.dWebsockets.wsBackEndCommunicator(
+        
+                    resp.userContact,
+                    resp.userName,
+                    this.userType,
+        
+                  )
                 }
                 
+                
+                this.dalaliData.singlewayfLoopMsg=`Welcome back ${resp.userName}`
+
+                this.singleLoop.openFeedbackLoop().then(()=>{
+
+                  let userAccounts:any = localStorage.getItem('userAccounts')
+                  let accountPresent:boolean=false
+
+                  if (userAccounts === null){
+
+                    this.dalaliData.multiwayfLoopMsg="Do you want to add this account to this device"
+                    this.multiLoop.openFeedbackLoop().then((userResp:Boolean)=>{
+                      
+                      if (userResp === true){
+
+                        const userAccount:any={
+                          contact:resp.userContact,
+                          password:resp.userPassword
+                        }
+
+                        userAccounts=[userAccount]
+
+                        localStorage.setItem('userAccounts',JSON.stringify(userAccounts))
+                
+                        this.dalaliData.singlewayfLoopMsg=`Account Added`
+
+                        this.singleLoop.openFeedbackLoop().then(()=>{
+
+                          this.dalaliRouter.navigateByUrl('home')
+
+                        })
+
+                      }else{
+
+                        this.dalaliRouter.navigateByUrl('home')
+
+                      }
+                    })
+
+                  }else{
+
+                    userAccounts = JSON.parse(userAccounts)
+
+                    for (const userAccount of userAccounts) {
+                      
+                      if (userAccount.contact === resp.userContact){
+                        accountPresent = true
+                      }
+
+                    }
+
+                    if ( accountPresent === false ) {
+
+                      this.dalaliData.multiwayfLoopMsg="Do you want to add this account to this device"
+                      this.multiLoop.openFeedbackLoop().then((userResp:Boolean)=>{
+                      
+                        if (userResp === true){
+
+                          const userAccount:any={
+                            contact:resp.userContact,
+                            password:resp.userPassword
+                          }
+                          
+                          userAccounts.push(userAccount)
+    
+                          localStorage.setItem('userAccounts',JSON.stringify(userAccounts))
+                
+                          this.dalaliData.singlewayfLoopMsg=`Account Added`
+  
+                          this.singleLoop.openFeedbackLoop().then(()=>{
+
+                            this.dalaliRouter.navigateByUrl('home')
+
+                          })
+
+                        }else{
+
+                          this.dalaliRouter.navigateByUrl('home')
+                        }
+
+                      })
+
+                    }else{
+
+                      this.dalaliRouter.navigateByUrl('home')
+
+                    }
+
+                  }
+
+                })
 
               }else if (resp.status == 2){
-                this.signUpAlert("This account exists in our system use a different contact")
+                this.dalaliData.singlewayfLoopMsg="This account exists in our system use a different contact"
+                this.singleLoop.openFeedbackLoop()
               }
 
             })
           }else{
-            this.signUpAlert("Wrong password match")
+            this.dalaliData.singlewayfLoopMsg="Wrong password match"
+            this.singleLoop.openFeedbackLoop()
           }
         }else{
-          this.signUpAlert("There are some empty values")
+          this.dalaliData.singlewayfLoopMsg="There are some empty values"
+          this.singleLoop.openFeedbackLoop()
         }
       }else{
-        this.signUpAlert("We only allow phone number or email")
+        this.dalaliData.singlewayfLoopMsg="We only allow phone number or email"
+        this.singleLoop.openFeedbackLoop()
       }
     }
     
-  }
-  closeFeedbackLoop():void{
-    let fBLoop:any=this.elRef.nativeElement.querySelector(".sWFLMain")
-    this.renderer.addClass(fBLoop,"nosite")
-  }
-
-  openFeedBackLoop(textToDisplay:string):void{
-    this.displayText=textToDisplay
-    let fBLoop:any=this.elRef.nativeElement.querySelector(".sWFLMain")
-    this.renderer.removeClass(fBLoop,"nosite")
   }
 
 }

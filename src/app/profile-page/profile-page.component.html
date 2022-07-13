@@ -1,34 +1,89 @@
 <div class="wholeProfilePage">
     <a routerLink="/signUp" class="linkButtons">            
         <div class="signUpButton profileButtons">
-            Sign Up
+            <div class="profButIcon">
+
+                <i class="fas fa-id-badge"></i>
+
+            </div>
+            <div class="profButText">
+
+                Sign Up
+
+            </div>
         </div>
     </a>
     <a routerLink="/signIn" class="linkButtons">            
         <div class="signInButton profileButtons">
-            Sign In
+
+            <div class="profButIcon">
+
+                <i class="fas fa-sign-in-alt"></i>
+
+            </div>
+
+            <div class="profButText">
+
+                Sign In
+
+            </div>
+
         </div>
     </a>
     
     <a routerLink="/userTools" class="linkButtons">            
         <div class="userButton profileButtons">
-            User Tools
+            <div class="profButIcon">
+
+                <i class="fas fa-address-card"></i>
+
+            </div>
+
+            <div class="profButText">
+
+                Account
+
+            </div>
+
         </div>
     </a>
 
     <a routerLink="/retailerTools" class="linkButtons" *ngIf="this.userType=='retailer' || this.userType=='admin'  || this.userType=='superuser'">            
         <div class="retailerButton profileButtons">
-            Retailer Tools
+
+            <div class="profButIcon">
+
+                <i class="fas fa-id-card-alt"></i>
+
+            </div>
+
+            <div class="profButText">
+
+                Retailer
+
+            </div>
+
         </div>
     </a>
     <a routerLink="/admin" class="linkButtons" *ngIf="this.userType=='admin' || this.userType=='superuser'">            
         <div class="adminButton profileButtons">
-            Admin Tools
+            <div class="profButIcon">
+
+                <i class="fas fa-user-shield"></i>
+
+            </div>
+
+            <div class="profButText">
+
+                Admin
+
+            </div>
+            
         </div>
     </a>
     <a routerLink="/superuser" class="linkButtons" *ngIf="this.userType=='superuser'">            
         <div class="superUserButton profileButtons">
-            Superuser Tools
+            Superuser
         </div>
     </a>
 </div>

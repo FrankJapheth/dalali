@@ -1,8 +1,4 @@
-import { Component, ElementRef, Renderer2, OnInit } from '@angular/core';
-import { BackendcommunicatorService } from '../service/communications/backendcommunicator.service';
-import { DalalidataService } from '../service/data/dalalidata.service';
-import { Router } from '@angular/router';
-import { DalaliWebSocketsService } from '../service/webSocket/dalali-web-sockets.service';
+import { Component, OnInit } from '@angular/core';
 import { DalaliSessionStorageService } from '../service/sessions/dalali-session-storage.service';
 
 @Component({
@@ -12,16 +8,7 @@ import { DalaliSessionStorageService } from '../service/sessions/dalali-session-
 })
 export class LoaderComponent implements OnInit {
 
-  private userOTP: string="";
-  private userContact: string="";
-
   constructor(
-    private eleRef:ElementRef,
-    private dataService:DalalidataService,
-    private backendCommunicator:BackendcommunicatorService,
-    private dalaliRouter:Router,
-    private renderer:Renderer2,
-    private dWebSockets:DalaliWebSocketsService,
     private sessionDetails: DalaliSessionStorageService
     ) { }
 
@@ -31,8 +18,7 @@ export class LoaderComponent implements OnInit {
   ngAfterViewInit():void{
     const deviceTypeDetails: Array< any >=this.getDeviceType();
     const webDeviceId: string = deviceTypeDetails[0]+' '+deviceTypeDetails[1]+' '+this.fnBrowserDetect()+' '+this.browserName();
-    this.sessionDetails.webDeviceId= webDeviceId;    
-    this.checkDetails();
+    this.sessionDetails.webDeviceId= webDeviceId;
   }
 
   getDeviceType(): any{
@@ -92,57 +78,4 @@ export class LoaderComponent implements OnInit {
           );
   }
   
-  checkDetails(){
-    let otpDetails:any=localStorage.getItem("userOTPItems") 
-    if(otpDetails!=null){   
-      this.sessionDetails.oTPPresent=true; 
-      this.sessionDetails.addDeviceQuiz=false
-      this.otpSignIn()
-    }else{
-      this.sessionDetails.oTPPresent=false;
-      this.sessionDetails.addDeviceQuiz= true
-      // const noOTPRF:FormData =  new FormData();
-      // noOTPRF.append('webDeviceID',this.sessionDetails.webDeviceId)
-      // this.sessionDetails.redFlag(noOTPRF).then((resp: any) => {
-      //   this.sessionDetails.addDeviceQuiz= resp;
-      //   this.dalaliRouter.navigateByUrl('home');
-      // }).catch((err: any) => {
-      //   console.error(err)
-      // })
-      this.dalaliRouter.navigateByUrl('home');
-    }
-  }
-  otpSignIn(){
-    let userOTPDetails:any=localStorage.getItem("userOTPItems")
-    if (userOTPDetails!=null){
-      let parsedUserOTPDetails:any= JSON.parse(userOTPDetails)
-      let userContact:string=parsedUserOTPDetails[0]
-      let userOTP:string=parsedUserOTPDetails[1]
-      let formToAppend:FormData=new FormData();
-      formToAppend.append("userContact",userContact)
-      formToAppend.append("userOTP",userOTP)
-      this.backendCommunicator.backendCommunicator(formToAppend,"post",`${this.backendCommunicator.backendBaseLink}/otpSignIn`).then((resp : any)=>{
-        if(resp[0]=="success"){
-          this.dataService.setUserBasicInfo([resp[1],resp[2],resp[3],resp[4]])
-          this.userOTP=resp[5]
-          this.userContact=resp[6]
-          let userOTPItems:Array<string>=[this.userContact,this.userOTP]
-          localStorage.setItem("userOTPItems",JSON.stringify(userOTPItems))
-          this.dWebSockets.wsBackEndCommunicator(
-            this.dataService.userData.userContact,
-            this.dataService.userData.userName,
-            this.dataService.userData.userType,
-          )
-        }
-        this.dalaliRouter.navigateByUrl('home')
-      }).catch ((err: any) => {
-        const innerLoaerDivElement: HTMLElement = this.eleRef.nativeElement.querySelector('.innerLoaerDiv');
-        this.renderer.addClass(innerLoaerDivElement,'nosite')
-        const noInternetErrorElement: HTMLElement = this.eleRef.nativeElement.querySelector('.noInternetError');
-        this.renderer.removeClass(noInternetErrorElement,'nosite')
-      });
-    }else{
-      this.dalaliRouter.navigateByUrl('home')
-    }
-  }
 }
